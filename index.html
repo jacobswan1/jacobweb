@@ -1,0 +1,1559 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jacob Zhiyuan Fang | Academic Homepage</title>
+  <meta name="description" content="(Jacob) Zhiyuan Fang — research scientist working on visual Gen AI." />
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="(Jacob) Zhiyuan Fang | Academic Homepage"/>
+  <meta property="og:description" content="Research, publications, teaching, talks, and contact"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="images/profile.jpg"/>
+  <meta property="og:locale" content="en_US"/>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    :root{
+      --bg:#ffffff;--fg:#111827;--muted:#6b7280;--link:#0f766e;--accent:#2563eb;--card:#f8fafc;--border:#e5e7eb;--kbd:#f1f5f9;--tag:#e2e8f0;--shadow:0 10px 30px rgba(0,0,0,.06);
+      /* graph theme */
+      --exp:#0EA5E9;   /* cyan-500 */
+      --pub:#F59E0B;   /* amber-500 */
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1021;--fg:#e5e7eb;--muted:#94a3b8;--link:#34d399;--accent:#60a5fa;--card:#0f172a;--border:#1f2937;--kbd:#111827;--tag:#1f2937;--shadow:0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:980px;margin:auto;padding:24px}
+    header{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;margin-block:20px}
+    .avatar{width:120px;height:120px;border-radius:16px;object-fit:cover;box-shadow:var(--shadow)}
+    .name{font-size:32px;line-height:1.2;margin:0}
+    .title{color:var(--muted);margin:.25rem 0 0}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:var(--tag);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px}
+    nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:10}
+    .nav{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;padding:10px 24px;overflow:auto}
+    .nav a{padding:6px 10px;border-radius:8px}
+    .nav a.active,.nav a:hover{background:var(--tag);text-decoration:none}
+    section{padding-block:28px;border-bottom:1px dashed var(--border)}
+    h2{margin:0 0 12px;font-size:26px}
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .pub{display:grid;gap:10px}
+    .pub .meta{color:var(--muted);font-size:14px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+    .tag{font-size:12px;background:var(--tag);border:1px solid var(--border);padding:2px 8px;border-radius:999px}
+    .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--bg);padding:6px 10px;border-radius:8px}
+    .btn:hover{background:var(--tag);text-decoration:none}
+    .right{margin-left:auto}
+    .tool{display:flex;gap:8px;flex-wrap:wrap}
+    .search{display:flex;gap:8px;align-items:center}
+    input[type="search"],select{background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:8px;color:var(--fg)}
+    footer{padding:24px 0;color:var(--muted);font-size:14px}
+    .two-col{display:grid;grid-template-columns:1fr 300px;gap:24px}
+    .thumb{width:100%;aspect-ratio:25/12;object-fit:cover;border-radius:12px;border:1px solid var(--border);background:#000}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
+    @media print{nav,.tool,.chip{display:none}.card{box-shadow:none}a{text-decoration:none}}
+
+    /* ===== Interactive Experience/Publication Graph (scoped) ===== */
+    #xp-pubs-graph{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:16px;position:relative}
+    #xp-pubs-graph .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+    #xp-pubs-graph .title{display:flex;align-items:center;gap:10px}
+    #xp-pubs-graph .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:var(--accent);box-shadow:0 0 16px rgba(96,165,250,.6)}
+    #xp-pubs-graph .legend{display:flex;gap:14px;font-size:12px;color:var(--muted)}
+    #xp-pubs-graph .legend .dot{background:currentColor;box-shadow:none}
+    #xp-pubs-graph .surface{
+      position:relative;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+      background:
+        radial-gradient(60% 40% at 10% 0%, rgba(96,165,250,0.14) 0%, rgba(96,165,250,0.00) 60%),
+        radial-gradient(50% 40% at 90% 100%, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0.00) 70%),
+        conic-gradient(from 220deg at 70% 30%, rgba(99,102,241,.10), rgba(59,130,246,.08), rgba(99,102,241,.10));
+      backdrop-filter: blur(8px)
+    }
+    #xp-pubs-graph .surface .hint{
+      position:absolute;right:10px;bottom:8px;font-size:11px;color:var(--muted);
+      user-select:none;background:var(--card);padding:6px 8px;border-radius:8px;border:1px solid var(--border)
+    }
+    #xp-pubs-graph .surface .test{
+      position:absolute;left:10px;bottom:8px;font-size:11px;opacity:.85;
+      user-select:none;background:rgba(0,0,0,.08);padding:6px 8px;border-radius:8px;border:1px solid var(--border);display:none; /* hide in prod */
+      color:var(--muted)
+    }
+    #xp-pubs-graph svg{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+    #xp-pubs-graph svg:active{cursor:grabbing}
+    #xp-pubs-graph .link{stroke:rgba(17,24,39,.28);stroke-width:1.2;transition:stroke .15s ease,stroke-width .15s ease}
+    #xp-pubs-graph .link.is-active{stroke:rgba(17,24,39,.66);stroke-width:2}
+    #xp-pubs-graph .node circle{stroke:rgba(255,255,255,.75);stroke-width:1.2;filter:drop-shadow(0 0 6px rgba(255,255,255,.6));transition:transform .15s ease, filter .15s ease, stroke-width .15s ease}
+    #xp-pubs-graph .node:hover circle{transform:scale(1.05)}
+    #xp-pubs-graph .node.is-active circle{stroke-width:2;filter:drop-shadow(0 0 12px rgba(255,255,255,.9))}
+    #xp-pubs-graph .node.is-dragging circle{transform:scale(1.12);filter:drop-shadow(0 0 16px rgba(255,255,255,.9))}
+    #xp-pubs-graph .label{font-size:12px;fill:var(--fg);paint-order:stroke;stroke:rgba(0,0,0,.25);stroke-width:3px;pointer-events:none}
+    #xp-pubs-graph .cluster{stroke:rgba(255,255,255,.35);stroke-dasharray:4 6;fill:rgba(96,165,250,0.06);pointer-events:none}
+    #xp-pubs-graph .cluster-label{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;font-weight:600;font-style:italic;font-size:15px;fill:var(--fg);opacity:.9;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.45);filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
+
+    /* ===== Video Panels (scoped) ===== */
+    #video-panels{}
+    #video-panels .vid-grid{
+      display:grid; gap:5px;
+      grid-template-columns:repeat(4, minmax(120px,1fr));
+    }
+    #video-panels .vid-grid { gap: 0 !important; margin: -12px; }
+    #video-panels .vid-panel { margin: 12px; }         /* ← adjust this to taste */
+    @media (max-width:1100px){ #video-panels .vid-grid{grid-template-columns:repeat(3, minmax(220px,1fr));} }
+    @media (max-width:800px){  #video-panels .vid-grid{grid-template-columns:repeat(2, minmax(220px,1fr));} }
+    @media (max-width:520px){  #video-panels .vid-grid{grid-template-columns:1fr;} }
+
+    #video-panels .vid-panel{
+      position:relative;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+      box-shadow:var(--shadow);
+      isolation:isolate;
+    }
+    #video-panels .vid-panel::before{
+      content:"";
+      position:absolute; inset:0; padding:2px; border-radius:16px;
+      background:linear-gradient(135deg, hsl(214 95% 68%), hsl(284 92% 72%));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      pointer-events:none; opacity:.9;
+    }
+    #video-panels .vid-badge{
+      display:inline-block;
+      padding:1px 16px;
+      border-radius:999px;
+      font-size:12px; font-weight:600;
+      background:rgba(96,165,250,.18);
+      border:1px solid var(--border);
+    }
+    #video-panels .vid-video{
+      position:relative; width:100%; overflow:hidden; border-radius:12px; margin-top:8px;
+    }
+    #video-panels .vid-video video{
+      width:100%; height:auto; display:block;
+      aspect-ratio:16/9;
+      object-fit:cover; background:#000;
+      border:1px solid var(--border); border-radius:12px;
+    }
+    #video-panels .vid-caption{
+      margin-top:8px; font-size:14px; color:var(--muted);
+    }
+
+    /* Taller video panels */
+    #video-panels { --vid-aspect: 9/14; }           /* try 2/3 for very tall, 1/1 for square */
+    #video-panels .vid-video { aspect-ratio: var(--vid-aspect); }
+
+    /* make the <video> fill the new box */
+    #video-panels .vid-video video{
+      aspect-ratio: auto;      /* override the old 16/9 rule */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ===== LinkedIn-style Experience list (matches site tokens) ===== */
+    #experience .xp {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    #experience .xp-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    #experience .xp-logo {
+      width: 56px; height: 56px;
+      border-radius: 12px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+    #experience .xp-logo img { width: 48px; height: 48px; object-fit: contain; }
+    #experience .xp-header { display: flex; flex-direction: column; gap: 2px; }
+    #experience .xp-company { font-weight: 700; color: inherit; text-decoration: none; }
+    #experience .xp-company:hover { text-decoration: underline; }
+    #experience .xp-meta { color: var(--muted); font-size: 14px; }
+    #experience .xp-location { color: var(--muted); font-size: 13px; }
+    #experience .xp-roles { margin-top: 8px; display: grid; gap: 10px; }
+    #experience .xp-role { border-top: 1px dashed var(--border); padding-top: 10px; }
+    #experience .xp-role:first-child { border-top: none; padding-top: 0; }
+    #experience .xp-role-title { font-weight: 600; }
+    #experience .xp-role-meta { color: var(--muted); font-size: 13px; }
+    #experience .xp-desc { margin-top: 6px; }
+    #experience .xp-desc a { color: var(--link); }
+    #experience .xp-desc a:hover { text-decoration: underline; }
+    @media (max-width: 720px){ #experience .xp-item{ grid-template-columns: 1fr; } }
+
+    .p-clamp{
+      max-width: 60ch;
+      margin: 0 0 .5rem 0;
+      overflow: hidden;
+    }
+    .p-clamp:not(.is-open){
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+              mask-image: linear-gradient(to bottom, black 70%, transparent);
+    }
+    .p-toggle{
+      font-size: .875rem;
+      padding: .2rem .5rem;
+      background: var(--card, #f8fafc);
+      border: 1px solid var(--border, #e5e7eb);
+      border-radius: .5rem;
+      cursor: pointer;
+    }
+
+    .lead{font-weight:500; font-size:1.05rem; line-height:1.5}
+    .accent{
+      /* element-level override via --accent is supported */
+      color: color-mix(in oklab, var(--accent, #2563eb) 88%, var(--fg, #111827));
+      font-weight:600; letter-spacing:.2px;
+    }
+    /* Responsive YouTube embed for publication cards */
+    .thumb-embed{
+      inline-size: var(--w, 100%);             /* width control: set --w inline if needed */
+      aspect-ratio: var(--ar, 25/12);          /* default matches your .thumbs; use 16/9 if you prefer */
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      margin: 8px 0;
+    }
+    .thumb-embed > iframe{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.p-toggle');
+      if (!btn) return;
+      const target = document.getElementById(btn.getAttribute('aria-controls'));
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      btn.textContent = expanded ? '🚀 We’re Hiring (Intern and FTE)' : 'Show less';
+      target.classList.toggle('is-open', !expanded);
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Jacob Zhiyuan Fang","jobTitle":"Research Scientist","affiliation":{"@type":"Organization","name":"TikTok / ByteDance"},"email":"mailto:you@example.com","url":"https://your-domain.example","sameAs":["https://scholar.google.com/citations?user=fHWXpq4AAAAJ","https://openreview.net/profile?id=~Zhiyuan_Fang1","https://github.com/"]}
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="nav">
+      <a href="#about" class="active">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+<!--      <a href="#teaching">Teaching</a>-->
+<!--      <a href="#talks">Talks</a>-->
+      <a href="#service">Service</a>
+      <a href="#contact">Contact</a>
+      <a href="cv.pdf" class="right btn" download>Download CV (PDF)</a>
+    </div>
+  </nav>
+  <main class="wrap">
+    <header>
+      <img class="avatar" src="images/profile.jpg" alt="Headshot (replace avatar.jpg)"/>
+      <div>
+        <h1 class="name">Jacob Zhiyuan Fang</h1>
+        <p class="title">Research Scientist,  ByteDance · Visual Gen AI · Vision & Language</p>
+        <div class="links">
+          <a class="chip" href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="chip" href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+          <a class="chip" href="mailto:zfang29@asu.edu">Email</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="about" class="two-col">
+      <div>
+        <h2>About</h2>
+        I am a research scientist in Bytedance/TikTok in generative AI, multi-modal learning, and video/image generation. My work focuses on developing advanced AI systems that seamlessly connect language, vision, and creative intelligence.
+        
+        <p>I work on <strong>generative models</strong>, <strong>video & image generation on diffusion models</strong>, and <strong>vision-language</strong>. My recent focus includes controllable generation, large scale training for diffusion models, and representation learning.</p>
+
+      <p class="lead">
+          <span class="accent" style="--accent:#2563eb">We’re Hiring (Intern and FTE)! </span> <br>
+      </p>
+      <p class="p-clamp" id="bio"> 
+          Who we are: <br>Join the Intelligence Creation Group at TikTok, where we focus on cutting-edge video generation technologies.
+            Our team develops advanced video generative models to power next-generation TikTok content.
+          We build video foundation models that bring creativity to life — like this example on TikTok (one single effect
+            that triggers more than !!30M!! post globally, best AI effect since 2023 across TikTok):
+          <br> 🎬 <a href="https://www.tiktok.com/@anastasile/video/7507712572259388679"> Click ME </a>. <br> We also build large scale Video Generation model
+          pre-training for creating powerful video foundation model. We build state-of-the-art VideoGen techniques like: video editing, <a href="https://magref-video.github.io/magref.github.io/">
+            video customized generation</a>, <a href="https://github.com/bytedance/ATI">video motion controlled generation</a>, etc. <br> <br>
+        Who we looking for: <br> ✅ Strong-motivated Ph.D. candidates; <br> ✅ Experiecnes of video generation/diffusion/AR model training; <br> ✅ Top-tier publications.
+      </p>
+
+        <button class="p-toggle" aria-expanded="false" aria-controls="bio">🚀 We’re Hiring (Intern and FTE)</button>
+
+        <div class="grid grid-1">
+          <br>
+          <div class="card">
+            <strong>Research Areas</strong>
+            <ul>
+              <li>Generative modeling (Image/Video diffusion model )</li>
+              <li>Vision-Language models (video-language, VLM)</li>
+              <li>Representation learning & efficient pretraining</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+<!--      <aside>-->
+        <div class="card">
+          <strong>News</strong>
+          <ul>
+            <li>[2025 Sep] New video generative foundation model trained by us is incoming for TikTok users. Stay tuned. </li> <br>
+            <li>[2025 March] <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441">AI Mermaid Effect</a> is online, attracting <em>30M+</em> post on TikTok - best TikTok AI effect since 2023!. </li> <br>
+            <li>[2025 Jan] <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">AI Alive</a> is online, check out <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">Shou's demo video</a> on our product. </li> <br>
+            <li>[2024 Oct] ACM MM'24: <a href="https://www.amazon.science/publications/zero-shot-controllable-image-to-video-animation-via-motion-decomposition">Zero-Shot Controllable Image-to-Video Animation </a>.</li> <br>
+            <li>[2024 July]: Joined Bytedance Intelligent Creation team as a Research Scientist. </li>
+
+          </ul>
+        </div>
+<!--      </aside>-->
+    </section>
+
+
+    <!-- ===== Experience — interactive canvas ===== -->
+    <!-- ===== Experience — interactive canvas + list ===== -->
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <!-- new LinkedIn-style list -->
+      <div class="xp" id="xp-list">
+        <article class="xp-item">
+          <div class="xp-logo">
+            <img src="images/bytedance_logo.jpeg" alt="ByteDance / TikTok logo"/>
+          </div>
+          <div>
+            <div class="xp-header">
+              <a class="xp-company" href="https://www.tiktok.com/" target="_blank" rel="noopener">ByteDance / TikTok</a>
+              <div class="xp-meta">Senior Research Scientist · 2024 — Present</div>
+              <div class="xp-location">San Jose, USA</div>
+            </div>
+            <div class="xp-roles">
+              <div class="xp-role">
+                <div class="xp-role-title">Video Generative Model</div>
+                <div class="xp-role-meta">Controllable video generation · Any-reference video generation · Foundation video generation pre-training</div>
+                <div class="xp-desc">
+                  We develop AI effects from video generative models. I also work closely with
+                  <a href="https://seed.bytedance.com/en/" target="_blank" rel="noopener">Bytedance SEED</a>
+                  to build state-of-the-art video generative models for TikTok production.
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="xp-item">
+          <div class="xp-logo">
+            <img src="images/amazon_logo.jpeg" alt="Amazon logo"/>
+          </div>
+          <div>
+            <div class="xp-header">
+              <a class="xp-company" href="https://amazon.jobs/content/en/teams/agi" target="_blank" rel="noopener">Amazon AGI</a>
+              <div class="xp-meta">Applied Scientist · 2022 — 2024</div>
+              <div class="xp-location">Sunnyvale, USA</div>
+            </div>
+            <div class="xp-roles">
+              <div class="xp-role">
+                <div class="xp-role-title">Image/Video Generation; Large-scale Diffusion Pre-training & Post-training</div>
+                <div class="xp-role-meta">Image/Video Diffusion Model</div>
+                <div class="xp-desc">
+                  Part of Amazon AGI org working on image generation model Titan (post-training) and video generation model Emerald (pre-training and SFT).
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="xp-item">
+          <div class="xp-logo">
+            <img src="images/microsoft_logo.jpeg" alt="Microsoft logo"/>
+          </div>
+          <div>
+            <div class="xp-header">
+              <a class="xp-company" href="#" target="_blank" rel="noopener">Microsoft Cloud & AI</a>
+              <div class="xp-meta">Research Intern · 2020 — 2022</div>
+              <div class="xp-location">Redmond, USA</div>
+            </div>
+            <div class="xp-roles">
+              <div class="xp-role">
+                <div class="xp-role-title">Vision and Language Model (VLM)</div>
+                <div class="xp-role-meta">Self-supervised Learning · Knowledge Distillation · Vision-Language Representation Learning</div>
+                <div class="xp-desc">Collaborators: <a href="https://sites.google.com/view/zichengliu/home">Zicheng Liu</a>, <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a>, <a href="https://jianfengwang.me/">Jianfeng Wang</a>, <a href="https://zhegan27.github.io/">Zhe Gan</a></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="xp-item">
+          <div class="xp-logo">
+            <img src="images/chinese_academy_of_sciences_logo.jpeg" alt="Chinse Academy of Sciences, MM Lab logo"/>
+          </div>
+          <div>
+            <div class="xp-header">
+              <a class="xp-company" href="#" target="_blank" rel="noopener">Chinse Academy of Sciences, MM Lab</a>
+              <div class="xp-meta">Visiting Student · June. 2016 — Dec. 2016</div>
+              <div class="xp-location">Shenzhen, China</div>
+            </div>
+            <div class="xp-roles">
+              <div class="xp-role">
+                <div class="xp-role-meta">Deep Learning · Face Recognition</div>
+                <div class="xp-desc">Collaborators: <a href="https://mmlab.siat.ac.cn/yuqiao"> Yu Qiao</a>, Zhifeng Li, Xiao Zhang</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Video panels directly beneath Experience ===== -->
+    <section id="video-panels">
+      <h2>Product Demos</h2>
+      <div class="vid-grid" style="gap: 0px 0px;">
+        <!-- Panel 1 -->
+        <figure class="vid-panel">
+          <span class="vid-badge">AI Mermaid</span>
+          <div class="vid-video">
+            <video autoplay loop muted playsinline preload="metadata" poster="images/ai_mermaid.jpg">
+              <source src="images/ai_mermaid.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <figcaption class="vid-caption"><a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441"> AI Mermaid effect</a> demo. Over <b><em>30M+</em></b> posts since online. BEST AI effect on Tiktok since 2023.</figcaption>
+        </figure>
+
+      <figure class="vid-panel">
+          <span class="vid-badge">AI Alive - Tiktok</span>
+          <div class="vid-video">
+            <video autoplay loop muted playsinline preload="metadata" poster="images/magref.jpg">
+              <source src="images/shou.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="vid-caption">AI Alive online! Demo video by Shou.</figcaption>
+        </figure>
+
+        <!-- Panel 2 -->
+        <figure class="vid-panel" style="gap: 0px 0px;">
+          <span class="vid-badge">AI SwayDance</span>
+          <div class="vid-video">
+            <video autoplay loop muted playsinline preload="metadata" poster="images/seedance.jpg">
+              <source src="images/ai_swaydance.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="vid-caption">AI Sway Dance Effect demo. Over 3M+ posts in 3 weeks. Let's hop hop hop!</figcaption>
+        </figure>
+
+        <!-- Panel 3 -->
+        <figure class="vid-panel">
+          <span class="vid-badge">AI Hug</span>
+          <div class="vid-video">
+            <video autoplay loop muted playsinline preload="metadata" poster="images/i2v_motion.jpg">
+              <source src="images/ai_hug.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="vid-caption">AI Hug Effect demo. Hug with your loved one.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+
+      <!-- existing interactive graph card (unchanged) -->
+      <div id="xp-pubs-graph" class="card">
+        <div class="header">
+          <div class="title">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <div style="font-weight:700; letter-spacing:.2px;">Explore My Work</div>
+              <div style="font-size:12px; color:var(--muted)">Drag nodes • wheel to zoom • double-click background to reset</div>
+            </div>
+          </div>
+          <div class="legend" aria-hidden="true">
+            <span style="color:var(--exp)"><span class="dot"></span> Experience</span>
+            <span style="color:var(--pub)"><span class="dot"></span> Publication</span>
+          </div>
+        </div>
+        <div class="surface" id="graph-surface">
+          <svg id="graph" viewBox="0 0 1100 560" role="img" aria-label="Interactive graph of experiences and publications">
+            <g id="clusters"></g>
+            <g id="links"></g>
+            <g id="nodes"></g>
+          </svg>
+          <div class="hint">center nodes are experiences • pubs orbit around them</div>
+          <div class="test" id="test-status">tests: running…</div>
+        </div>
+      </div>
+    
+    <section id="publications">
+      <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
+        <h2 style="margin:0">Selected Preprints & Publications</h2>
+        <div class="tool">
+          <div class="search">
+            <label for="q">Search</label>
+            <input id="q" type="search" placeholder="Filter by title, authors, keywords…" oninput="filterPubs()">
+          </div>
+          <select id="year" onchange="filterPubs()">
+            <option value="">All years</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2023</option>
+            <option>2022</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>2019</option>
+            <option>2018</option>
+          </select>
+          <select id="venue" onchange="filterPubs()">
+            <option value="">All venues</option>
+            <option>MM</option>
+            <option>TMLR</option>
+            <option>WACV</option>
+            <option>ECCV</option>
+            <option>CVPR</option>
+            <option>ICCV</option>
+            <option>ICLR</option>
+            <option>arXiv</option>
+            <option>TR</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="pub-list" class="grid" style="margin-top:16px">
+        <!-- Existing + added publications -->
+
+          <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="video generation any-reference masked guidance">
+          <video class="thumb"
+                 autoplay muted loop playsinline
+                 preload="metadata"
+                 aria-label="MAGREF teaser">
+            <source src="images/magref.mp4" type="video/mp4">
+            <!-- Optional: <source src="images/magref.webm" type="video/webm"> -->
+            Your browser does not support the video tag.
+          </video>
+          <div>
+            <strong>MAGREF: Masked Guidance for Any-Reference Video Generation</strong>
+            <span class="meta">Yufan Deng, Xun Guo, Yuanyang Yin, Jacob Zhiyuan Fang, Yiding Yang, Yizhi Wang, Shenghai Yuan, Angtian Wang, Bo Liu, Haibin Huang, Chongyang Ma · arXiv 2025</span>
+            <div class="tags"><span class="tag">Video Generation</span><span class="tag">ID/IP Reference Video Generation</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>
+            <a class="btn" href="https://github.com/MAGREF-Video/MAGREF" target="_blank" rel="noopener">Github</a>
+            <a class="btn" href="https://magref-video.github.io/" target="_blank" rel="noopener">Webpage</a>
+          </div>
+          <pre class="bibtex" style="display:none">@article{fang2025magref,
+  title={MAGREF: Masked Guidance for Any-Reference Video Generation},
+  author={Fang, Zhiyuan and others},
+  journal={arXiv},
+  year={2025}
+}</pre>
+        </article>
+
+        <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="controllable video trajectory instruction">
+          <div>
+            <strong>ATI: Any Trajectory Instruction for Controllable Video Generation</strong>
+          <video class="thumb"
+                 autoplay muted loop playsinline
+                 preload="metadata"
+                 aria-label="MAGREF teaser">
+            <source src="images/ATI_teaser.mp4" type="video/mp4">
+            <!-- Optional: <source src="images/magref.webm" type="video/webm"> -->
+            Your browser does not support the video tag.
+          </video>
+            <span class="meta">Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma · arXiv 2025</span>
+          <div class="tags"><span class="tag">Video Generation</span><span class="tag">Motion Controlled Video Generation</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://arxiv.org/pdf/2505.22944" target="_blank" rel="noopener">Preprint</a>
+            <a class="btn" href="https://github.com/bytedance/ATI" target="_blank" rel="noopener">Github</a>
+            <a class="btn" href="https://anytraj.github.io/" target="_blank" rel="noopener">Webpage</a>
+          </div>
+          <pre class="bibtex" style="display:none">@article{wang2025ati,
+  title={Any Trajectory Instruction for Controllable Video Generation},
+  author={Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma},
+  journal={arXiv},
+  year={2025}
+}</pre>
+        </article>
+        
+        <article class="card pub" data-year="2024" data-venue="MM" data-keywords="image-to-video controllable animation motion decomposition diffusion">
+          <img class="thumb" src="images/zero_shot_motion.png" alt="Zero-shot controllable image-to-video animation teaser"/>
+          <div>
+            <strong>Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition</strong>
+            <span class="meta">Shoubin Yu, <strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Gunnar A. Sigurdsson, Vicente Ordonez, Robinson Piramuthu, Mohit Bansal · ACM MM 2024</span>
+            <div class="tags"><span class="tag">Video Generation</span><span class="tag">Control Generation</span><span class="tag">Diffusion</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://openreview.net/pdf?id=vngElHOj2N" target="_blank" rel="noopener">Paper</a>
+            <a class="btn" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">Website</a>
+<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{yu2024zeroshot,
+  title={Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition},
+  author={Yu, Shoubin and Fang, Jacob Zhiyuan and Zheng, Skyler and Sigurdsson, Gunnar A and Ordonez, Vicente and Piramuthu, Robinson and Bansal, Mohit},
+  booktitle={ACM Multimedia},
+  year={2024}
+}</pre>
+        </article>
+
+        <article class="card pub" data-year="2024" data-venue="TMLR" data-keywords="controllable text-to-image multimodal control efficiency lora">
+<!--          <img class="thumb" src="https://lh3.googleusercontent.com/E5QZXmuMSG9PhSLmode29xiLqBg9QEr5cz-eBM6kJMtdh8eNTMq7Yv4rQtpkDz5umHgy0OqE8sLtwVQ2ddn2qoFVwlsHIpwBkBx0n31s7TdswBDQq5KzBo4FO0KVhtZGizAzHh2jndlmAdaF5T8NuwIlEABERrpgEIwyCDe-8pQLFGPeWLIXHA=w1280" alt="FlexEControl teaser"/>-->
+          <div>
+            <strong>FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation</strong>
+            <span class="meta">Xuehai He, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Robinson Piramuthu, Mohit Bansal, Vicente Ordonez, Gunnar A. Sigurdsson, Nanyun Peng, Xin Eric Wang · TMLR 2024</span>
+            <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion Model</span><span class="tag">Efficiency</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://arxiv.org/abs/2405.04834" target="_blank" rel="noopener">arXiv</a>
+            <a class="btn" href="https://sites.google.com/view/flexecontrol" target="_blank" rel="noopener">Project</a>
+<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+          </div>
+          <pre class="bibtex" style="display:none">@article{he2024flexecontrol,
+  title={FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation},
+  author={He, Xuehai and Zheng, Jian and Fang, Jacob Zhiyuan and Piramuthu, Robinson and Bansal, Mohit and Ordonez, Vicente and Sigurdsson, Gunnar A and Peng, Nanyun and Wang, Xin Eric},
+  journal={TMLR},
+  year={2024}
+}</pre>
+        </article>
+
+<!--        <article class="card pub" data-year="2024" data-venue="WACV" data-keywords="image editing diffusion information removal">-->
+<!--          <img class="thumb" src="https://www.amazon.science/publications/text-to-image-editing-by-image-information-removal/_jcr_content/root/section/section_770/logo_copy_copy_2122628257/image.coreimg.png/1697659892018/text-to-image-editing-by-image-information-removal.png" alt="Text-to-image editing by image information removal teaser"/>-->
+<!--          <div>-->
+<!--            <strong>Text-to-image Editing by Image Information Removal</strong>-->
+<!--            <span class="meta">Zhongping Zhang, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Bryan A. Plummer · WACV 2024</span>-->
+<!--            <div class="tags"><span class="tag">Image Editing</span><span class="tag">Diffusion</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/html/Zhang_Text-to-image_Editing_by_Image_Information_Removal_WACVW_2024_paper.html" target="_blank" rel="noopener">CVF</a>-->
+<!--            <a class="btn" href="https://www.amazon.science/publications/text-to-image-editing-by-image-information-removal" target="_blank" rel="noopener">Page</a>-->
+<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@inproceedings{zhang2024ttiir,-->
+<!--  title={Text-to-image Editing by Image Information Removal},-->
+<!--  author={Zhang, Zhongping and Zheng, Jian and Fang, Jacob Zhiyuan and Plummer, Bryan A},-->
+<!--  booktitle={WACV Workshops},-->
+<!--  year={2024}-->
+<!--}</pre>-->
+<!--        </article>-->
+
+<!--        <article class="card pub" data-year="2024" data-venue="WACV" data-keywords="video-language masked video modeling vq tokenizer">-->
+<!--          <img class="thumb" src="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/assets/Fang_E-ViLM_Efficient_Video-Language_Model_via_Masked_Video_Modeling_With_Semantic_WACVW_2024_paper-1.png" alt="E-ViLM teaser"/>-->
+<!--          <div>-->
+<!--            <strong>E-ViLM: Efficient Video-Language Model via Masked Video Modeling with Semantic Vector-Quantized Tokenizer</strong>-->
+<!--            <span class="meta"><strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Vasu Sharma, Robinson Piramuthu · WACV Workshops 2024</span>-->
+<!--            <div class="tags"><span class="tag">Video-Language</span><span class="tag">Pretraining</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="https://arxiv.org/abs/2311.17267" target="_blank" rel="noopener">arXiv</a>-->
+<!--            <a class="btn" href="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/html/Fang_E-ViLM_Efficient_Video-Language_Model_via_Masked_Video_Modeling_With_Semantic_WACVW_2024_paper.html" target="_blank" rel="noopener">CVF</a>-->
+<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@inproceedings{fang2024evilmm,-->
+<!--  title={E-ViLM: Efficient Video-Language Model via Masked Video Modeling with Semantic Vector-Quantized Tokenizer},-->
+<!--  author={Fang, Zhiyuan and Zheng, Skyler and Sharma, Vasu and Piramuthu, Robinson},-->
+<!--  booktitle={WACV Workshops},-->
+<!--  year={2024}-->
+<!--}</pre>-->
+<!--        </article>-->
+
+        <article class="card pub" data-year="2024" data-venue="ECCV" data-keywords="text-to-image generalization dataset skew evaluation">
+          <div>
+            <strong>Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation</strong>
+            <span class="meta">Yingshan Chang, Yasi Zhang, Zhiyuan Fang, Yingnian Wu, Yonatan Bisk, Feng Gao · ECCV 2024</span>
+            <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://arxiv.org/pdf/2403.16394" target="_blank" rel="noopener">Arxiv</a>
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{chang2024skews,
+  title={Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation},
+  author={Chang, Yuqing and Zhang, Yuchen and Fang, Zhiyuan and Wu, Yuchen and Bisk, Yonatan and Gao, Feng},
+  booktitle={ECCV},
+  year={2024}
+}</pre>
+        </article>
+
+<!--        <article class="card pub" data-year="2024" data-venue="arXiv" data-keywords="model card foundation models amazon nova">-->
+<!--          <div>-->
+<!--            <strong>The Amazon Nova Family of Models: Technical Report and Model Card</strong>-->
+<!--            <span class="meta">AAG Intelligence (incl. <strong>Zhiyuan Fang</strong>) · Technical Report 2024</span>-->
+<!--            <div class="tags"><span class="tag">Model Card</span><span class="tag">Foundation</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=fHWXpq4AAAAJ&sortby=pubdate&citation_for_view=fHWXpq4AAAAJ:CHSYGLWDkRkC" target="_blank" rel="noopener">Scholar</a>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@techreport{nova2024,-->
+<!--  title={The Amazon Nova Family of Models: Technical Report and Model Card},-->
+<!--  author={AAG Intelligence},-->
+<!--  year={2024}-->
+<!--}</pre>-->
+<!--        </article>-->
+
+        <article class="card pub" data-year="2021" data-venue="ICLR" data-keywords="self-supervised distillation visual representation">
+          <div>
+            <strong>SEED: Self-supervised Distillation For Visual Representation</strong>
+            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Lijuan Wang, Lei Zhang, Yezhou Yang, Zicheng Liu · ICLR 2021</span>
+            <div class="tags"><span class="tag">Self-supervised Learning</span><span class="tag">Knowledge Distillation</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">Arxiv</a>
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{fang2021seed,
+  title={SEED: Self-supervised Distillation For Visual Representation},
+  author={Fang, Zhiyuan and Wang, Jianfeng and Wang, Lijuan and Zhang, Lei and Yang, Yezhou and Liu, Zicheng},
+  booktitle={ICLR},
+  year={2021}
+}</pre>
+        </article>
+
+        <article class="card pub" data-year="2022" data-venue="CVPR" data-keywords="captioning semantics end-to-end">
+          <div>
+            <strong>Injecting Semantic Concepts into End-to-End Image Captioning</strong>
+            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lin Liang, Zhe Gan, Lijuan Wang, Yezhou Yang, Zicheng Liu · CVPR 2022</span>
+            <div class="tags"><span class="tag">Image Captioning</span><span class="tag">Vision & Language</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf" target="_blank" rel="noopener">Paper</a>
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{fang2022injecting,
+  title={Injecting Semantic Concepts into End-to-End Image Captioning},
+  author={Fang, Zhiyuan and Wang, Jianfeng and Hu, Xiaowei and Liang, Lin and Gan, Zhe and Wang, Lijuan and Yang, Yezhou and Liu, Zicheng},
+  booktitle={CVPR},
+  year={2022}
+}</pre>
+        </article>
+
+        <article class="card pub" data-year="2021" data-venue="ICCV" data-keywords="knowledge distillation vlm compression">
+          <div>
+            <strong>Compressing Visual-linguistic Model via Knowledge Distillation</strong>
+            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, Zicheng Liu · ICCV 2021</span>
+            <div class="tags"><span class="tag">Knowledge Distillation</span><span class="tag">Vision and Language</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf" target="_blank" rel="noopener">Paper</a>
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{fang2021compressing,
+  title={Compressing Visual-linguistic Model via Knowledge Distillation},
+  author={Fang, Zhiyuan and Wang, Jianfeng and Hu, Xiaowei and Lijuan Wang, Yezhou Yang, Zicheng Liu},
+  booktitle={ICCV},
+  year={2021}
+}</pre>
+        </article>
+
+        <article class="card pub" data-year="2020" data-venue="ECCV" data-keywords="person search language attributes alignment">
+          <div>
+            <strong>ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language</strong>
+            <span class="meta">Zheng Wang, <strong>Zhiyuan Fang</strong>, Jun Wang, Yezhou Yang · ECCV 2020</span>
+            <div class="tags"><span class="tag">Person Search</span></div>
+          </div>
+          <div class="tool">
+            <a class="btn" href="https://arxiv.org/pdf/2005.07327" target="_blank" rel="noopener">Paper</a>
+          </div>
+          <pre class="bibtex" style="display:none">@inproceedings{wang2020vitaa,
+  title={ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language},
+  author={Wang, Zheng and Fang, Zhiyuan and Wang, Jianfeng and Yang, Yezhou},
+  booktitle={ECCV},
+  year={2020}
+}</pre>
+        </article>
+
+        <a href="https://scholar.google.com/citations?hl=en&user=fHWXpq4AAAAJ">More in Google Scholar.</a>
+
+
+<!--        <article class="card pub" data-year="2020" data-venue="arXiv" data-keywords="video captioning commonsense">-->
+<!--          <div>-->
+<!--            <strong>Video2commonsense: Generating Commonsense Descriptions to Enrich Video Captioning</strong>-->
+<!--            <span class="meta"><strong>Zhiyuan Fang</strong> et al. · arXiv 2020</span>-->
+<!--            <div class="tags"><span class="tag">Video Captioning</span><span class="tag">Commonsense</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@article{fang2020video2commonsense,-->
+<!--  title={Video2commonsense: Generating Commonsense Descriptions to Enrich Video Captioning},-->
+<!--  author={Fang, Zhiyuan and others},-->
+<!--  journal={arXiv},-->
+<!--  year={2020}-->
+<!--}</pre>-->
+<!--        </article>-->
+
+<!--        <article class="card pub" data-year="2019" data-venue="CVPR" data-keywords="grounding counterfactual modularized">-->
+<!--          <div>-->
+<!--            <strong>Modularized Textual Grounding for Counterfactual Resilience</strong>-->
+<!--            <span class="meta"><strong>Zhiyuan Fang</strong>, Shu Kong, Charless C. Fowlkes, Yezhou Yang · CVPR 2019</span>-->
+<!--            <div class="tags"><span class="tag">Grounding</span><span class="tag">Counterfactual</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="https://openaccess.thecvf.com/content_CVPR_2019/html/Fang_Modularized_Textual_Grounding_for_Counterfactual_Resilience_CVPR_2019_paper.html" target="_blank" rel="noopener">CVF</a>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@inproceedings{fang2019modularized,-->
+<!--  title={Modularized Textual Grounding for Counterfactual Resilience},-->
+<!--  author={Fang, Zhiyuan and Kong, Shu and Fowlkes, Charless C. and Yang, Yezhou},-->
+<!--  booktitle={CVPR},-->
+<!--  year={2019}-->
+<!--}</pre>-->
+<!--        </article>-->
+
+<!--        <article class="card pub" data-year="2018" data-venue="arXiv" data-keywords="grounding attention weakly supervised">-->
+<!--          <div>-->
+<!--            <strong>Weakly Supervised Attention Learning for Textual Phrases Grounding</strong>-->
+<!--            <span class="meta"><strong>Zhiyuan Fang</strong>, Shu Kong, Tianshu Yu, Yezhou Yang · arXiv 2018</span>-->
+<!--            <div class="tags"><span class="tag">Grounding</span><span class="tag">Attention</span></div>-->
+<!--          </div>-->
+<!--          <div class="tool">-->
+<!--            <a class="btn" href="https://arxiv.org/abs/1812.01880" target="_blank" rel="noopener">arXiv</a>-->
+<!--          </div>-->
+<!--          <pre class="bibtex" style="display:none">@article{fang2018weakly,-->
+<!--  title={Weakly Supervised Attention Learning for Textual Phrases Grounding},-->
+<!--  author={Fang, Zhiyuan and Kong, Shu and Yu, Tianshu and Yang, Yezhou},-->
+<!--  journal={arXiv},-->
+<!--  year={2018}-->
+<!--}</pre>-->
+<!--        </article>-->
+      </div>
+    </section>
+
+<!--    <section id="teaching">-->
+<!--      <h2>Teaching</h2>-->
+<!--      <div class="card">-->
+<!--        <ul>-->
+<!--          <li>Guest lectures and tutorials on diffusion models, controllability, and video generation.</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </section>-->
+
+<!--    <section id="talks">-->
+<!--      <h2>Talks</h2>-->
+<!--      <div class="card">-->
+<!--        <ul>-->
+<!--          <li>MM'24 — Zero-Shot Controllable I2V Animation (poster)</li>-->
+<!--          <li>WACV'24 Workshops — E-ViLM (oral/poster)</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </section>-->
+
+    <section id="service">
+      <h2>Service</h2>
+      <div class="card">
+        <ul>
+          <li>Reviewer: ICCV, CVPR, ECCV, Neurips, ICLR, ICML, ACL, EMNLP, SIGGRAPH, SIGGRAPH-ASIA, TMLR, etc.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="card">
+        <p>Email: <a href="mailto:zfang29@asu.edu">zfang29@asu.edu</a> · Open to collaborations and intern inquiries.</p>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> Jacob Zhiyuan Fang · Source under MIT License. Last updated: <span id="lastmod"></span>
+    </footer>
+  </main>
+
+  <script>
+    // year & last modified (guarded)
+    const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
+    const lmEl=document.getElementById('lastmod'); try{ if(lmEl) lmEl.textContent=new Date(document.lastModified).toISOString().slice(0,10);}catch(e){}
+
+    // nav active (guarded)
+    const links=[...document.querySelectorAll('.nav a[href^="#"]')];
+    const secs=links.map(a=>{try{return document.querySelector(a.getAttribute('href'));}catch(_){return null}}).filter(Boolean);
+    if('IntersectionObserver' in window){
+      const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            links.forEach(l=>l.classList.remove('active'));
+            const id='#'+e.target.id; const cur=links.find(l=>l.getAttribute('href')===id);
+            cur&&cur.classList.add('active');
+          }
+        })
+      },{rootMargin:'-40% 0px -55% 0px'});
+      secs.forEach(s=>s&&obs.observe(s));
+    }
+
+    // --- publication search & filtering ---
+    function normText(s){
+      return (s||'').toString().toLowerCase()
+        .normalize('NFD').replace(/\p{Diacritic}+/gu,'')
+        .replace(/\s+/g,' ')
+        .trim();
+    }
+    function buildPubIndex(){
+      const items=[...document.querySelectorAll('#pub-list .pub')];
+      items.forEach(it=>{
+        const title=it.querySelector('strong')?.textContent||'';
+        const meta=it.querySelector('.meta')?.textContent||'';
+        const tags=[...it.querySelectorAll('.tags .tag')].map(t=>t.textContent).join(' ');
+        const kws=it.dataset.keywords||'';
+        it.dataset.search = normText([title,meta,tags,kws].join(' • '));
+      });
+    }
+    function filterPubs(){
+      const first=document.querySelector('#pub-list .pub');
+      if(first && !first.dataset.search) buildPubIndex();
+      const qEl=document.getElementById('q');
+      const yEl=document.getElementById('year');
+      const vEl=document.getElementById('venue');
+      const query=normText(qEl? qEl.value : '');
+      const terms=query? query.split(' ').filter(Boolean) : [];
+      const y=(yEl&&yEl.value)||'';
+      const v=(vEl&&vEl.value)||'';
+      const items=[...document.querySelectorAll('#pub-list .pub')];
+      let visible=0;
+      items.forEach(it=>{
+        const okY=!y || it.dataset.year===y;
+        const okV=!v || it.dataset.venue===v;
+        let okQ=true;
+        if(terms.length){
+          const text = it.dataset.search || normText(it.textContent);
+          okQ = terms.every(t=>text.includes(t));
+        }
+        const show = okQ && okY && okV;
+        it.style.display = show ? '' : 'none';
+        if(show) visible++;
+      });
+      let empty=document.getElementById('pub-empty');
+      if(!empty){
+        empty=document.createElement('div');
+        empty.id='pub-empty';
+        empty.style.cssText='color:var(--muted);font-size:14px;margin-top:8px;';
+        const list=document.getElementById('pub-list');
+        list && list.parentElement && list.parentElement.appendChild(empty);
+      }
+      empty.textContent = visible ? '' : 'No publications match your filters.';
+    }
+
+    // copy bibtex
+    function copyBibtex(btn){
+      const pre=btn.closest('.pub').querySelector('.bibtex').textContent;
+      navigator.clipboard.writeText(pre).then(()=>{btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Copy BibTeX',1500)});
+    }
+
+    // ===== Interactive Experience/Publication Graph =====
+    function initGraph(){
+      "use strict";
+      const CONFIG = {
+        gridPadding: 16,
+        ringBase: 120,
+        ringGap: 72,
+        pubsPerRing: 10,
+        clusterGap: 24,
+        jitterFrac: 0.22,
+        zoomMin: 0.5,
+        zoomMax: 3,
+        // floating + breathing
+        expFloatAmp: 2.5,
+        expFloatSpeed: 0.20,
+        pubFloatAmp: 5.0,
+        pubFloatSpeed: 0.42,
+        floatLerp: 0.085,
+        breatheAmpExp: 0.06,
+        breatheAmpPub: 0.08
+      };
+
+      const experiences = [
+        { id: "xp_bytedance", label: "ByteDance / TikTok — Senior Research Scientist", year: "2024–Present", keywords:["Video Generation"] },
+        { id: "xp_amazon", label: "Amazon AGI — Applied Scientist", year: "2022–2024", keywords:["Diffusion","Image Generation"] },
+        { id: "xp_microsoft", label: "Microsoft Cloud & AI — Research Intern", year: "2020–2022", keywords:["VLM","Self-sup.","KD"] },
+        { id: "xp_cas", label: "CAS MM Lab — Visiting Student", year: "2016", keywords:["Deep Learning","Face Rec"] },
+        { id: "xp_asu", label: "ASU — Ph.D.", year: "2013", keywords:["Vision & Language", "VLM"] },
+      ];
+      const publications = [
+        { id: "pub_arxiv25_magref", label: "MAGREF: Any-Reference Video Gen", year: "arXiv 2025" },
+        { id: "pub_arxiv25_ati", label: "ATI: Any Trajectory Instruction", year: "arXiv 2025" },
+        { id: "pub_mm24_i2v", label: "Zero-Shot Controllable I2V Animation", year: "MM 2024" },
+        { id: "pub_tmlr24_flexe", label: "FlexEControl", year: "TMLR 2024" },
+        { id: "pub_wacv24_ttiir", label: "T2I Editing by Info Removal", year: "WACV 2024" },
+        { id: "pub_wacv24_evilm", label: "E-ViLM", year: "WACV 2024" },
+        { id: "pub_eccv24_skews", label: "Skews Hinder T2I Generalization", year: "ECCV 2024" },
+        { id: "pub_tr24_nova", label: "Amazon Nova Models", year: "2024" },
+        { id: "pub_iclr21_seed", label: "SEED: Self-sup. Distillation", year: "ICLR 2021" },
+        { id: "pub_cvpr22_caption", label: "Injecting Concepts into Captioning", year: "CVPR 2022" },
+        { id: "pub_iccv21_kd", label: "Compressing V-L via KD", year: "ICCV 2021" },
+        { id: "pub_eccv20_vitaa", label: "ViTAA", year: "ECCV 2020" },
+        { id: "pub_arxiv20_v2cs", label: "Video2commonsense", year: "arXiv 2020" },
+        { id: "pub_cvpr19_modground", label: "Modularized Textual Grounding", year: "CVPR 2019" },
+        { id: "pub_arxiv18_wsag", label: "Weakly-Sup. Attention Grounding", year: "arXiv 2018" },
+      ];
+      const data = {
+        nodes: [
+          ...experiences.map(d => ({ ...d, type: "experience" })),
+          ...publications.map(d => ({ ...d, type: "publication" })),
+        ],
+        links: [
+          { source: "xp_bytedance", target: "pub_arxiv25_magref" },
+          { source: "xp_bytedance", target: "pub_arxiv25_ati" },
+          { source: "xp_amazon", target: "pub_mm24_i2v" },
+          { source: "xp_amazon", target: "pub_tmlr24_flexe" },
+          { source: "xp_amazon", target: "pub_wacv24_ttiir" },
+          { source: "xp_amazon", target: "pub_wacv24_evilm" },
+          { source: "xp_amazon", target: "pub_tr24_nova" },
+          { source: "xp_amazon", target: "pub_eccv24_skews" },
+          { source: "xp_microsoft", target: "pub_iclr21_seed" },
+          { source: "xp_microsoft", target: "pub_iccv21_kd" },
+          { source: "xp_microsoft", target: "pub_cvpr22_caption" },
+          { source: "xp_asu", target: "pub_cvpr19_modground" },
+          { source: "xp_asu", target: "pub_arxiv18_wsag" },
+          { source: "xp_asu", target: "pub_eccv20_vitaa" },
+          { source: "xp_asu", target: "pub_arxiv20_v2cs" },
+          { source: "xp_bytedance", target: "xp_amazon" },
+          { source: "xp_amazon", target: "xp_microsoft" },
+          { source: "xp_microsoft", target: "xp_asu" },
+        ]
+      };
+
+      const svg = document.getElementById('graph');
+      const gNodes = document.getElementById('nodes');
+      const gLinks = document.getElementById('links');
+      const gClusters = document.getElementById('clusters');
+      const surface = document.getElementById('graph-surface');
+      const testStatus = document.getElementById('test-status');
+      if(!svg || !gNodes || !gLinks || !gClusters || !surface) return;
+
+      const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
+
+      // helpers
+      function hslToRgb(h, s, l){
+        const a = s*Math.min(l,1-l);
+        const f = (n,k=(n+h*12)%12)=> l - a*Math.max(Math.min(k-3, 9-k, 1), -1);
+        return [Math.round(255*f(0)), Math.round(255*f(8)), Math.round(255*f(4))];
+      }
+      const rgba = (r,g,b,a)=>`rgba(${r},${g},${b},${a})`;
+      function pointerToViewBox(e){
+        const rect = svg.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        return {
+          x: view.x + px * (W / view.z),
+          y: view.y + py * (H / view.z),
+          px, py
+        };
+      }
+
+      // Build lookup
+      const nodeById = new Map(data.nodes.map(n=>[n.id, n]));
+      const pubsByExp = new Map();
+      const expByPub = new Map();
+      data.links.forEach(l=>{
+        const sIsExp = l.source.startsWith('xp_');
+        const tIsPub = l.target.startsWith('pub_');
+        if(sIsExp && tIsPub){
+          const arr = pubsByExp.get(l.source) || []; arr.push(l.target); pubsByExp.set(l.source, arr);
+          expByPub.set(l.target, l.source);
+        }
+      });
+
+      // Cluster styles
+      (function assignClusterStyles(){
+        const exps = data.nodes.filter(n=>n.type==='experience');
+        exps.forEach((e, i)=>{
+          const hue = (i / Math.max(1, exps.length)) % 1;
+          const [r,g,b] = hslToRgb(hue, 0.65, 0.60);
+          e.tint = { r, g, b };
+          e.pulseSpeed = 0.6 + Math.random()*0.5;
+          e.pulsePhase = Math.random()*Math.PI*2;
+        });
+      })();
+
+      // Layout helpers
+      function assignAnchor(n, x, y){
+        n.ax = x; n.ay = y; n.x = x; n.y = y;
+        n.phi = Math.random()*Math.PI*2;
+        n.psi = Math.random()*Math.PI*2;
+        n.omega = 0.6 + Math.random()*0.8;
+        n.breathePhase = Math.random()*Math.PI*2;
+        n.breatheSpeed = 0.45 + Math.random()*0.4;
+        if(n.type==='experience' || (n.id && n.id.startsWith('xp_'))){ n.kbase = Math.random()*Math.PI*2; }
+      }
+      function clusterRadiusExpected(exp){
+        const pubIds = pubsByExp.get(exp.id) || [];
+        const count = pubIds.length;
+        const rings = Math.max(1, Math.ceil(count / CONFIG.pubsPerRing));
+        const outer = CONFIG.ringBase + (rings-1)*CONFIG.ringGap;
+        return Math.max(60, outer + 18);
+      }
+      function clusterRadiusNow(exp){
+        const pubIds = pubsByExp.get(exp.id) || [];
+        let r = 0;
+        for(const pid of pubIds){
+          const p = nodeById.get(pid); if(!p) continue;
+          r = Math.max(r, Math.hypot(p.x-exp.x, p.y-exp.y));
+        }
+        return Math.max(60, r + 18);
+      }
+      function placeClustersHexFit(exps){
+        const radii = exps.map(e => clusterRadiusExpected(e));
+        const Rmax = radii.length ? Math.max(...radii) : 60;
+        let stepX = (Rmax*2) + CONFIG.clusterGap;
+        let stepY = stepX * Math.sqrt(3)/2;
+        const padEdge = Math.max(CONFIG.gridPadding, Rmax + 8);
+        let cols = Math.max(1, Math.floor((W - 2*padEdge) / stepX));
+        let rows = Math.max(1, Math.floor((H - 2*padEdge) / stepY));
+        let passes = 0;
+        while (cols * rows < exps.length && passes < 20){
+          stepX *= 0.92;
+          stepY = stepX * Math.sqrt(3)/2;
+          cols = Math.max(1, Math.floor((W - 2*padEdge) / stepX));
+          rows = Math.max(1, Math.floor((H - 2*padEdge) / stepY));
+          passes++;
+        }
+        const pts = [];
+        for(let r=0;r<rows;r++){
+          const offsetX = (r % 2) ? stepX/2 : 0;
+          for(let c=0;c<cols;c++){
+            const x = padEdge + offsetX + c*stepX;
+            const y = padEdge + r*stepY;
+            if(x>=padEdge && x<=W-padEdge && y>=padEdge && y<=H-padEdge) pts.push({x,y});
+          }
+        }
+        for(let i=pts.length-1;i>0;i--){
+          const j = (Math.random()*(i+1))|0;
+          [pts[i], pts[j]] = [pts[j], pts[i]];
+        }
+        const chosen = pts.slice(0, exps.length);
+        if(chosen.length){
+          let minX = Math.min(...chosen.map(p=>p.x));
+          let maxX = Math.max(...chosen.map(p=>p.x));
+          let minY = Math.min(...chosen.map(p=>p.y));
+          let maxY = Math.max(...chosen.map(p=>p.y));
+          const availW = W - 2*padEdge;
+          const availH = H - 2*padEdge;
+          const scale = Math.min(
+            availW / Math.max(1, maxX - minX),
+            availH / Math.max(1, maxY - minY)
+          );
+          const cx = (minX + maxX) * 0.5;
+          const cy = (minY + maxY) * 0.5;
+          const canvasCX = W * 0.5;
+          const canvasCY = H * 0.5;
+          chosen.forEach(p=>{
+            p.x = canvasCX + (p.x - cx) * scale;
+            p.y = canvasCY + (p.y - cy) * scale;
+          });
+        }
+        const jitter = stepX * CONFIG.jitterFrac;
+        exps.forEach((e,i)=>{
+          const r = radii[i];
+          const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
+          const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
+          let x = chosen[i] ? chosen[i].x : (W/2 + (Math.random()-0.5)*W*0.6);
+          let y = chosen[i] ? chosen[i].y : (H/2 + (Math.random()-0.5)*H*0.6);
+          x += (Math.random()*2-1)*jitter;
+          y += (Math.random()*2-1)*jitter;
+          x = Math.max(minX, Math.min(maxX, x));
+          y = Math.max(minY, Math.min(maxY, y));
+          assignAnchor(e, x, y);
+        });
+      }
+      function layout() {
+        const exps = data.nodes.filter(n=>n.type==='experience');
+        placeClustersHexFit(exps);
+        for(const exp of exps){
+          const pubIds = pubsByExp.get(exp.id) || [];
+          const pubs = pubIds.map(id=>nodeById.get(id)).filter(Boolean);
+          const perRing = CONFIG.pubsPerRing;
+          const baseAngle = Math.random()*Math.PI*2;
+          pubs.forEach((p, idx)=>{
+            const ringIndex = Math.floor(idx / perRing);
+            const posInRing = idx % perRing;
+            const ringCount = Math.min(perRing, pubs.length - ringIndex*perRing);
+            const angle = baseAngle + 2*Math.PI * (posInRing / Math.max(1, ringCount)) + (Math.random()-0.5)*0.28;
+            const radius = CONFIG.ringBase + ringIndex * CONFIG.ringGap + (Math.random()-0.5)*18;
+            const x = exp.ax + Math.cos(angle) * radius;
+            const y = exp.ay + Math.sin(angle) * radius;
+            assignAnchor(p, x, y);
+          });
+        }
+      }
+
+      // drawing
+      function linkId(s,t){ return `link_${s}__${t}`; }
+      function drawClusters(tNow){
+        gClusters.innerHTML='';
+        const exps = data.nodes.filter(n=>n.type==='experience');
+        for(const exp of exps){
+          const pubIds = pubsByExp.get(exp.id)||[];
+          let r = 0;
+          for(const pid of pubIds){ const p=nodeById.get(pid); if(!p) continue; const d=Math.hypot(p.x-exp.x, p.y-exp.y); if(d>r) r=d; }
+          r = Math.max(60, r + 18);
+
+          const phase = exp.pulsePhase || 0;
+          const speed = exp.pulseSpeed || 0.8;
+          const pulse = 1 + 0.025 * Math.sin((tNow*speed) + phase);
+          const alpha = 0.10 + 0.10 * (0.5 + 0.5*Math.sin((tNow*speed) + phase));
+          const {r:cr,g:cg,b:cb} = exp.tint || {r:108,g:124,b:255};
+
+          const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          c.setAttribute('class','cluster');
+          c.setAttribute('cx', exp.x); c.setAttribute('cy', exp.y); c.setAttribute('r', r*pulse);
+          c.setAttribute('stroke', rgba(cr,cg,cb, 0.55));
+          c.setAttribute('fill', rgba(cr,cg,cb, alpha));
+          gClusters.appendChild(c);
+
+          const kws = exp.keywords || [];
+          const base = exp.kbase || 0;
+          kws.forEach((kw,i)=>{
+            const ang = base + i*(2*Math.PI/Math.max(1,kws.length));
+            const tx = exp.x + Math.cos(ang)*(r + 14);
+            const ty = exp.y + Math.sin(ang)*(r + 14);
+            const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+            t.setAttribute('class','cluster-label');
+            t.setAttribute('x', tx); t.setAttribute('y', ty);
+            t.setAttribute('text-anchor', Math.cos(ang)>0 ? 'start' : 'end');
+            t.setAttribute('fill', rgba(cr,cg,cb, 0.95));
+            t.setAttribute('opacity', 0.70 + 0.25*(0.5 + 0.5*Math.sin((tNow*speed) + phase)));
+            t.textContent = kw; gClusters.appendChild(t);
+          });
+        }
+      }
+      function drawLinks(){
+        gLinks.innerHTML='';
+        for(const {source,target} of data.links){
+          const s = nodeById.get(source); const t = nodeById.get(target);
+          if(!s||!t) continue;
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1', s.x); line.setAttribute('y1', s.y);
+          line.setAttribute('x2', t.x); line.setAttribute('y2', t.y);
+          line.setAttribute('class','link');
+          line.dataset.source = source; line.dataset.target = target; line.id = linkId(source,target);
+          if(source.startsWith('xp_') && target.startsWith('pub_') && s.tint){
+            const {r,g,b} = s.tint; line.setAttribute('stroke', rgba(r,g,b, 0.35));
+          } else if (target.startsWith('xp_') && source.startsWith('pub_') && t.tint){
+            const {r,g,b} = t.tint; line.setAttribute('stroke', rgba(r,g,b, 0.35));
+          }
+          gLinks.appendChild(line);
+        }
+      }
+      function drawNodes(tNow){
+        gNodes.innerHTML='';
+        for(const n of data.nodes){
+          const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+          g.setAttribute('class','node'); g.setAttribute('data-id', n.id); g.setAttribute('data-type', n.type);
+          g.style.pointerEvents = 'all';
+
+          const isExp = n.type==='experience';
+          const R0 = isExp ? 16 : 11;
+          const RR0 = isExp ? 24 : 18;
+
+          const amp = isExp ? CONFIG.breatheAmpExp : CONFIG.breatheAmpPub;
+          const s = 1 + amp * Math.sin(tNow*2*Math.PI*n.breatheSpeed + n.breathePhase);
+
+          // expanded hit
+          const hit = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          hit.setAttribute('r', isExp ? 28 : 22);
+          hit.setAttribute('cx', n.x);
+          hit.setAttribute('cy', n.y);
+          hit.setAttribute('fill', '#000');
+          hit.setAttribute('fill-opacity', '0.001');
+
+          const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          ring.setAttribute('r', RR0*s); ring.setAttribute('cx', n.x); ring.setAttribute('cy', n.y);
+          ring.setAttribute('fill','none');
+          ring.setAttribute('stroke', isExp ? (getComputedStyle(document.documentElement).getPropertyValue('--exp').trim()||'#0EA5E9') : (getComputedStyle(document.documentElement).getPropertyValue('--pub').trim()||'#F59E0B'));
+          ring.setAttribute('stroke-opacity','.45');
+          ring.style.pointerEvents = 'none';
+
+          const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          circle.setAttribute('r', R0*s); circle.setAttribute('cx', n.x); circle.setAttribute('cy', n.y);
+          circle.setAttribute('fill', isExp ? (getComputedStyle(document.documentElement).getPropertyValue('--exp').trim()||'#0EA5E9') : (getComputedStyle(document.documentElement).getPropertyValue('--pub').trim()||'#F59E0B'));
+
+          const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+          label.setAttribute('class','label');
+          label.setAttribute('x', n.x + (isExp? 30: 20));
+          label.setAttribute('y', n.y + 6);
+          label.textContent = `${n.label}${n.year? ' · '+n.year:''}`;
+          label.style.pointerEvents = 'none';
+
+          // Hover highlighting
+          g.addEventListener('pointerenter', ()=> highlightNode(n.id, true));
+          g.addEventListener('pointerleave', ()=> highlightNode(n.id, false));
+
+          // Dragging
+          g.addEventListener('pointerdown', (e)=>{
+            const vb = pointerToViewBox(e);
+            dragging = n; draggingEl = g;
+            g.classList.add('is-dragging');
+            g.setPointerCapture(e.pointerId);
+            dragOffset.x = n.x - vb.x;
+            dragOffset.y = n.y - vb.y;
+          });
+          g.addEventListener('pointermove', (e)=>{
+            if(dragging !== n) return;
+            const vb = pointerToViewBox(e);
+            const nx = vb.x + dragOffset.x;
+            const ny = vb.y + dragOffset.y;
+            if(n.type==='experience'){
+              translateCluster(n.id, nx - n.x, ny - n.y);
+            } else {
+              n.x = Math.max(20, Math.min(W-20, nx));
+              n.y = Math.max(20, Math.min(H-20, ny));
+              n.ax = n.x; n.ay = n.y;
+            }
+            redraw(performance.now()*0.001);
+          });
+          g.addEventListener('pointerup', (e)=>{
+            if(dragging === n){ g.releasePointerCapture(e.pointerId); }
+            g.classList.remove('is-dragging');
+            dragging = null; draggingEl = null;
+          });
+
+          g.appendChild(hit); g.appendChild(ring); g.appendChild(circle); g.appendChild(label);
+          gNodes.appendChild(g);
+        }
+      }
+      function redraw(t){ drawClusters(t||0); drawLinks(); drawNodes(t||0); }
+
+      // Interaction: cluster drag + pan/zoom
+      let dragging=null, draggingEl=null, dragOffset={x:0,y:0};
+      const pubsOf = (expId)=> (pubsByExp.get(expId)||[]).map(id=>nodeById.get(id)).filter(Boolean);
+
+      function translateCluster(expId, dx, dy){
+        const exp = nodeById.get(expId); if(!exp) return;
+        let nx = exp.x + dx, ny = exp.y + dy;
+        const r = clusterRadiusNow(exp);
+        const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
+        const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
+        nx = Math.max(minX, Math.min(maxX, nx));
+        ny = Math.max(minY, Math.min(maxY, ny));
+        const ddx = nx - exp.x, ddy = ny - exp.y;
+
+        exp.x = nx; exp.y = ny; exp.ax += ddx; exp.ay += ddy;
+        for(const p of pubsOf(expId)){ p.x += ddx; p.y += ddy; p.ax += ddx; p.ay += ddy; }
+
+        resolveClusterOverlaps();
+      }
+
+      // Pan/Zoom state
+      let view={x:0,y:0,z:1}, panning=false, panStart={x:0,y:0}, viewStart={x:0,y:0};
+
+      svg.addEventListener('pointerdown', (e)=>{
+        const onNode = e.target.closest && e.target.closest('.node');
+        if(!onNode){
+          panning = true;
+          panStart = {x: e.clientX, y: e.clientY};
+          viewStart = {...view};
+        }
+      });
+      svg.addEventListener('pointermove', (e)=>{
+        if(panning){
+          const rect = svg.getBoundingClientRect();
+          const scaleX = (W/view.z)/rect.width;
+          const scaleY = (H/view.z)/rect.height;
+          view.x = viewStart.x - (e.clientX - panStart.x) * scaleX;
+          view.y = viewStart.y - (e.clientY - panStart.y) * scaleY;
+          applyView();
+        }
+      });
+      svg.addEventListener('pointerup', ()=>{ panning=false; });
+      svg.addEventListener('pointerleave', ()=>{ panning=false; });
+
+      // Hover highlight
+      function highlightNode(id, on){
+        if(on){
+          for(const el of gNodes.querySelectorAll('.node')) el.classList.remove('is-active');
+          for(const el of gLinks.querySelectorAll('.link')) el.classList.remove('is-active');
+        }
+        const n = nodeById.get(id); if(!n) return;
+        const nodeEl = gNodes.querySelector(`[data-id="${id}"]`);
+        if(nodeEl && on) nodeEl.classList.add('is-active');
+
+        if(n.type==='experience'){
+          const pubs = pubsByExp.get(id)||[];
+          for(const pid of pubs){
+            const l = document.getElementById(linkId(id,pid)); if(l && on) l.classList.add('is-active');
+            const pEl = gNodes.querySelector(`[data-id="${pid}"]`); if(pEl && on) pEl.classList.add('is-active');
+          }
+        } else if(n.type==='publication'){
+          const expId = expByPub.get(id);
+          const l = document.getElementById(linkId(expId,id)); if(l && on) l.classList.add('is-active');
+          const eEl = gNodes.querySelector(`[data-id="${expId}"]`); if(eEl && on) eEl.classList.add('is-active');
+        }
+
+        if(!on){
+          for(const el of gNodes.querySelectorAll('.node')) el.classList.remove('is-active');
+          for(const el of gLinks.querySelectorAll('.link')) el.classList.remove('is-active');
+        }
+      }
+
+      // Node spacing
+      function collideNodes(pass=1){
+        const nodes = data.nodes; const n = nodes.length;
+        const strength = 0.16*pass;
+        const minExp = 52, minPub = 18, minCross = 26;
+        for(let i=0;i<n;i++){
+          for(let j=i+1;j<n;j++){
+            const a=nodes[i], b=nodes[j];
+            const dx=b.x-a.x, dy=b.y-a.y; let d2=dx*dx+dy*dy; if(d2<0.01) d2=0.01;
+            const d=Math.sqrt(d2); const ux=dx/d, uy=dy/d;
+            const want = (a.type==='experience' && b.type==='experience') ? minExp
+                      : (a.type==='publication' && b.type==='publication') ? minPub
+                      : minCross;
+            const overlap = want - d;
+            if(overlap>0){
+              const push = overlap*strength;
+              if(dragging!==a){ a.x -= ux*push; a.y -= uy*push; }
+              if(dragging!==b){ b.x += ux*push; b.y += uy*push; }
+              a.x=Math.max(20,Math.min(W-20,a.x)); a.y=Math.max(20,Math.min(H-20,a.y));
+              b.x=Math.max(20,Math.min(W-20,b.x)); b.y=Math.max(20,Math.min(H-20,b.y));
+            }
+          }
+        }
+      }
+
+      // Cluster collision
+      function resolveClusterOverlaps(pass=1){
+        const exps = data.nodes.filter(n=>n.type==='experience');
+        const n = exps.length;
+        const strength = 0.65*pass;
+        for(let i=0;i<n;i++){
+          for(let j=i+1;j<n;j++){
+            const a = exps[i], b = exps[j];
+            const ra = clusterRadiusNow(a), rb = clusterRadiusNow(b);
+            const need = ra + rb + CONFIG.clusterGap;
+
+            let dx = b.x - a.x, dy = b.y - a.y;
+            let d2 = dx*dx + dy*dy;
+            if(d2 < 1e-5){ dx = (Math.random()-0.5)*1e-3; dy = (Math.random()-0.5)*1e-3; d2 = dx*dx+dy*dy; }
+            const d = Math.sqrt(d2);
+            const overlap = need - d;
+            if(overlap > 0){
+              const ux = dx / d, uy = dy / d;
+              const push = overlap * strength;
+
+              applyClusterDelta(a, dragging===a ? 0 : -ux*push, dragging===a ? 0 : -uy*push);
+              applyClusterDelta(b, dragging===b ? 0 :  ux*push, dragging===b ? 0 :  uy*push);
+            }
+          }
+        }
+      }
+      function applyClusterDelta(exp, dx, dy){
+        if(dx===0 && dy===0) return;
+        const r = clusterRadiusNow(exp);
+        const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
+        const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
+        let nx = Math.max(minX, Math.min(maxX, exp.x + dx));
+        let ny = Math.max(minY, Math.min(maxY, exp.y + dy));
+        const ddx = nx - exp.x, ddy = ny - exp.y;
+        exp.x = nx; exp.y = ny; exp.ax += ddx; exp.ay += ddy;
+
+        const pubs = (pubsByExp.get(exp.id)||[]).map(id=>nodeById.get(id)).filter(Boolean);
+        for(const p of pubs){ p.x += ddx; p.y += ddy; p.ax += ddx; p.ay += ddy; }
+      }
+
+      // Floating & Pulse
+      let lastT = performance.now();
+      function floatStep(){
+        const now = performance.now();
+        const t = now * 0.001;
+        const dt = Math.min(0.05, (now - lastT) * 0.001);
+        lastT = now;
+        for(const n of data.nodes){
+          if(dragging===n) continue;
+          const isExp = n.type==='experience';
+          const amp = isExp ? CONFIG.expFloatAmp : CONFIG.pubFloatAmp;
+          const spd = isExp ? CONFIG.expFloatSpeed : CONFIG.pubFloatSpeed;
+          const targetX = n.ax + Math.cos(n.phi + t*spd*2*Math.PI) * amp;
+          const targetY = n.ay + Math.sin(n.psi + t*spd*2*Math.PI*0.88) * amp;
+          n.x += (targetX - n.x) * (CONFIG.floatLerp * (1+dt*14));
+          n.y += (targetY - n.y) * (CONFIG.floatLerp * (1+dt*14));
+          n.x = Math.max(20, Math.min(W-20, n.x));
+          n.y = Math.max(20, Math.min(H-20, n.y));
+        }
+        return t;
+      }
+
+      function tick(){
+        const t = floatStep();
+        resolveClusterOverlaps(1.0);
+        collideNodes(0.20);
+        redraw(t);
+        requestAnimationFrame(tick);
+      }
+
+      // Tests
+      function runTests(){
+        const results = [];
+        function assert(cond, msg){ results.push({ok:!!cond, msg}); }
+        const expCount = experiences.length, pubCount = publications.length;
+        assert(data.nodes.filter(n=>n.type==='experience').length === expCount, 'experience count matches');
+        assert(data.nodes.filter(n=>n.type==='publication').length === pubCount, 'publication count matches');
+        const passed = results.filter(r=>r.ok).length;
+        if(testStatus) testStatus.textContent = `tests: ${passed}/${results.length} passed`;
+      }
+
+      // Init
+      function applyView(){ const vbW=W/view.z, vbH=H/view.z; svg.setAttribute('viewBox', `${view.x} ${view.y} ${vbW} ${vbH}`); }
+      surface.addEventListener('wheel', (e)=>{
+        e.preventDefault();
+        const rect = svg.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const mx = view.x + px*(W/view.z);
+        const my = view.y + py*(H/view.z);
+        const scale = Math.exp(-e.deltaY*0.001);
+        view.z = Math.max(CONFIG.zoomMin, Math.min(CONFIG.zoomMax, view.z*scale));
+        view.x = mx - px*(W/view.z);
+        view.y = my - py*(H/view.z);
+        applyView();
+      }, {passive:false});
+      surface.addEventListener('dblclick', ()=>{ view={x:0,y:0,z:1}; applyView(); });
+
+      (function init(){ layout(); redraw(0); applyView(); runTests(); requestAnimationFrame(tick); })();
+    }
+
+    // boot
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',()=>{ buildPubIndex(); filterPubs(); initGraph(); });
+    }else{
+      buildPubIndex(); filterPubs(); initGraph();
+    }
+    ['q','year','venue'].forEach(id=>{
+      const el=document.getElementById(id); if(!el) return;
+      const ev=(id==='q')?'input':'change';
+      el.addEventListener(ev, filterPubs);
+    });
+
+    // ===== Auto-pause/play videos when (not) visible =====
+    (function manageVideoAutoplay(){
+      const vids = document.querySelectorAll('#video-panels video');
+      vids.forEach(v => { v.muted = true; v.playsInline = true; });
+      if ('IntersectionObserver' in window){
+        const io = new IntersectionObserver(entries=>{
+          entries.forEach(e=>{
+            const v = e.target;
+            if (e.isIntersecting) { v.play().catch(()=>{}); }
+            else { v.pause(); }
+          });
+        }, { threshold: 0.25 });
+        vids.forEach(v=>io.observe(v));
+      }
+    })();
+  </script>
+</body>
+</html>
