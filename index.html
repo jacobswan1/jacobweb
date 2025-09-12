@@ -243,6 +243,78 @@
   </style>
 
   <script>
+  // Lightweight hover play/pause for project videos
+  (function initProjectThumbs(){
+    const tiles = document.querySelectorAll('#experience .xp-project');
+    tiles.forEach(t=>{
+      const v = t.querySelector('video');
+      if(!v) return;
+      v.muted = true; v.playsInline = true; v.preload = 'metadata';
+      t.addEventListener('mouseenter', ()=> v.play().catch(()=>{}));
+      t.addEventListener('mouseleave', ()=> v.pause());
+      t.addEventListener('focus',     ()=> v.play().catch(()=>{}), true);
+      t.addEventListener('blur',      ()=> v.pause(), true);
+    });
+  })();
+</script>
+
+  <style>
+  /* ===== Experience project thumbnails (LinkedIn-like) ===== */
+  #experience .xp-projects{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(180px,1fr));
+    gap:12px;
+    margin-top:10px;
+  }
+  @media (max-width:1000px){ #experience .xp-projects{ grid-template-columns:repeat(2,minmax(160px,1fr)); } }
+  @media (max-width:640px){  #experience .xp-projects{ grid-template-columns:1fr; } }
+
+  #experience .xp-project{
+    display:block;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    color:inherit; text-decoration:none;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  #experience .xp-project:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+    text-decoration:none;
+    border-color:color-mix(in oklab, var(--accent) 35%, var(--border));
+  }
+  #experience .xp-project:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  #experience .xp-project-thumb{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    background:#000;
+    border-bottom:1px solid var(--border);
+    display:block;
+  }
+  /* Allow video too (same class) */
+  #experience .xp-project-thumb video,
+  #experience .xp-project-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  #experience .xp-project-body{ padding:10px 12px; }
+  #experience .xp-project-title{ font-weight:600; line-height:1.35; }
+  #experience .xp-project-meta{ color:var(--muted); font-size:13px; margin-top:2px; }
+  #experience .xp-project-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  #experience .xp-project-tag{
+    font-size:12px; padding:2px 8px; border-radius:999px;
+    background:var(--tag); border:1px solid var(--border);
+    white-space:nowrap;
+  }
+</style>
+
+  
+  <script>
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('.p-toggle');
       if (!btn) return;
@@ -291,7 +363,7 @@
         <h2>About</h2>
         I am a research scientist in Bytedance/TikTok in generative AI, multi-modal learning, and video/image generation. My work focuses on developing advanced AI systems that seamlessly connect language, vision, and creative intelligence. I obtained my Ph.D. from <a href="https://faculty.engineering.asu.edu/yezhouyang/">APG lab </a> with Y.Z. Yang.
         
-        <p>I work on <strong>generative models</strong>, <strong>video & image generation on diffusion models</strong>, and <strong>vision-language</strong>. My recent focus includes controllable generation, large scale training for diffusion models, and representation learning.</p>
+        <p>I work on <strong>generative models</strong>, <strong>video & image generation on diffusion models</strong>, and <strong>Vision-Language Model</strong>. My recent focus includes controllable generation, large scale training for diffusion models, and representation learning.</p>
 
       <p class="lead">
           <span class="accent" style="--accent:#2563eb">We’re Hiring (Intern and FTE)! </span> <br>
@@ -314,7 +386,7 @@
           <div class="card">
             <strong>Research Areas</strong>
             <ul>
-              <li>Generative modeling (Image/Video diffusion model )</li>
+              <li>Generative modeling (Image/Video diffusion model)</li>
               <li>Vision-Language models (video-language, VLM)</li>
               <li>Representation learning & efficient pretraining</li>
             </ul>
@@ -354,14 +426,80 @@
               <div class="xp-meta">Senior Research Scientist · 2024 — Present</div>
               <div class="xp-location">San Jose, USA</div>
             </div>
-            <div class="xp-roles">
+
+              <div class="xp-roles">
               <div class="xp-role">
                 <div class="xp-role-title">Video Generative Model</div>
                 <div class="xp-role-meta">Controllable video generation · Any-reference video generation · Foundation video generation pre-training</div>
                 <div class="xp-desc">
-                  We develop AI effects from video generative models. I also work closely with
+                   We develop AI effects from video generative models. I also work closely with
                   <a href="https://seed.bytedance.com/en/" target="_blank" rel="noopener">Bytedance SEED</a>
                   to build state-of-the-art video generative models for TikTok production.
+                  <ul>
+                    <li> Large-scale Video Foundation Model Pre-training - Technical Owner for <a href="https://seed.bytedance.com/en/seedance">Seedance</a> (TikTok Version) development and Pre-training; Model pre-training (large-scale pre-training on <em>billions+ videos over ~2K H100 GPU</em>) ;</li>
+                    <li> Video Generation Model Application Dev & Post-training - TikTok Production - Core Contributor； </li>
+                    <li> Agent for Video Generation;</li>
+                </ul>
+                </div>
+
+                <!-- Highlighted Projects (LinkedIn-style thumbnails) -->
+                <h4 style="margin:12px 0 2px">Highlighted projects</h4>
+                <div class="xp-projects">
+
+
+                  <a class="xp-project" href="https://seed.bytedance.com/en/seedance" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb" aria-hidden="true">
+                      <video autoplay muted loop playsinline poster="images/ati.jpg">
+                        <source src="images/ai_mermaid.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">AI Mermaid - Video Generation & XFN</div>
+                      <div class="xp-project-meta">2025 · Video </div>
+                      <div class="xp-project-tags">
+                        <span class="xp-project-tag">Video Foundation Model Training</span>
+<!--                        <span class="xp-project-tag"></span>-->
+                      </div>
+                    </div>
+                  </a>
+
+                  <!-- Project 1: MAGREF -->
+                  <a class="xp-project" href="https://magref-video.github.io/" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb" aria-hidden="true">
+                      <video autoplay muted loop playsinline poster="images/magref.jpg">
+                        <source src="images/magref.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">MAGREF — Any-Reference Video Generation</div>
+                      <div class="xp-project-meta">2025 · Webpage</div>
+                      <div class="xp-project-tags">
+                        <span class="xp-project-tag">VideoGen</span>
+                        <span class="xp-project-tag">Reference</span>
+                        <span class="xp-project-tag">Diffusion</span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <!-- Project 2: ATI -->
+                  <a class="xp-project" href="https://anytraj.github.io/" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb" aria-hidden="true">
+                      <video autoplay muted loop playsinline poster="images/ati.jpg">
+                        <source src="images/ATI_teaser.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">ATI — Motion-Controlled Video Generation</div>
+                      <div class="xp-project-meta">2025 · Webpage</div>
+                      <div class="xp-project-tags">
+                        <span class="xp-project-tag">Control</span>
+                        <span class="xp-project-tag">Trajectory</span>
+                      </div>
+                    </div>
+                  </a>
+
+
+                </div>
                 </div>
               </div>
             </div>
@@ -383,8 +521,42 @@
                 <div class="xp-role-title">Image/Video Generation; Large-scale Diffusion Pre-training & Post-training</div>
                 <div class="xp-role-meta">Image/Video Diffusion Model</div>
                 <div class="xp-desc">
-                  Part of Amazon AGI org working on image generation model Titan (post-training) and video generation model Emerald (pre-training and SFT).
+                  Amazon AGI Project Nova, Image/Video Generation team.
+                  <ul>
+                    <li> Text-to-Image generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/creative/">Amazon Nova Canvas</a>, <a href="https://www.aboutamazon.com/news/devices/what-is-create-with-alexa">Create with Alexa for Kids</a>, <a href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator"> AI Art for FireTV </a>, and <a href="https://www.aboutamazon.com/news/innovation-at-amazon/amazon-ads-generative-ai-video-generator-advertisers"> Amazon Ads</a>). Tech lead for model development/training/post-training.</li>
+                    <li> Video generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/?trk=978e13b6-fa37-4872-9001-1825f3ca3367&sc_channel=ps&ef_id=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB:G:s&s_kwcid=AL!4422!3!692006004844!e!!g!!nova%20reel!21048268689!159639953895&gad_campaignid=21048268689&gbraid=0AAAAADjHtp_cG3ZoMojsEiEKFCdZNR-Vj&gclid=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB">Amazon Nova Reel</a>, and Amazon Ads). Core Contributor for SFT/post-training. </li>
+                  </ul>
                 </div>
+                <h4 style="margin:12px 0 2px">Highlighted projects</h4>
+                <div class="xp-projects">
+                  <a class="xp-project" href="https://www.amazon.science/blog/meet-nova-amazons-new-generative-ai-models" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb"><img src="images/nova.png" alt="Amazon Nova visuals"></div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">Amazon Nova — Image/Video Generation</div>
+                      <div class="xp-project-meta">2023–2024 · Model family</div>
+                      <div class="xp-project-tags"><span class="xp-project-tag">T2V</span><span class="xp-project-tag">Video</span></div>
+                    </div>
+                  </a>
+
+                    <a class="xp-project" href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb"><img src="images/firetv.jpeg" alt="Amazon FireTV"></div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">Amazon FireTV — Image/Video Generation</div>
+                      <div class="xp-project-meta">2023–2024 · XFN</div>
+                      <div class="xp-project-tags"><span class="xp-project-tag">T2I</span><span class="xp-project-tag">Image Generation</span></div>
+                    </div>
+                  </a>
+
+                  <a class="xp-project" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb"><img src="images/zero_shot_motion.png" alt="I2V Motion Decomposition teaser"></div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">Zero-Shot I2V via Motion Decomposition</div>
+                      <div class="xp-project-meta">ACM MM 2024 · Website</div>
+                      <div class="xp-project-tags"><span class="xp-project-tag">I2V</span><span class="xp-project-tag">Control</span></div>
+                    </div>
+                  </a>
+                </div>
+
               </div>
             </div>
           </div>
@@ -405,6 +577,26 @@
                 <div class="xp-role-title">Vision and Language Model (VLM)</div>
                 <div class="xp-role-meta">Self-supervised Learning · Knowledge Distillation · Vision-Language Representation Learning</div>
                 <div class="xp-desc">Collaborators: <a href="https://sites.google.com/view/zichengliu/home">Zicheng Liu</a>, <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a>, <a href="https://jianfengwang.me/">Jianfeng Wang</a>, <a href="https://zhegan27.github.io/">Zhe Gan</a></div>
+                <div class="xp-desc">
+                  Vision-Language Model Pre-training/Distillation.
+                  <ul>
+                    <li> Vision Language Model Distillation: <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Compressing Visual-linguistic Model via Knowledge Distillation</a> </li>
+                    <li> VLM Pre-training & Image Captioning: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf">Injecting Semantic Concepts into End-to-End Image Captioning</a> </li>
+                    <li> Self-Supervised Learning/Visual Pre-training: <a href="https://arxiv.org/pdf/2101.04731"> SEED: Self-supervised Distillation For Visual Representation </a> </li>
+                  </ul>
+                </div>
+              <h4 style="margin:12px 0 2px">Highlighted projects</h4>
+
+                <div class="xp-projects">
+                  <a class="xp-project" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb"><img src="images/seed.png" alt="SEED paper cover (placeholder)"></div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">SEED — Self-supervised Distillation</div>
+                      <div class="xp-project-meta">ICLR 2021 · Paper</div>
+                      <div class="xp-project-tags"><span class="xp-project-tag">SSL</span><span class="xp-project-tag">KD</span></div>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -423,7 +615,10 @@
             <div class="xp-roles">
               <div class="xp-role">
                 <div class="xp-role-meta">Deep Learning · Face Recognition</div>
-                <div class="xp-desc">Collaborators: <a href="https://mmlab.siat.ac.cn/yuqiao"> Yu Qiao</a>, Zhifeng Li, Xiao Zhang</div>
+                <div class="xp-desc">Collaborators: Zhifeng Li, Xiao Zhang,  <a href="https://mmlab.siat.ac.cn/yuqiao"> Yu Qiao</a></div>
+                  <ul>
+                    <li> Face Recognition: <a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Zhang_Range_Loss_for_ICCV_2017_paper.pdf">Range Loss for Deep Face Recognition with Long-tailed Training Data</a> </li>
+                  </ul>
               </div>
             </div>
           </div>
@@ -433,7 +628,7 @@
 
     <!-- ===== Video panels directly beneath Experience ===== -->
     <section id="video-panels">
-      <h2>Product Demos</h2>
+      <h2>Product Highlights</h2>
       <div class="vid-grid" style="gap: 0px 0px;">
         <!-- Panel 1 -->
         <figure class="vid-panel">
@@ -639,45 +834,6 @@
 }</pre>
         </article>
 
-<!--        <article class="card pub" data-year="2024" data-venue="WACV" data-keywords="image editing diffusion information removal">-->
-<!--          <img class="thumb" src="https://www.amazon.science/publications/text-to-image-editing-by-image-information-removal/_jcr_content/root/section/section_770/logo_copy_copy_2122628257/image.coreimg.png/1697659892018/text-to-image-editing-by-image-information-removal.png" alt="Text-to-image editing by image information removal teaser"/>-->
-<!--          <div>-->
-<!--            <strong>Text-to-image Editing by Image Information Removal</strong>-->
-<!--            <span class="meta">Zhongping Zhang, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Bryan A. Plummer · WACV 2024</span>-->
-<!--            <div class="tags"><span class="tag">Image Editing</span><span class="tag">Diffusion</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/html/Zhang_Text-to-image_Editing_by_Image_Information_Removal_WACVW_2024_paper.html" target="_blank" rel="noopener">CVF</a>-->
-<!--            <a class="btn" href="https://www.amazon.science/publications/text-to-image-editing-by-image-information-removal" target="_blank" rel="noopener">Page</a>-->
-<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@inproceedings{zhang2024ttiir,-->
-<!--  title={Text-to-image Editing by Image Information Removal},-->
-<!--  author={Zhang, Zhongping and Zheng, Jian and Fang, Jacob Zhiyuan and Plummer, Bryan A},-->
-<!--  booktitle={WACV Workshops},-->
-<!--  year={2024}-->
-<!--}</pre>-->
-<!--        </article>-->
-
-<!--        <article class="card pub" data-year="2024" data-venue="WACV" data-keywords="video-language masked video modeling vq tokenizer">-->
-<!--          <img class="thumb" src="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/assets/Fang_E-ViLM_Efficient_Video-Language_Model_via_Masked_Video_Modeling_With_Semantic_WACVW_2024_paper-1.png" alt="E-ViLM teaser"/>-->
-<!--          <div>-->
-<!--            <strong>E-ViLM: Efficient Video-Language Model via Masked Video Modeling with Semantic Vector-Quantized Tokenizer</strong>-->
-<!--            <span class="meta"><strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Vasu Sharma, Robinson Piramuthu · WACV Workshops 2024</span>-->
-<!--            <div class="tags"><span class="tag">Video-Language</span><span class="tag">Pretraining</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="https://arxiv.org/abs/2311.17267" target="_blank" rel="noopener">arXiv</a>-->
-<!--            <a class="btn" href="https://openaccess.thecvf.com/content/WACV2024W/Pretrain/html/Fang_E-ViLM_Efficient_Video-Language_Model_via_Masked_Video_Modeling_With_Semantic_WACVW_2024_paper.html" target="_blank" rel="noopener">CVF</a>-->
-<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@inproceedings{fang2024evilmm,-->
-<!--  title={E-ViLM: Efficient Video-Language Model via Masked Video Modeling with Semantic Vector-Quantized Tokenizer},-->
-<!--  author={Fang, Zhiyuan and Zheng, Skyler and Sharma, Vasu and Piramuthu, Robinson},-->
-<!--  booktitle={WACV Workshops},-->
-<!--  year={2024}-->
-<!--}</pre>-->
-<!--        </article>-->
 
         <article class="card pub" data-year="2024" data-venue="ECCV" data-keywords="text-to-image generalization dataset skew evaluation">
           <div>
@@ -695,22 +851,6 @@
   year={2024}
 }</pre>
         </article>
-
-<!--        <article class="card pub" data-year="2024" data-venue="arXiv" data-keywords="model card foundation models amazon nova">-->
-<!--          <div>-->
-<!--            <strong>The Amazon Nova Family of Models: Technical Report and Model Card</strong>-->
-<!--            <span class="meta">AAG Intelligence (incl. <strong>Zhiyuan Fang</strong>) · Technical Report 2024</span>-->
-<!--            <div class="tags"><span class="tag">Model Card</span><span class="tag">Foundation</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=fHWXpq4AAAAJ&sortby=pubdate&citation_for_view=fHWXpq4AAAAJ:CHSYGLWDkRkC" target="_blank" rel="noopener">Scholar</a>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@techreport{nova2024,-->
-<!--  title={The Amazon Nova Family of Models: Technical Report and Model Card},-->
-<!--  author={AAG Intelligence},-->
-<!--  year={2024}-->
-<!--}</pre>-->
-<!--        </article>-->
 
         <article class="card pub" data-year="2021" data-venue="ICLR" data-keywords="self-supervised distillation visual representation">
           <div>
@@ -782,78 +922,8 @@
 
         <a href="https://scholar.google.com/citations?hl=en&user=fHWXpq4AAAAJ">More in Google Scholar.</a>
 
-
-<!--        <article class="card pub" data-year="2020" data-venue="arXiv" data-keywords="video captioning commonsense">-->
-<!--          <div>-->
-<!--            <strong>Video2commonsense: Generating Commonsense Descriptions to Enrich Video Captioning</strong>-->
-<!--            <span class="meta"><strong>Zhiyuan Fang</strong> et al. · arXiv 2020</span>-->
-<!--            <div class="tags"><span class="tag">Video Captioning</span><span class="tag">Commonsense</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@article{fang2020video2commonsense,-->
-<!--  title={Video2commonsense: Generating Commonsense Descriptions to Enrich Video Captioning},-->
-<!--  author={Fang, Zhiyuan and others},-->
-<!--  journal={arXiv},-->
-<!--  year={2020}-->
-<!--}</pre>-->
-<!--        </article>-->
-
-<!--        <article class="card pub" data-year="2019" data-venue="CVPR" data-keywords="grounding counterfactual modularized">-->
-<!--          <div>-->
-<!--            <strong>Modularized Textual Grounding for Counterfactual Resilience</strong>-->
-<!--            <span class="meta"><strong>Zhiyuan Fang</strong>, Shu Kong, Charless C. Fowlkes, Yezhou Yang · CVPR 2019</span>-->
-<!--            <div class="tags"><span class="tag">Grounding</span><span class="tag">Counterfactual</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="https://openaccess.thecvf.com/content_CVPR_2019/html/Fang_Modularized_Textual_Grounding_for_Counterfactual_Resilience_CVPR_2019_paper.html" target="_blank" rel="noopener">CVF</a>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@inproceedings{fang2019modularized,-->
-<!--  title={Modularized Textual Grounding for Counterfactual Resilience},-->
-<!--  author={Fang, Zhiyuan and Kong, Shu and Fowlkes, Charless C. and Yang, Yezhou},-->
-<!--  booktitle={CVPR},-->
-<!--  year={2019}-->
-<!--}</pre>-->
-<!--        </article>-->
-
-<!--        <article class="card pub" data-year="2018" data-venue="arXiv" data-keywords="grounding attention weakly supervised">-->
-<!--          <div>-->
-<!--            <strong>Weakly Supervised Attention Learning for Textual Phrases Grounding</strong>-->
-<!--            <span class="meta"><strong>Zhiyuan Fang</strong>, Shu Kong, Tianshu Yu, Yezhou Yang · arXiv 2018</span>-->
-<!--            <div class="tags"><span class="tag">Grounding</span><span class="tag">Attention</span></div>-->
-<!--          </div>-->
-<!--          <div class="tool">-->
-<!--            <a class="btn" href="https://arxiv.org/abs/1812.01880" target="_blank" rel="noopener">arXiv</a>-->
-<!--          </div>-->
-<!--          <pre class="bibtex" style="display:none">@article{fang2018weakly,-->
-<!--  title={Weakly Supervised Attention Learning for Textual Phrases Grounding},-->
-<!--  author={Fang, Zhiyuan and Kong, Shu and Yu, Tianshu and Yang, Yezhou},-->
-<!--  journal={arXiv},-->
-<!--  year={2018}-->
-<!--}</pre>-->
-<!--        </article>-->
       </div>
     </section>
-
-<!--    <section id="teaching">-->
-<!--      <h2>Teaching</h2>-->
-<!--      <div class="card">-->
-<!--        <ul>-->
-<!--          <li>Guest lectures and tutorials on diffusion models, controllability, and video generation.</li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </section>-->
-
-<!--    <section id="talks">-->
-<!--      <h2>Talks</h2>-->
-<!--      <div class="card">-->
-<!--        <ul>-->
-<!--          <li>MM'24 — Zero-Shot Controllable I2V Animation (poster)</li>-->
-<!--          <li>WACV'24 Workshops — E-ViLM (oral/poster)</li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </section>-->
 
     <section id="service">
       <h2>Service</h2>
@@ -1555,5 +1625,6 @@
       }
     })();
   </script>
+
 </body>
 </html>
