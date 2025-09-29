@@ -321,7 +321,7 @@
       const target = document.getElementById(btn.getAttribute('aria-controls'));
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!expanded));
-      btn.textContent = expanded ? '🚀 We’re Hiring (Intern and FTE)' : 'Show less';
+      btn.textContent = expanded ? '🚀 We’re Hiring (Intern and <s>FTE</s>)' : 'Show less';
       target.classList.toggle('is-open', !expanded);
     });
   </script>
@@ -349,7 +349,7 @@
       <img class="avatar" src="images/profile.jpg" alt="Headshot (replace avatar.jpg)"/>
       <div>
         <h1 class="name">Jacob Zhiyuan Fang</h1>
-        <p class="title">Research Scientist,  ByteDance · Ph.D. · Visual Gen AI · Vision & Language</p>
+        <p class="title">Senior Research Scientist,  ByteDance · Ph.D. · Visual Gen AI · Vision & Language</p>
         <div class="links">
           <a class="chip" href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="chip" href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
@@ -365,14 +365,15 @@
         
         <p>I work on <strong>generative models</strong>, <strong>video & image generation on diffusion models</strong>, and <strong>Vision-Language Model</strong>. My recent focus includes controllable generation, large scale training for diffusion models, and representation learning.</p>
 
+        <u>We are not hiring Full-Time Employee since the headcount filled. But we are open to long-term intern collaboration. Please drop an email.</u>
       <p class="lead">
-          <span class="accent" style="--accent:#2563eb">We’re Hiring (Intern and FTE)! </span> <br>
+        <span class="accent" style="--accent:#2563eb"><b><s>We’re Hiring (Intern and FTE)!</b> </span> <br></s>
       </p>
       <p class="p-clamp" id="bio"> 
           Who we are: <br>Join the Intelligence Creation Group at TikTok, where we focus on cutting-edge video generation technologies.
             Our team develops advanced video generative models to power next-generation TikTok content.
           We build video foundation models that bring creativity to life — like this example on TikTok (one single effect
-            that triggers more than !!30M!! post globally, best AI effect since 2023 across TikTok):
+            that triggers more than !!30M!! post globally, best AI effect since 2023 on TikTok):
           <br> 🎬 <a href="https://www.tiktok.com/@anastasile/video/7507712572259388679"> Click ME </a>. <br> We also build large scale Video Generation model
           pre-training for creating powerful video foundation model. We build state-of-the-art VideoGen techniques like: video editing, <a href="https://magref-video.github.io/magref.github.io/">
             video customized generation</a>, <a href="https://github.com/bytedance/ATI">video motion controlled generation</a>, etc. <br> <br>
@@ -397,7 +398,7 @@
         <div class="card">
           <strong>News</strong>
           <ul>
-            <li>[2025 Sep] New video generative foundation model trained by us is incoming for TikTok users. Stay tuned. </li> <br>
+            <li>[2025 Sep] <b>New video generative foundation model (Seedance-1.0 - TikTok Version)</b> trained by us is online. Check out its first effect - <a href="">AI Flower</a>. </li> <br>
             <li>[2025 March] <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441">AI Mermaid Effect</a> is online, attracting <em>30M+</em> post on TikTok - best TikTok AI effect since 2023!. </li> <br>
             <li>[2025 Jan] <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">AI Alive</a> is online, check out <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">Shou's demo video</a> on our product. </li> <br>
             <li>[2024 Oct] ACM MM'24: <a href="https://www.amazon.science/publications/zero-shot-controllable-image-to-video-animation-via-motion-decomposition">Zero-Shot Controllable Image-to-Video Animation </a>.</li> <br>
@@ -437,8 +438,10 @@
                   to build state-of-the-art video generative models for TikTok production.
                   <ul>
                     <li> Large-scale Video Foundation Model Pre-training - Technical Owner for <a href="https://seed.bytedance.com/en/seedance">Seedance</a> (TikTok Version) development and Pre-training; Model pre-training (large-scale pre-training on <em>billions+ videos over ~2K H100 GPU</em>) ;</li>
-                    <li> Video Generation Model Application Dev & Post-training - TikTok Production - Core Contributor； </li>
-                    <li> Agent for Video Generation;</li>
+                    <li> Video Generation Model Application Dev (ID/IP Perservation; Video Editing; Controllable Video Gen) - TikTok Production - Core Contributor； <br>Check out our recent work on <a href="https://magref-video.github.io/">ID/IP video Gen</a>, <a href="https://anytraj.github.io/">Motion Controlled Video Gen</a>, <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441">V2V/Style Transfer</a>, etc.</li>
+                    <li> Agentic Video Generation (incoming);</li>
+                    <li> Video Generation Model Post-Training/RLHF/ReFL;</li>
+
                 </ul>
                 </div>
 
@@ -447,7 +450,7 @@
                 <div class="xp-projects">
 
 
-                  <a class="xp-project" href="https://seed.bytedance.com/en/seedance" target="_blank" rel="noopener">
+                  <a class="xp-project" href="https://www.tiktok.com/effect/AI-Mermaid-2386487441" target="_blank" rel="noopener">
                     <div class="xp-project-thumb" aria-hidden="true">
                       <video autoplay muted loop playsinline poster="images/ati.jpg">
                         <source src="images/ai_mermaid.mp4" type="video/mp4">
@@ -455,9 +458,10 @@
                     </div>
                     <div class="xp-project-body">
                       <div class="xp-project-title">AI Mermaid - Video Generation & XFN</div>
-                      <div class="xp-project-meta">2025 · Video </div>
+                      <div class="xp-project-meta">2025 · TikTok Effect  <br><b><span style="color: #B20000;">(Best AI Effect on TikTok since 2023 )</b></span></div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">Video Foundation Model Training</span>
+                        <span class="xp-project-tag">Video Generation</span>
+                        <span class="xp-project-tag">Effect</span>
 <!--                        <span class="xp-project-tag"></span>-->
                       </div>
                     </div>
@@ -472,11 +476,11 @@
                     </div>
                     <div class="xp-project-body">
                       <div class="xp-project-title">MAGREF — Any-Reference Video Generation</div>
-                      <div class="xp-project-meta">2025 · Webpage</div>
+                      <div class="xp-project-meta">2025 · Research Work</div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">VideoGen</span>
-                        <span class="xp-project-tag">Reference</span>
-                        <span class="xp-project-tag">Diffusion</span>
+<!--                        <span class="xp-project-tag">VideoGen</span>-->
+                        <span class="xp-project-tag">ID/IP Video Gen</span>
+                        <span class="xp-project-tag">Diffusion Model</span>
                       </div>
                     </div>
                   </a>
@@ -490,16 +494,34 @@
                     </div>
                     <div class="xp-project-body">
                       <div class="xp-project-title">ATI — Motion-Controlled Video Generation</div>
-                      <div class="xp-project-meta">2025 · Webpage</div>
+                      <div class="xp-project-meta">2025 · Research Work</div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">Control</span>
-                        <span class="xp-project-tag">Trajectory</span>
+                        <span class="xp-project-tag">Controllable Video Gen</span>
+<!--                        <span class="xp-project-tag">Trajectory</span>-->
                       </div>
                     </div>
                   </a>
 
-
+                   <a class="xp-project" href="" target="_blank" rel="noopener">
+                    <div class="xp-project-thumb" aria-hidden="true">
+                      <video autoplay muted loop playsinline poster="images/ai_flower_2.gif">
+                        <source src="images/ai_flower_2.gif" type="image/gif">
+                      </video>
+                    </div>
+                    <div class="xp-project-body">
+                      <div class="xp-project-title">AI Flower 2.0 — Effect Powered by our Seedance 1.0 TikTok Version</div>
+                      <div class="xp-project-meta">2025 · TikTok Effect</div>
+                      <div class="xp-project-tags">
+                        <span class="xp-project-tag">Video Generation</span>
+                        <span class="xp-project-tag">Effect</span>
+                      </div>
+                    </div>
+                  </a>
                 </div>
+
+
+
+
                 </div>
               </div>
             </div>
