@@ -14,19 +14,19 @@
   <link rel="icon" href="favicon.ico" />
   <style>
     :root{
-      --bg:#ffffff;--fg:#111827;--muted:#6b7280;--link:#0f766e;--accent:#2563eb;--card:#f8fafc;--border:#e5e7eb;--kbd:#f1f5f9;--tag:#e2e8f0;--shadow:0 10px 30px rgba(0,0,0,.06);
+      --bg:#ffffff;--fg:#000000;--muted:#6b7280;--link:#2563eb;--accent:#2563eb;--card:#ffffff;--border:#e5e7eb;--kbd:#f1f5f9;--tag:#e2e8f0;--shadow:0 10px 30px rgba(0,0,0,.06);
       /* graph theme */
       --exp:#0EA5E9;   /* cyan-500 */
       --pub:#F59E0B;   /* amber-500 */
     }
     @media (prefers-color-scheme: dark){
       :root{
-        --bg:#0b1021;--fg:#e5e7eb;--muted:#94a3b8;--link:#34d399;--accent:#60a5fa;--card:#0f172a;--border:#1f2937;--kbd:#111827;--tag:#1f2937;--shadow:0 10px 30px rgba(0,0,0,.35);
+        --bg:#ffffff;--fg:#000000;--muted:#94a3b8;--link:#60a5fa;--accent:#60a5fa;--card:#ffffff;--border:#e5e7eb;--kbd:#111827;--tag:#1f2937;--shadow:0 10px 30px rgba(0,0,0,.35);
       }
     }
     html,body{height:100%}
     body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif}
-    a{color:var(--link);text-decoration:none}
+    a, a:visited{color:var(--link) !important; text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:980px;margin:auto;padding:24px}
     header{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;margin-block:20px}
@@ -34,11 +34,21 @@
     .name{font-size:32px;line-height:1.2;margin:0}
     .title{color:var(--muted);margin:.25rem 0 0}
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .chip{display:inline-flex;align-items:center;gap:8px;background:var(--tag);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:#ffffff;color:var(--link);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px;text-decoration:none}
+    .chip:visited{color:var(--link)}
+    .chip:hover{background:var(--card)}
     nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:10}
     .nav{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;padding:10px 24px;overflow:auto}
-    .nav a{padding:6px 10px;border-radius:8px}
-    .nav a.active,.nav a:hover{background:var(--tag);text-decoration:none}
+    .nav a{
+      padding:6px 10px;
+      border-radius:8px;
+      background:#ffffff;
+      color:var(--link);
+      border:1px solid var(--border);
+      text-decoration:none;
+    }
+    .nav a:visited{color:var(--link)}
+    .nav a.active,.nav a:hover{background:var(--card);color:var(--link);text-decoration:none}
     section{padding-block:28px;border-bottom:1px dashed var(--border)}
     h2{margin:0 0 12px;font-size:26px}
     .grid{display:grid;gap:16px}
@@ -48,15 +58,43 @@
     .pub .meta{color:var(--muted);font-size:14px}
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
     .tag{font-size:12px;background:var(--tag);border:1px solid var(--border);padding:2px 8px;border-radius:999px}
+    /* Hide publication tags (visual-only) */
+    .card.pub .tags{display:none}
     .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--bg);padding:6px 10px;border-radius:8px}
-    .btn:hover{background:var(--tag);text-decoration:none}
+    .btn:hover{background:var(--card);text-decoration:none}
     .right{margin-left:auto}
     .tool{display:flex;gap:8px;flex-wrap:wrap}
     .search{display:flex;gap:8px;align-items:center}
     input[type="search"],select{background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:8px;color:var(--fg)}
     footer{padding:24px 0;color:var(--muted);font-size:14px}
-    .two-col{display:grid;grid-template-columns:1fr 300px;gap:24px}
+    .two-col{display:grid;grid-template-columns:1fr 240px;gap:24px}
     .thumb{width:100%;aspect-ratio:25/12;object-fit:cover;border-radius:12px;border:1px solid var(--border);background:#000}
+
+    /* Media thumbnails keep their native aspect ratio; titles on first line, authors on second. */
+    .card.pub{display:grid;gap:12px;align-items:start;grid-template-columns:1fr}
+    .card.pub:has(.thumb){grid-template-columns:240px 1fr}
+    .card.pub .thumb{grid-column:1;grid-row:1;width:240px;height:144px;border-radius:8px;object-fit:cover;display:block;max-width:100%}
+    /* Place all non-thumb children into the right column when a thumbnail exists */
+    .card.pub:has(.thumb) > *:not(.thumb){grid-column:2}
+    .card.pub .tool{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+    .card.pub pre.bibtex{display:block;margin-top:6px;color:var(--muted);font-size:13px}
+    /* Title and authors on separate lines */
+    .card.pub > div > strong{display:block;margin-bottom:4px}
+    .card.pub > div > .meta{display:block;margin-top:0}
+
+    /* Collapse publications: show only first 3 when collapsed */
+    #pub-list.collapsed article.pub:nth-of-type(n+4){display:none;}
+
+    /* Toggle button style for publications (more visible) */
+    .pub-toggle{font-size:.95rem;padding:.4rem .75rem;background:var(--accent);color:#fff;border:none;border-radius:.5rem;cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.12)}
+    .pub-toggle:hover{opacity:.95}
+    .pub-toggle:focus{outline:3px solid rgba(0,0,0,.06);outline-offset:2px}
+
+    @media (max-width:720px){
+      .card.pub{grid-template-columns:1fr}
+      .card.pub .thumb{width:100%;height:auto}
+      .card.pub > *:not(.thumb){grid-column:1}
+    }
     @media (max-width:900px){.two-col{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
     @media print{nav,.tool,.chip{display:none}.card{box-shadow:none}a{text-decoration:none}}
 
@@ -98,22 +136,24 @@
 
     /* ===== Video Panels (scoped) ===== */
     #video-panels{}
+    /* Horizontal slider for Product Highlights (show up to 3 panels) */
     #video-panels .vid-grid{
-      display:grid; gap:5px;
-      grid-template-columns:repeat(4, minmax(120px,1fr));
+      display:flex; gap:12px; margin:0;
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      scroll-padding-inline:56px; -ms-overflow-style:none; scrollbar-width:none;
     }
-    #video-panels .vid-grid { gap: 0 !important; margin: -12px; }
-    #video-panels .vid-panel { margin: 12px; }         /* ← adjust this to taste */
-    @media (max-width:1100px){ #video-panels .vid-grid{grid-template-columns:repeat(3, minmax(220px,1fr));} }
-    @media (max-width:800px){  #video-panels .vid-grid{grid-template-columns:repeat(2, minmax(220px,1fr));} }
-    @media (max-width:520px){  #video-panels .vid-grid{grid-template-columns:1fr;} }
+    #video-panels .vid-grid::-webkit-scrollbar{ display:none; height:0 }
+    /* Each vid panel becomes a flex child (3 per view desktop, 2 per tablet, 1 per mobile) */
+    #video-panels .vid-panel{ flex:0 0 calc((100% - 24px)/3); max-width:calc((100% - 24px)/3); scroll-snap-align:start; margin:0 6px; }
+    @media (max-width:1100px){ #video-panels .vid-panel{ flex:0 0 calc((100% - 12px)/2); max-width:calc((100% - 12px)/2); } }
+    @media (max-width:520px){  #video-panels .vid-panel{ flex:0 0 100%; max-width:100%; } }
 
     #video-panels .vid-panel{
       position:relative;
       background:var(--card);
       border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px;
+      border-radius:12px;
+      padding:10px;
       box-shadow:var(--shadow);
       isolation:isolate;
     }
@@ -157,6 +197,27 @@
       height: 100%;
       object-fit: cover;
     }
+
+    /* Slightly larger video panels (raised height to reduce 'skewed' look) */
+    #video-panels .vid-video{ max-height:260px; }
+    #video-panels .vid-video video{ height:100%; }
+
+    /* News vertical slider */
+    .news-slider{ position:relative; }
+    .news-list{ max-height:200px; overflow-y:auto; scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch; padding-right:8px; -ms-overflow-style:none; scrollbar-width:none; }
+    .news-list > ul{ margin:4px 0 0; padding-left:16px; }
+    .news-list::-webkit-scrollbar{ display:none; width:0 }
+    .news-list li{ scroll-snap-align:start; padding:6px 0; }
+
+    /* tighten spacing between card header and list */
+    .card > strong{ display:block; margin-bottom:6px }
+    .news-prev, .news-next{
+      position:absolute; right:10px; width:36px; height:36px; border-radius:50%; border:none; background:rgba(0,0,0,0.6); color:#fff; display:flex; align-items:center; justify-content:center; z-index:6; box-shadow:0 6px 18px rgba(0,0,0,.12); cursor:pointer; opacity:1; transition:opacity .12s ease;
+    }
+    .news-prev{ top:8px }
+    .news-next{ bottom:8px }
+    .news-prev.hidden, .news-next.hidden{ opacity:0; pointer-events:none }
+
 
     /* ===== LinkedIn-style Experience list (matches site tokens) ===== */
     #experience .xp {
@@ -260,14 +321,46 @@
 
   <style>
   /* ===== Experience project thumbnails (LinkedIn-like) ===== */
+  /* Horizontal slider: show up to 3 projects per view, allow sliding for more */
   #experience .xp-projects{
-    display:grid;
-    grid-template-columns:repeat(3, minmax(180px,1fr));
+    display:flex;
+    flex-wrap:nowrap;
     gap:12px;
     margin-top:10px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:6px;
+    scroll-padding-inline:56px; /* keep first/last visible when arrows overlay */
+    -ms-overflow-style:none; /* hide IE scrollbar */
+    scrollbar-width:none; /* hide Firefox scrollbar */
   }
-  @media (max-width:1000px){ #experience .xp-projects{ grid-template-columns:repeat(2,minmax(160px,1fr)); } }
-  @media (max-width:640px){  #experience .xp-projects{ grid-template-columns:1fr; } }
+  #experience .xp-projects::-webkit-scrollbar{ display:none; height:0; }
+  /* Each project takes up one third of the container (max 3 visible) */
+  #experience .xp-project{ flex:0 0 calc((100% - 24px)/3); max-width:calc((100% - 24px)/3); scroll-snap-align:start; }
+  @media (max-width:1000px){ #experience .xp-project{ flex:0 0 calc((100% - 12px)/2); max-width:calc((100% - 12px)/2); } }
+  @media (max-width:640px){  #experience .xp-project{ flex:0 0 100%; max-width:100%; } }
+
+  /* Slider wrapper and nav buttons */
+  .xp-slider{ position:relative; margin:8px 0 0; }
+  .xp-prev, .xp-next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:40px; height:40px; border-radius:50%; border:none;
+    background:rgba(0,0,0,0.65); color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.12); cursor:pointer; z-index:6; transition:transform .12s ease, opacity .12s ease;
+  }
+  .xp-prev{ left:8px; }
+  .xp-next{ right:8px; }
+  .xp-prev.hidden, .xp-next.hidden{ opacity:0; pointer-events:none; transform:translateY(-50%) scale(.98); }
+
+  /* subtle gradient edges to hint at overflow */
+  .xp-slider::before, .xp-slider::after{ content:''; position:absolute; top:0; bottom:0; width:56px; pointer-events:none; z-index:4; }
+  .xp-slider::before{ left:0; background: linear-gradient(to right, var(--bg), transparent); }
+  .xp-slider::after{ right:0; background: linear-gradient(to left, var(--bg), transparent); }
+
+  @media (max-width:640px){ .xp-prev, .xp-next, .xp-slider::before, .xp-slider::after { display:none !important; } }
 
   #experience .xp-project{
     display:block;
@@ -297,6 +390,8 @@
     background:#000;
     border-bottom:1px solid var(--border);
     display:block;
+    max-height:105px;
+    overflow:hidden;
   }
   /* Allow video too (same class) */
   #experience .xp-project-thumb video,
@@ -340,7 +435,6 @@
 <!--      <a href="#teaching">Teaching</a>-->
 <!--      <a href="#talks">Talks</a>-->
       <a href="#service">Service</a>
-      <a href="#contact">Contact</a>
       <a href="cv.pdf" class="right btn" download>Download CV (PDF)</a>
     </div>
   </nav>
@@ -349,11 +443,11 @@
       <img class="avatar" src="images/profile.jpg" alt="Headshot (replace avatar.jpg)"/>
       <div>
         <h1 class="name">Jacob Zhiyuan Fang</h1>
-        <p class="title">Senior Research Scientist,  ByteDance · Ph.D. · Visual Gen AI · Vision & Language</p>
+        <p class="title">Member of Technical Staff,  Microsoft AI, Super Intelligence Team</p>
         <div class="links">
           <a class="chip" href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="chip" href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-          <a class="chip" href="mailto:zfang29@asu.edu">Email</a>
+          <a class="chip" href="https://x.com/Jacob292020" target="_blank" rel="noopener">X</a>
         </div>
       </div>
     </header>
@@ -361,47 +455,31 @@
     <section id="about" class="two-col">
       <div>
         <h2>About</h2>
-        I am a senior research scientist in Bytedance/TikTok in video generation and multi-modal learning. My recent focus includes controllable video generation, large scale training for diffusion models, and representation learning.</p>
-
-        <u>We are hiring Full-Time employee and open to long-term intern collaboration. Please drop an email to (jacob.fang@bytedance.com).</u>
-      <p class="lead">
-        <span class="accent" style="--accent:#2563eb"><b>We’re Hiring (Intern and FTE)!</b> </span> <br>
-      </p>
-      <p class="p-clamp" id="bio"> 
-          Who we are: <br>Join the Intelligence Creation Group at TikTok, where we focus on cutting-edge video generation technologies.
-            Our team develops advanced video generative models to power next-generation TikTok content.
-          We build video foundation models that bring creativity to life — like this example on TikTok (one single effect
-            that triggers more than !!30M!! post globally, best AI effect since 2023 on TikTok):
-          <br> 🎬 <a href="https://www.tiktok.com/@anastasile/video/7507712572259388679"> Click ME </a>. <br> We also build large scale Video Generation model
-          pre-training for creating powerful video foundation model. We build state-of-the-art VideoGen techniques like: video editing, <a href="https://magref-video.github.io/magref.github.io/">
-            video customized generation</a>, <a href="https://github.com/bytedance/ATI">video motion controlled generation</a>, etc. <br> <br>
-        Who we looking for: <br> ✅ Strong-motivated Ph.D. candidates; <br> ✅ Experiecnes of video generation/diffusion/AR model training; <br> ✅ Top-tier publications.
-      </p>
-
-        <button class="p-toggle" aria-expanded="false" aria-controls="bio">🚀 We’re Hiring (Intern and FTE)</button>
+        I am a member of technical staff in Microsoft AI's Super Intelligence Team, focusing on visual generation and multi-modal learning. My recent focus includes controllable video generation, large scale training for diffusion models, and representation learning.</p>
 
         <div class="grid grid-1">
-          <br>
+
           <div class="card">
-            <strong>Research Areas</strong>
+            <strong>News</strong>
             <ul>
-              <li>Generative modeling (Image/Video diffusion model)</li>
-              <li>Vision-Language models (video-language, VLM)</li>
-              <li>Representation learning & efficient pretraining</li>
+              <li>[2026 June] - <a href="https://microsoft.ai/news/introducing-mai-image-2-5/">MAI-Image-2.5</a> released. Top-2 Image generation model on LMArena. </li>              
+              <li>[2026 March] - Joined Microsoft AI's Super Intelligence Team. </li> 
+              <li>[2025 Sep] - New video generation model (Seedance-1.0-mini - TikTok production model) trained by us is online. Check out its first effect - <a href="">AI Flower (2M+ posts on TikTok in one week)</a>. <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441"> <br> AI Mermaid Effect</a> is online, more than <a><em>35M</em></a> post on TikTok - <b>best</b> TikTok Global AI effect since 2023! </li>
+              <li>[2025 Jan] - <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">AI Alive</a> is online, check out <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">Shou's demo video</a> on our product. </li>
+              <!-- <li>[2024 Oct] ACM MM'24: <a href="https://www.amazon.science/publications/zero-shot-controllable-image-to-video-animation-via-motion-decomposition">Zero-Shot Controllable Image-to-Video Animation </a>.</li> <br> -->
+              <!-- <li>[2024 July]: Joined Bytedance Global GenAI - Intelligent Creation team as a Research Scientist. </li> -->
+
             </ul>
           </div>
         </div>
       </div>
 <!--      <aside>-->
         <div class="card">
-          <strong>News</strong>
+          <strong>Research Areas</strong>
           <ul>
-            <li>[2025 Sep] <b>New video generative foundation model (Seedance-1.0 - TikTok Version)</b> trained by us is online. Check out its first effect - <a href="">AI Flower (2M+ posts on TikTok in one week)</a>. </li> <br>
-            <li>[2025 March] <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441">AI Mermaid Effect</a> is online, attracting <a><em>30M+</em></a> post on TikTok - <b>best</b> TikTok AI effect since 2023!. </li> <br>
-            <li>[2025 Jan] <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">AI Alive</a> is online, check out <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">Shou's demo video</a> on our product. </li> <br>
-            <li>[2024 Oct] ACM MM'24: <a href="https://www.amazon.science/publications/zero-shot-controllable-image-to-video-animation-via-motion-decomposition">Zero-Shot Controllable Image-to-Video Animation </a>.</li> <br>
-            <li>[2024 July]: Joined Bytedance Global GenAI - Intelligent Creation team as a Research Scientist. </li>
-
+            <li>Generative modeling (Image/Video diffusion model)</li>
+            <li>Vision-Language models (video-language, VLM)</li>
+            <li>Representation learning & efficient pretraining</li>
           </ul>
         </div>
 <!--      </aside>-->
@@ -415,6 +493,30 @@
 
       <!-- new LinkedIn-style list -->
       <div class="xp" id="xp-list">
+        <!-- MAI Superintelligence Lab (new job) -->
+        <article class="xp-item">
+          <div class="xp-logo">
+            <img src="./images/mai.png" alt="MAI / Microsoft AI logo"/>
+          </div>
+          <div>
+            <div class="xp-header">
+              <a class="xp-company" href="https://microsoft.ai/" target="_blank" rel="noopener">Superintelligence Lab, Microsoft AI</a>
+              <div class="xp-meta">Member of Technical Staff · March, 2026 — Present</div>
+              <div class="xp-location">Mountain View, USA</div>
+            </div>
+            <div class="xp-roles">
+              <div class="xp-role">
+                <div class="xp-role-title">Image Generation; Diffusion Model; Post-Training and RL</div>
+                <div class="xp-role-meta">Diffusion Model RL</div>
+                <div class="xp-desc">
+                  <ul>
+                    <li><a href="https://microsoft.ai/news/introducing-mai-image-2-5/">MAI-Image-2.5 </a>: Post-training and RL, Reward Model Development</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
         <article class="xp-item">
           <div class="xp-logo">
             <img src="images/bytedance_logo.jpeg" alt="ByteDance / TikTok logo"/>
@@ -422,23 +524,17 @@
           <div>
             <div class="xp-header">
               <a class="xp-company" href="https://www.tiktok.com/" target="_blank" rel="noopener">Global GenAI, ByteDance / TikTok</a>
-              <div class="xp-meta">Senior Research Scientist · 2024 — Present</div>
+              <div class="xp-meta">Senior Research Scientist · June, 2024 — March, 2026 </div>
               <div class="xp-location">San Jose, USA</div>
             </div>
-
               <div class="xp-roles">
               <div class="xp-role">
-                <div class="xp-role-title">Video Generative Model</div>
-                <div class="xp-role-meta">Controllable video generation · Any-reference video generation · Foundation video generation pre-training</div>
+                <div class="xp-role-title">Video Generation Model</div>
                 <div class="xp-desc">
-                   We develop AI effects from video generative models. I also work closely with
-                  <a href="https://seed.bytedance.com/en/" target="_blank" rel="noopener">Bytedance SEED</a>
-                  to build state-of-the-art video generative models for TikTok production.
                   <ul>
-                    <li> Large-scale Video Foundation Model Pre-training - Technical Owner for <a href="https://seed.bytedance.com/en/seedance">Seedance</a> (TikTok Version) development and Pre-training; Model pre-training (large-scale pre-training on <em>billions+ videos over ~2K H100 GPU</em>) ;</li>
-                    <li> Video Generation Model Application Dev (ID/IP Perservation; Video Editing; Controllable Video Gen) - TikTok Production - Core Contributor； <br>Check out our recent work on <a href="https://magref-video.github.io/">ID/IP video Gen</a>, <a href="https://anytraj.github.io/">Motion Controlled Video Gen</a>, <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441">V2V/Style Transfer</a>, etc.</li>
-                    <li> Agentic Video Generation;</li>
-                    <li> Video Generation Model Post-Training/RLHF;</li>
+                    <li> ID/IP Perservation in Video Gen; Video Editing; Controllable Video Gen； </li>
+                    <li> Seedance 1.0 mini Production Model Pre-train; (billions+ videos over ~2K GPUs) ;</li>
+                    <li> Video Gen Post-Training/RLHF;</li>
 
                 </ul>
                 </div>
@@ -456,10 +552,10 @@
                     </div>
                     <div class="xp-project-body">
                       <div class="xp-project-title">AI Mermaid - Video Generation & XFN</div>
-                      <div class="xp-project-meta">2025 · TikTok Effect  <br><b><span style="color: #B20000;">(Best AI Effect on TikTok since 2023 )</b></span></div>
+                      <div class="xp-project-meta">2025 · TikTok Effect  <br><b><span style="color: #170e7e;">(Best AI Effect on TikTok since 2023 )</b></span></div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">Video Generation</span>
-                        <span class="xp-project-tag">Effect</span>
+                        <!-- <span class="xp-project-tag">Video Generation</span>
+                        <span class="xp-project-tag">Effect</span> -->
 <!--                        <span class="xp-project-tag"></span>-->
                       </div>
                     </div>
@@ -477,8 +573,8 @@
                       <div class="xp-project-meta">2025 · Research Work</div>
                       <div class="xp-project-tags">
 <!--                        <span class="xp-project-tag">VideoGen</span>-->
-                        <span class="xp-project-tag">ID/IP Video Gen</span>
-                        <span class="xp-project-tag">Diffusion Model</span>
+                        <!-- <span class="xp-project-tag">ID/IP Video Gen</span>
+                        <span class="xp-project-tag">Diffusion Model</span> -->
                       </div>
                     </div>
                   </a>
@@ -494,7 +590,7 @@
                       <div class="xp-project-title">ATI — Motion-Controlled Video Generation</div>
                       <div class="xp-project-meta">2025 · Research Work</div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">Controllable Video Gen</span>
+                        <!-- <span class="xp-project-tag">Controllable Video Gen</span> -->
 <!--                        <span class="xp-project-tag">Trajectory</span>-->
                       </div>
                     </div>
@@ -510,8 +606,8 @@
                       <div class="xp-project-title">AI Flower 2.0 — Effect Powered by our Seedance 1.0 TikTok Version</div>
                       <div class="xp-project-meta">2025 · TikTok Effect</div>
                       <div class="xp-project-tags">
-                        <span class="xp-project-tag">Video Generation</span>
-                        <span class="xp-project-tag">Effect</span>
+                        <!-- <span class="xp-project-tag">Video Generation</span>
+                        <span class="xp-project-tag">Effect</span> -->
                       </div>
                     </div>
 
@@ -528,18 +624,13 @@
                     <div class="xp-project-title">AI Live Photo — Image to Video Generation</div>
                     <div class="xp-project-meta">2025 · Production</div>
                     <div class="xp-project-tags">
-                      <span class="xp-project-tag">Video Gen</span>
-                      <span class="xp-project-tag">Seedance-TikTok</span>
+                      <!-- <span class="xp-project-tag">Video Gen</span>
+                      <span class="xp-project-tag">Seedance-TikTok</span> -->
                     </div>
                   </div>
                 </a>
                   
                 </div>
-
-
-
-
-
                 </div>
               </div>
             </div>
@@ -558,13 +649,13 @@
             </div>
             <div class="xp-roles">
               <div class="xp-role">
-                <div class="xp-role-title">Image/Video Generation; Large-scale Diffusion Pre-training & Post-training</div>
+                <div class="xp-role-title">Image/Video Generation; Diffusion Model Pre-training & Post-training</div>
                 <div class="xp-role-meta">Image/Video Diffusion Model</div>
                 <div class="xp-desc">
                   Amazon AGI Project Nova, Image/Video Generation team.
                   <ul>
-                    <li> Text-to-Image generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/creative/">Amazon Nova Canvas</a>, <a href="https://www.aboutamazon.com/news/devices/what-is-create-with-alexa">Create with Alexa for Kids</a>, <a href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator"> AI Art for FireTV </a>, and <a href="https://www.aboutamazon.com/news/innovation-at-amazon/amazon-ads-generative-ai-video-generator-advertisers"> Amazon Ads</a>). Tech lead for model development/training/post-training.</li>
-                    <li> Video generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/?trk=978e13b6-fa37-4872-9001-1825f3ca3367&sc_channel=ps&ef_id=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB:G:s&s_kwcid=AL!4422!3!692006004844!e!!g!!nova%20reel!21048268689!159639953895&gad_campaignid=21048268689&gbraid=0AAAAADjHtp_cG3ZoMojsEiEKFCdZNR-Vj&gclid=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB">Amazon Nova Reel</a>, and Amazon Ads). Core Contributor for SFT/post-training. </li>
+                    <li> Text-to-Image generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/creative/">Amazon Nova Canvas</a>, <a href="https://www.aboutamazon.com/news/devices/what-is-create-with-alexa">Create with Alexa for Kids</a>, <a href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator"> AI Art for FireTV </a>, and <a href="https://www.aboutamazon.com/news/innovation-at-amazon/amazon-ads-generative-ai-video-generator-advertisers"> Amazon Ads</a>). Model training/post-training.</li>
+                    <li> Video generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/?trk=978e13b6-fa37-4872-9001-1825f3ca3367&sc_channel=ps&ef_id=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB:G:s&s_kwcid=AL!4422!3!692006004844!e!!g!!nova%20reel!21048268689!159639953895&gad_campaignid=21048268689&gbraid=0AAAAADjHtp_cG3ZoMojsEiEKFCdZNR-Vj&gclid=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB">Amazon Nova Reel</a>, and Amazon Ads). Model SFT/post-training. </li>
                   </ul>
                 </div>
                 <h4 style="margin:12px 0 2px">Highlighted projects</h4>
@@ -574,7 +665,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title">Amazon Nova — Image/Video Generation</div>
                       <div class="xp-project-meta">2023–2024 · Model family</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">T2V</span><span class="xp-project-tag">Video</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">T2V</span><span class="xp-project-tag">Video</span></div> -->
                     </div>
                   </a>
 
@@ -583,7 +674,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title">Amazon FireTV — Image/Video Generation</div>
                       <div class="xp-project-meta">2023–2024 · XFN</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">T2I</span><span class="xp-project-tag">Image Generation</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">T2I</span><span class="xp-project-tag">Image Generation</span></div> -->
                     </div>
                   </a>
 
@@ -592,7 +683,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title">Zero-Shot I2V via Motion Decomposition</div>
                       <div class="xp-project-meta">ACM MM 2024 · Website</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">I2V</span><span class="xp-project-tag">Control</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">I2V</span><span class="xp-project-tag">Control</span></div> -->
                     </div>
                   </a>
                 </div>
@@ -618,7 +709,7 @@
                 <div class="xp-role-meta">Self-supervised Learning · Knowledge Distillation · Vision-Language Representation Learning</div>
                 <div class="xp-desc">Collaborators: <a href="https://sites.google.com/view/zichengliu/home">Zicheng Liu</a>, <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a>, <a href="https://jianfengwang.me/">Jianfeng Wang</a>, <a href="https://zhegan27.github.io/">Zhe Gan</a></div>
                 <div class="xp-desc">
-                  Vision-Language Model Pre-training/Distillation.
+                  <!-- Vision-Language Model Pre-training/Distillation. -->
                   <ul>
                     <li> Vision Language Model Distillation: <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Compressing Visual-linguistic Model via Knowledge Distillation</a> </li>
                     <li> VLM Pre-training & Image Captioning: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf">Injecting Semantic Concepts into End-to-End Image Captioning</a> </li>
@@ -633,7 +724,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title">SEED — Self-supervised Distillation</div>
                       <div class="xp-project-meta">ICLR 2021 · Paper</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">SSL</span><span class="xp-project-tag">KD</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">SSL</span><span class="xp-project-tag">KD</span></div> -->
                     </div>
                   </a>
 
@@ -642,7 +733,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title"> Vision-Language Model Pretraining & Distillation</div>
                       <div class="xp-project-meta">ICCV 2021 · Paper</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">VLM</span><span class="xp-project-tag">KD</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">VLM</span><span class="xp-project-tag">KD</span></div> -->
                     </div>
                   </a>
 
@@ -651,7 +742,7 @@
                     <div class="xp-project-body">
                       <div class="xp-project-title">ViTCAP — Image Captioning & Vision-Language Model Pretraining </div>
                       <div class="xp-project-meta">CVPR 2022 · Paper</div>
-                      <div class="xp-project-tags"><span class="xp-project-tag">Pretraining</span><span class="xp-project-tag">VLM</span></div>
+                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">Pretraining</span><span class="xp-project-tag">VLM</span></div> -->
                     </div>
                   </a>
                 </div>
@@ -752,34 +843,6 @@
         </figure>
       </div>
     </section>
-
-
-      <!-- existing interactive graph card (unchanged) -->
-      <div id="xp-pubs-graph" class="card">
-        <div class="header">
-          <div class="title">
-            <span class="dot" aria-hidden="true"></span>
-            <div>
-              <div style="font-weight:700; letter-spacing:.2px;">Explore My Work</div>
-              <div style="font-size:12px; color:var(--muted)">Drag nodes • wheel to zoom • double-click background to reset</div>
-            </div>
-          </div>
-          <div class="legend" aria-hidden="true">
-            <span style="color:var(--exp)"><span class="dot"></span> Experience</span>
-            <span style="color:var(--pub)"><span class="dot"></span> Publication</span>
-          </div>
-        </div>
-        <div class="surface" id="graph-surface">
-          <svg id="graph" viewBox="0 0 1100 560" role="img" aria-label="Interactive graph of experiences and publications">
-            <g id="clusters"></g>
-            <g id="links"></g>
-            <g id="nodes"></g>
-          </svg>
-          <div class="hint">center nodes are experiences • pubs orbit around them</div>
-          <div class="test" id="test-status">tests: running…</div>
-        </div>
-      </div>
-    
     <section id="publications">
       <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
         <h2 style="margin:0">Selected Preprints & Publications</h2>
@@ -814,7 +877,7 @@
         </div>
       </div>
 
-      <div id="pub-list" class="grid" style="margin-top:16px">
+      <div id="pub-list" class="grid collapsed" style="margin-top:16px">
         <!-- Existing + added publications -->
 
           <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="video generation any-reference masked guidance">
@@ -830,11 +893,11 @@
             <strong>MAGREF: Masked Guidance for Any-Reference Video Generation</strong>
             <span class="meta">Yufan Deng, Xun Guo, Yuanyang Yin, Jacob Zhiyuan Fang, Yiding Yang, Yizhi Wang, Shenghai Yuan, Angtian Wang, Bo Liu, Haibin Huang, Chongyang Ma · arXiv 2025</span>
             <div class="tags"><span class="tag">Video Generation</span><span class="tag">ID/IP Reference Video Generation</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>
-            <a class="btn" href="https://github.com/MAGREF-Video/MAGREF" target="_blank" rel="noopener">Github</a>
-            <a class="btn" href="https://magref-video.github.io/" target="_blank" rel="noopener">Webpage</a>
+            <div class="tool">
+              <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>
+              <a class="btn" href="https://github.com/MAGREF-Video/MAGREF" target="_blank" rel="noopener">Github</a>
+              <a class="btn" href="https://magref-video.github.io/" target="_blank" rel="noopener">Webpage</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@article{fang2025magref,
   title={MAGREF: Masked Guidance for Any-Reference Video Generation},
@@ -845,23 +908,22 @@
         </article>
 
         <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="controllable video trajectory instruction">
-          <div>
           <video class="thumb"
                  autoplay muted loop playsinline
                  preload="metadata"
-                 aria-label="MAGREF teaser">
+                 aria-label="ATI teaser">
             <source src="images/ATI_teaser.mp4" type="video/mp4">
-            <!-- Optional: <source src="images/magref.webm" type="video/webm"> -->
             Your browser does not support the video tag.
           </video>
-          <strong>ATI: Any Trajectory Instruction for Controllable Video Generation</strong>
-          <span class="meta">Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma · arXiv 2025</span>
-          <div class="tags"><span class="tag">Video Generation</span><span class="tag">Motion Controlled Video Generation</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://arxiv.org/pdf/2505.22944" target="_blank" rel="noopener">Preprint</a>
-            <a class="btn" href="https://github.com/bytedance/ATI" target="_blank" rel="noopener">Github</a>
-            <a class="btn" href="https://anytraj.github.io/" target="_blank" rel="noopener">Webpage</a>
+          <div>
+            <strong>ATI: Any Trajectory Instruction for Controllable Video Generation</strong>
+            <span class="meta">Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma · arXiv 2025</span>
+            <div class="tags"><span class="tag">Video Generation</span><span class="tag">Motion Controlled Video Generation</span></div>
+            <div class="tool">
+              <a class="btn" href="https://arxiv.org/pdf/2505.22944" target="_blank" rel="noopener">Preprint</a>
+              <a class="btn" href="https://github.com/bytedance/ATI" target="_blank" rel="noopener">Github</a>
+              <a class="btn" href="https://anytraj.github.io/" target="_blank" rel="noopener">Webpage</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@article{wang2025ati,
   title={Any Trajectory Instruction for Controllable Video Generation},
@@ -877,11 +939,11 @@
             <strong>Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition</strong>
             <span class="meta">Shoubin Yu, <strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Gunnar A. Sigurdsson, Vicente Ordonez, Robinson Piramuthu, Mohit Bansal · ACM MM 2024</span>
             <div class="tags"><span class="tag">Video Generation</span><span class="tag">Control Generation</span><span class="tag">Diffusion</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://openreview.net/pdf?id=vngElHOj2N" target="_blank" rel="noopener">Paper</a>
-            <a class="btn" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">Website</a>
-<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+            <div class="tool">
+              <a class="btn" href="https://openreview.net/pdf?id=vngElHOj2N" target="_blank" rel="noopener">Paper</a>
+              <a class="btn" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">Website</a>
+            </div>
+            <!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{yu2024zeroshot,
   title={Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition},
@@ -897,11 +959,11 @@
             <strong>FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation</strong>
             <span class="meta">Xuehai He, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Robinson Piramuthu, Mohit Bansal, Vicente Ordonez, Gunnar A. Sigurdsson, Nanyun Peng, Xin Eric Wang · TMLR 2024</span>
             <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion Model</span><span class="tag">Efficiency</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://arxiv.org/abs/2405.04834" target="_blank" rel="noopener">arXiv</a>
-            <a class="btn" href="https://sites.google.com/view/flexecontrol" target="_blank" rel="noopener">Project</a>
-<!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
+            <div class="tool">
+              <a class="btn" href="https://arxiv.org/abs/2405.04834" target="_blank" rel="noopener">arXiv</a>
+              <a class="btn" href="https://sites.google.com/view/flexecontrol" target="_blank" rel="noopener">Project</a>
+            </div>
+            <!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
           </div>
           <pre class="bibtex" style="display:none">@article{he2024flexecontrol,
   title={FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation},
@@ -917,9 +979,9 @@
             <strong>Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation</strong>
             <span class="meta">Yingshan Chang, Yasi Zhang, <strong>Zhiyuan Fang</strong>, Yingnian Wu, Yonatan Bisk, Feng Gao · ECCV 2024</span>
             <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://arxiv.org/pdf/2403.16394" target="_blank" rel="noopener">Arxiv</a>
+            <div class="tool">
+              <a class="btn" href="https://arxiv.org/pdf/2403.16394" target="_blank" rel="noopener">Arxiv</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{chang2024skews,
   title={Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation},
@@ -934,9 +996,9 @@
             <strong>SEED: Self-supervised Distillation For Visual Representation</strong>
             <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Lijuan Wang, Lei Zhang, Yezhou Yang, Zicheng Liu · ICLR 2021</span>
             <div class="tags"><span class="tag">Self-supervised Learning</span><span class="tag">Knowledge Distillation</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">Arxiv</a>
+            <div class="tool">
+              <a class="btn" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">Arxiv</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{fang2021seed,
   title={SEED: Self-supervised Distillation For Visual Representation},
@@ -951,9 +1013,9 @@
             <strong>Injecting Semantic Concepts into End-to-End Image Captioning</strong>
             <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lin Liang, Zhe Gan, Lijuan Wang, Yezhou Yang, Zicheng Liu · CVPR 2022</span>
             <div class="tags"><span class="tag">Image Captioning</span><span class="tag">Vision & Language</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf" target="_blank" rel="noopener">Paper</a>
+            <div class="tool">
+              <a class="btn" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf" target="_blank" rel="noopener">Paper</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{fang2022injecting,
   title={Injecting Semantic Concepts into End-to-End Image Captioning},
@@ -968,9 +1030,9 @@
             <strong>Compressing Visual-linguistic Model via Knowledge Distillation</strong>
             <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, Zicheng Liu · ICCV 2021</span>
             <div class="tags"><span class="tag">Knowledge Distillation</span><span class="tag">Vision and Language</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf" target="_blank" rel="noopener">Paper</a>
+            <div class="tool">
+              <a class="btn" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf" target="_blank" rel="noopener">Paper</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{fang2021compressing,
   title={Compressing Visual-linguistic Model via Knowledge Distillation},
@@ -985,9 +1047,9 @@
             <strong>ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language</strong>
             <span class="meta">Zhe Wang, <strong>Zhiyuan Fang</strong>, Jun Wang, Yezhou Yang · ECCV 2020</span>
             <div class="tags"><span class="tag">Person Search</span></div>
-          </div>
-          <div class="tool">
-            <a class="btn" href="https://arxiv.org/pdf/2005.07327" target="_blank" rel="noopener">Paper</a>
+            <div class="tool">
+              <a class="btn" href="https://arxiv.org/pdf/2005.07327" target="_blank" rel="noopener">Paper</a>
+            </div>
           </div>
           <pre class="bibtex" style="display:none">@inproceedings{wang2020vitaa,
   title={ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language},
@@ -1000,6 +1062,11 @@
         <a href="https://scholar.google.com/citations?hl=en&user=fHWXpq4AAAAJ">More in Google Scholar.</a>
 
       </div>
+
+      <div style="text-align:center;margin-top:12px">
+        <button id="pub-toggle" class="pub-toggle" aria-expanded="false" aria-controls="pub-list">Show all</button>
+      </div>
+
     </section>
 
     <section id="service">
@@ -1011,15 +1078,8 @@
       </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="card">
-        <p>Email: <a href="mailto:zfang29@asu.edu">zfang29@asu.edu</a> · Open to collaborations and intern inquiries.</p>
-      </div>
-    </section>
-
     <footer>
-      © <span id="y"></span> Jacob Zhiyuan Fang · Source under MIT License. Last updated: <span id="lastmod"></span>
+      © <span id="y"></span> Jacob Zhiyuan Fang </span>
     </footer>
   </main>
 
@@ -1700,6 +1760,160 @@
         }, { threshold: 0.25 });
         vids.forEach(v=>io.observe(v));
       }
+    })();
+
+    // ===== Collapse/Expand publications list (show top 3 by default) =====
+    (function initPubToggle(){
+      const list = document.getElementById('pub-list');
+      const btn = document.getElementById('pub-toggle');
+      if(!list || !btn) return;
+      const pubs = list.querySelectorAll('article.pub');
+      const total = pubs.length;
+      const isCollapsed = list.classList.contains('collapsed');
+      btn.setAttribute('aria-expanded', String(!isCollapsed));
+      btn.textContent = isCollapsed ? `Show all (${total})` : 'Show less';
+      btn.addEventListener('click', ()=>{
+        const collapsed = list.classList.toggle('collapsed');
+        btn.setAttribute('aria-expanded', String(!collapsed));
+        btn.textContent = collapsed ? `Show all (${total})` : 'Show less';
+      });
+    })();
+
+    // ===== Experience project sliders (show up to 3, add nav buttons with loop) =====
+    (function initXpSliders(){
+      const containers = document.querySelectorAll('#experience .xp-projects');
+      containers.forEach((track)=>{
+        // wrap track in a slider wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'xp-slider';
+        track.parentNode.insertBefore(wrapper, track);
+        wrapper.appendChild(track);
+
+        // create nav buttons with SVG icons
+        const prev = document.createElement('button');
+        prev.className = 'xp-prev'; prev.setAttribute('aria-label','Previous projects');
+        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.71 6.71a1 1 0 0 0-1.42-1.42L8 11.59 14.29 17.88a1 1 0 1 0 1.42-1.42L10.83 12l4.88-5.29z"/></svg>';
+
+        const next = document.createElement('button');
+        next.className = 'xp-next'; next.setAttribute('aria-label','Next projects');
+        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8.29 17.29a1 1 0 0 0 1.42 1.42L16 12.41 9.71 6.12A1 1 0 0 0 8.29 7.54L13.17 12l-4.88 5.29z"/></svg>';
+
+        wrapper.appendChild(next); wrapper.insertBefore(prev, track);
+
+        // paging helpers
+        let page = 0;
+        const pageWidth = ()=> Math.max(1, track.clientWidth);
+        const maxPage = ()=> Math.max(0, Math.ceil(track.scrollWidth / pageWidth()) - 1);
+
+        function goToPage(p){
+          const mp = maxPage();
+          const target = Math.max(0, Math.min(mp, p));
+          track.scrollTo({ left: Math.round(target * pageWidth()), behavior: 'smooth' });
+          page = target;
+        }
+
+        // next/prev with looping behavior
+        prev.addEventListener('click', ()=>{
+          const mp = maxPage();
+          if (mp === 0) return;
+          if (page <= 0) goToPage(mp); else goToPage(page - 1);
+        });
+        next.addEventListener('click', ()=>{
+          const mp = maxPage();
+          if (mp === 0) return;
+          if (page >= mp) goToPage(0); else goToPage(page + 1);
+        });
+
+        // show/hide arrows only when content overflows; keep arrows visible otherwise
+        function update(){
+          const canScroll = track.scrollWidth - track.clientWidth > 6;
+          prev.classList.toggle('hidden', !canScroll);
+          next.classList.toggle('hidden', !canScroll);
+          // update current page based on scroll position
+          const pw = pageWidth();
+          if (pw > 0) page = Math.max(0, Math.min(maxPage(), Math.round(track.scrollLeft / pw)));
+        }
+        track.addEventListener('scroll', update, {passive:true});
+        window.addEventListener('resize', update);
+        update();
+
+        // sensible scroll padding so first/last items aren't hidden under arrows
+        try{ track.style.scrollPaddingInline = '56px'; }catch(e){}
+      });
+    })();
+
+    // ===== Product Highlights slider (horizontal, reuse xp styles) =====
+    (function initVidSliders(){
+      const containers = document.querySelectorAll('#video-panels .vid-grid');
+      containers.forEach((track)=>{
+        const wrapper = document.createElement('div'); wrapper.className = 'xp-slider';
+        track.parentNode.insertBefore(wrapper, track); wrapper.appendChild(track);
+
+        const prev = document.createElement('button'); prev.className='xp-prev'; prev.setAttribute('aria-label','Previous highlights');
+        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.71 6.71a1 1 0 0 0-1.42-1.42L8 11.59 14.29 17.88a1 1 0 1 0 1.42-1.42L10.83 12l4.88-5.29z"/></svg>';
+        const next = document.createElement('button'); next.className='xp-next'; next.setAttribute('aria-label','Next highlights');
+        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8.29 17.29a1 1 0 0 0 1.42 1.42L16 12.41 9.71 6.12A1 1 0 0 0 8.29 7.54L13.17 12l-4.88 5.29z"/></svg>';
+        wrapper.appendChild(next); wrapper.insertBefore(prev, track);
+
+        let page = 0;
+        const pageWidth = ()=> Math.max(1, track.clientWidth);
+        const maxPage = ()=> Math.max(0, Math.ceil(track.scrollWidth / pageWidth()) - 1);
+        function goToPage(p){ const mp = maxPage(); const target = Math.max(0, Math.min(mp, p)); track.scrollTo({ left: Math.round(target * pageWidth()), behavior: 'smooth' }); page = target; }
+
+        prev.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page <= 0) goToPage(mp); else goToPage(page - 1); });
+        next.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page >= mp) goToPage(0); else goToPage(page + 1); });
+
+        function update(){ const canScroll = track.scrollWidth - track.clientWidth > 6; prev.classList.toggle('hidden', !canScroll); next.classList.toggle('hidden', !canScroll); const pw = pageWidth(); if (pw>0) page = Math.max(0, Math.min(maxPage(), Math.round(track.scrollLeft / pw))); }
+        track.addEventListener('scroll', update, {passive:true}); window.addEventListener('resize', update); update();
+        try{ track.style.scrollPaddingInline = '56px'; }catch(e){}
+
+        // Auto-slide (left→right) with looping, pause on hover/interaction and when tab hidden
+        (function autoSlide(){
+          const AUTO_MS = 4000; let autoTimer = null; let interactionPaused = false;
+          function startAuto(){ if (autoTimer || interactionPaused) return; if (maxPage() === 0) return; autoTimer = setInterval(()=>{ const mp = maxPage(); if (page >= mp) goToPage(0); else goToPage(page + 1); }, AUTO_MS); }
+          function stopAuto(){ if (!autoTimer) return; clearInterval(autoTimer); autoTimer = null; }
+          wrapper.addEventListener('mouseenter', ()=>{ interactionPaused = true; stopAuto(); });
+          wrapper.addEventListener('mouseleave', ()=>{ interactionPaused = false; startAuto(); });
+          track.addEventListener('pointerdown', ()=>{ interactionPaused = true; stopAuto(); }, {passive:true});
+          track.addEventListener('pointerup', ()=>{ interactionPaused = false; setTimeout(startAuto, 1200); }, {passive:true});
+          document.addEventListener('visibilitychange', ()=>{ if (document.hidden) stopAuto(); else startAuto(); });
+          // start if scrollable
+          startAuto();
+        })();
+      });
+    })();
+
+    // ===== News vertical slider (up/down) =====
+    (function initNewsSlider(){
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card=>{
+        const header = card.querySelector('strong'); if(!header) return;
+        if(header.textContent.trim() !== 'News') return;
+        const ul = card.querySelector('ul'); if(!ul) return;
+
+        const wrapper = document.createElement('div'); wrapper.className = 'news-slider';
+        const list = document.createElement('div'); list.className = 'news-list';
+        ul.parentNode.replaceChild(wrapper, ul);
+        list.appendChild(ul); wrapper.appendChild(list);
+
+        const prev = document.createElement('button'); prev.className='news-prev'; prev.setAttribute('aria-label','Previous news');
+        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>';
+        const next = document.createElement('button'); next.className='news-next'; next.setAttribute('aria-label','Next news');
+        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>';
+        wrapper.appendChild(next); wrapper.insertBefore(prev, list);
+
+        let page = 0;
+        const pageHeight = ()=> Math.max(1, list.clientHeight);
+        const maxPage = ()=> Math.max(0, Math.ceil(list.scrollHeight / pageHeight()) - 1);
+        function goToPage(p){ const mp = maxPage(); const target = Math.max(0, Math.min(mp, p)); list.scrollTo({ top: Math.round(target * pageHeight()), behavior: 'smooth' }); page = target; }
+
+        prev.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page <= 0) goToPage(mp); else goToPage(page - 1); });
+        next.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page >= mp) goToPage(0); else goToPage(page + 1); });
+
+        function update(){ const canScroll = list.scrollHeight - list.clientHeight > 6; prev.classList.toggle('hidden', !canScroll); next.classList.toggle('hidden', !canScroll); const ph = pageHeight(); if (ph>0) page = Math.max(0, Math.min(maxPage(), Math.round(list.scrollTop / ph))); }
+        list.addEventListener('scroll', update, {passive:true}); window.addEventListener('resize', update); update();
+        try{ list.style.scrollPaddingBlock = '40px'; }catch(e){}
+      });
     })();
   </script>
 
