@@ -1,1933 +1,319 @@
 <!doctype html>
-<!-- Republished on 2026-10-31 after restoring the custom domain. -->
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jacob Zhiyuan Fang | Academic Homepage</title>
-  <meta name="description" content="(Jacob) Zhiyuan Fang — research scientist working on visual Gen AI." />
-  <meta name="color-scheme" content="light dark">
-  <meta property="og:title" content="(Jacob) Zhiyuan Fang | Academic Homepage"/>
-  <meta property="og:description" content="Research, publications, teaching, talks, and contact"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:image" content="images/profile.jpg"/>
-  <meta property="og:locale" content="en_US"/>
-  <link rel="icon" href="favicon.ico" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Jacob Zhiyuan Fang — Selected work</title>
+  <meta name="description" content="Jacob Zhiyuan Fang, Member of Technical Staff at Microsoft AI. Visual generation across images, videos, and visual assets using diffusion models, code, and agentic methods.">
   <style>
-    /* Mobile/responsive fixes */
-    *, *::before, *::after { box-sizing: border-box; }
-    img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
-    html, body { overflow-x: hidden; }
-    @media (max-width:420px){
-      .wrap{padding:12px}
-      header{grid-template-columns:72px 1fr;gap:12px}
-      .avatar{width:72px;height:72px;border-radius:12px}
-      .name{font-size:22px}
-      .nav{padding:8px 12px}
+    :root { color-scheme:light; --page:#ffffff; --ink:#202832; --muted:#586472; --rule:#dce1e6; --accent:#245d91; --sans:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+    *,*::before,*::after { box-sizing:border-box; }
+    html { scroll-padding-top:28px; }
+    body { margin:0; color:var(--ink); background:var(--page); font:15px/1.65 var(--sans); -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,h4,p,figure,dl,dd { margin:0; }
+    strong { font-weight:600; }
+    img,video { max-width:100%; display:block; }
+    img { height:auto; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px; }
+    a:hover { text-decoration:underline; }
+    a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+    button { font:inherit; }
+    [hidden] { display:none !important; }
+    .page { width:calc(100% - 56px); max-width:936px; margin:0 auto; }
+    .row { display:grid; grid-template-columns:144px minmax(0,1fr); column-gap:32px; }
+    .content { min-width:0; }
+    .skip { position:absolute; top:-90px; left:16px; background:var(--page); padding:8px; z-index:2; }
+    .skip:focus { top:10px; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:24px 0 17px; border-bottom:1px solid var(--rule); font:12px/1.6 var(--sans); }
+    .topline a { text-decoration:none; }
+    .preview-link { color:var(--muted); }
+    .topline nav { display:flex; flex-wrap:wrap; gap:22px; }
+    .intro { grid-template-columns:180px minmax(0,1fr); align-items:center; padding:36px 0 38px; }
+    .headshot { width:180px; height:225px; object-fit:cover; }
+    h1 { font:600 28px/1.25 var(--sans); letter-spacing:-.4px; }
+    .role { margin-top:8px; font:500 13px/1.6 var(--sans); color:var(--muted); }
+    .bio { max-width:660px; margin-top:16px; font:16px/1.65 var(--sans); }
+    .contact-links { display:flex; flex-wrap:wrap; gap:18px; margin-top:16px; font:12px/1.6 var(--sans); }
+    .contact-links a { text-decoration:none; }
+    .case { padding:28px 0 38px; border-top:1px solid var(--rule); }
+    .case + .case { padding-top:28px; }
+    .margin-note { padding-top:3px; color:var(--muted); font:12px/1.7 var(--sans); }
+    .margin-note strong { display:block; color:var(--ink); font-size:13px; font-weight:600; }
+    .margin-note .position { display:block; margin-top:6px; }
+    .margin-note time,.margin-note .period { display:block; margin-top:11px; font-size:12px; }
+    .case h2,.section-title { font:600 16px/1.5 var(--sans); letter-spacing:0; }
+    .case .lede { max-width:680px; margin-top:12px; }
+    .case .lede + p { max-width:680px; margin-top:12px; }
+    .case .result { margin-top:12px; font-size:15px; }
+    .result strong { font-weight:600; color:var(--ink); }
+    .figure { margin-top:20px; }
+    .figure-image { display:block; }
+    .figure-image img { width:100%; height:auto; border:1px solid #e2e6ea; }
+    .figure figcaption { margin-top:11px; color:var(--muted); font:12px/1.65 var(--sans); }
+    .figure figcaption a { text-decoration:none; }
+    .caption-title { color:var(--ink); font-weight:500; }
+    .caption-source { display:block; margin-top:3px; font-size:12px; }
+    .generation-set { max-width:680px; margin:20px 0 24px; }
+    .generation-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .generation-row--mixed { grid-template-columns:minmax(0,.684962fr) minmax(0,1.777778fr); margin-top:12px; }
+    .generation-row a { display:block; min-width:0; aspect-ratio:1; cursor:zoom-in; }
+    .generation-row--mixed a:first-child { aspect-ratio:1248 / 1822; }
+    .generation-row--mixed a:last-child { aspect-ratio:1920 / 1080; }
+    .generation-row img { width:100%; height:100%; object-fit:contain; }
+    .generation-set figcaption { margin-top:9px; color:var(--muted); font:12px/1.6 var(--sans); }
+    .generation-set figcaption a { text-decoration:none; }
+    .arena-gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; max-width:640px; margin-top:20px; align-items:start; }
+    .arena-gallery .figure,.supporting .arena-gallery .figure { margin:0; min-width:0; }
+    .arena-gallery figcaption { margin-top:7px; font:12px/1.5 var(--sans); }
+    .arena-gallery .figure-image { cursor:zoom-in; }
+    .arena-source { max-width:640px; margin-top:10px; color:var(--muted); font:12px/1.6 var(--sans); }
+    .arena-source a { text-decoration:none; }
+    .nova-figure { max-width:520px; }
+    .research-demos .figure { max-width:520px; }
+    .image-viewer { width:fit-content; max-width:min(1400px,96vw); max-height:96vh; padding:16px; border:1px solid var(--rule); background:var(--page); color:var(--ink); }
+    .portrait-link { display:block; width:fit-content; cursor:zoom-in; }
+    .viewer-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .viewer-actions button:disabled { opacity:.5; cursor:default; }
+    .image-canvas { max-width:min(1366px,calc(96vw - 34px)); max-height:calc(96vh - 100px); max-height:calc(96dvh - 100px); overflow:auto; }
+    .image-canvas:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+    .image-viewer.is-zoomed img { max-width:none; max-height:none; cursor:zoom-out; }
+    .image-viewer::backdrop { background:rgba(20,28,38,.66); }
+    .viewer-bar { position:sticky; top:-16px; display:flex; justify-content:space-between; align-items:center; gap:16px; margin:-16px -16px 14px; padding:12px 16px; background:var(--page); font:12px/1.5 var(--sans); }
+    .viewer-bar button { flex-shrink:0; border:1px solid var(--rule); padding:7px 12px; color:var(--ink); background:transparent; cursor:pointer; font:12px/1.5 var(--sans); }
+    .image-viewer img { width:auto; height:auto; max-width:min(1366px,calc(96vw - 34px)); max-height:calc(96vh - 100px); max-height:calc(96dvh - 100px); object-fit:contain; margin:0 auto; cursor:zoom-in; }
+    .supporting { margin-top:22px; padding-top:14px; border-top:1px solid var(--rule); }
+    .supporting summary { color:var(--accent); cursor:pointer; font:12px/1.65 var(--sans); padding:3px 0; }
+    .supporting summary:hover { text-decoration:underline; text-underline-offset:3px; }
+    .supporting .support-copy { margin-top:14px; max-width:680px; font-size:15px; }
+    .supporting .support-copy + p { margin-top:10px; font-size:15px; }
+    .supporting .figure { margin-top:18px; }
+    .video-showcase { display:grid; grid-template-columns:.5625fr 1.777778fr 1.733333fr; gap:16px; max-width:600px; margin-top:18px; align-items:start; }
+    .video-item { min-width:0; margin:0; }
+    .video-preview { position:relative; display:block; overflow:hidden; }
+    .video-hover { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:contain; opacity:0; pointer-events:none; transition:opacity .16s ease; }
+    .video-preview[data-preview-state="playing"] .video-hover { opacity:1; }
+    .video-preview::after { content:"↗"; position:absolute; top:7px; right:7px; display:grid; place-items:center; width:22px; height:22px; color:#fff; background:rgba(20,28,38,.58); opacity:0; pointer-events:none; font:13px/1 var(--sans); transition:opacity .16s ease; }
+    .video-preview:hover::after,.video-preview:focus-visible::after { opacity:1; }
+    .video-showcase[data-hover-previews="true"] .video-preview { cursor:zoom-in; }
+    .video-preview img { width:100%; height:auto; }
+    .video-preview .play-mark { position:absolute; bottom:8px; left:8px; display:grid; place-items:center; width:26px; height:26px; background:rgba(255,255,255,.94); color:var(--ink); font:11px/1 var(--sans); }
+    .video-showcase[data-hover-previews="true"] .play-mark { display:none; }
+    .video-showcase[data-hover-previews="true"] .video-preview[data-preview-state="error"] .play-mark { display:grid; }
+    .video-hint { margin-top:12px; color:var(--muted); font:12px/1.6 var(--sans); }
+    .video-hint .hover-hint { display:none; }
+    .video-showcase[data-hover-previews="true"] + .video-hint .hover-hint { display:inline; }
+    .video-showcase[data-hover-previews="true"] + .video-hint .tap-hint { display:none; }
+    @media (prefers-reduced-motion:reduce) { .video-hover,.video-preview::after { transition:none; } }
+    .video-item figcaption { margin-top:8px; color:var(--muted); font:12px/1.6 var(--sans); }
+    .video-name { display:block; color:var(--ink); font-size:13px; font-weight:600; }
+    .video-detail { display:block; margin-top:2px; }
+    .video-source { display:inline-block; margin-top:3px; text-decoration:none; }
+    .video-source:hover { text-decoration:underline; }
+    .video-viewer { width:fit-content; max-width:94vw; max-height:94vh; padding:16px; border:1px solid var(--rule); background:var(--page); color:var(--ink); }
+    .video-viewer::backdrop { background:rgba(20,28,38,.66); }
+    .video-viewer video { display:block; width:auto; height:auto; max-width:calc(94vw - 34px); max-height:calc(94vh - 110px); max-height:calc(94dvh - 110px); object-fit:contain; background:#101820; }
+    .video-error { max-width:320px; margin-top:10px; font:12px/1.5 var(--sans); }
+    .small-link { font:12px/1.6 var(--sans); }
+    .small-link a { text-decoration:none; }
+    .research-demos .figure + .figure { margin-top:27px; }
+    .research-demos video { width:100%; height:auto; }
+    .research-demos .figure-title { margin-bottom:9px; font:600 16px/1.45 var(--sans); }
+    .related-links { display:flex; flex-wrap:wrap; gap:8px 19px; margin-top:18px; font:12px/1.65 var(--sans); }
+    .related-links a { text-decoration:none; }
+    .bibliography { border-top:1px solid var(--rule); padding:30px 0 38px; }
+    .section-intro { max-width:680px; color:var(--muted); margin-top:10px; font-size:14px; }
+    .publication-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 18px; color:var(--muted); font:12px/1.5 var(--sans); }
+    .publication-toolbar button { min-height:28px; padding:2px 0; border:0; background:transparent; color:var(--accent); cursor:pointer; font:12px/1.5 var(--sans); }
+    .publication-toolbar button:hover { text-decoration:underline; text-underline-offset:3px; }
+    .publication-list { max-height:420px; overflow-y:scroll; padding:0 14px 8px 0; scrollbar-gutter:stable; scrollbar-color:auto; }
+    .publication-list:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+    .publication-list::-webkit-scrollbar { display:block; width:10px; }
+    .publication-list::-webkit-scrollbar-track { background:#f2f4f6; }
+    .publication-list::-webkit-scrollbar-thumb { background:#a6b0bb; border:2px solid #f2f4f6; border-radius:6px; }
+    .publication-list > .paper-group:first-child { margin-top:0; }
+    .publication-list.is-expanded { max-height:none; overflow:visible; }
+    .paper-group { margin-top:24px; }
+    .paper-group h3 { margin-bottom:14px; font:600 13px/1.6 var(--sans); color:var(--muted); }
+    .paper + .paper { margin-top:19px; }
+    .paper h4 { font:600 15px/1.5 var(--sans); letter-spacing:0; }
+    .paper h4 a { color:var(--ink); text-decoration:none; }
+    .paper h4 a:hover { color:var(--accent); text-decoration:underline; }
+    .paper-venue { margin-top:5px; color:var(--muted); font:12px/1.55 var(--sans); }
+    .authors { margin-top:5px; font:12px/1.7 var(--sans); color:var(--muted); }
+    .authors strong { font-weight:600; color:var(--ink); }
+    .paper-links { display:flex; flex-wrap:wrap; gap:16px; margin-top:6px; font:12px/1.6 var(--sans); }
+    .paper-links a { text-decoration:none; }
+    .background { border-top:1px solid var(--rule); padding:30px 0 32px; }
+    .career { list-style:none; margin:20px 0 22px; padding:0; }
+    .career li { display:grid; grid-template-columns:158px minmax(0,1fr); gap:22px; font:12px/1.65 var(--sans); padding:0 0 15px; }
+    .career-date { color:var(--muted); font-size:12px; padding-top:2px; }
+    .career-company { display:block; font-weight:500; }
+    .career-role { display:block; color:var(--muted); font-size:12px; }
+    .education { padding-top:21px; border-top:1px solid var(--rule); font:14px/1.65 var(--sans); }
+    .education p + p { margin-top:12px; }
+    .education span { display:block; color:var(--muted); font:12px/1.7 var(--sans); margin-top:4px; }
+    .service { margin-top:18px; color:var(--muted); font:12px/1.7 var(--sans); }
+    .service strong { color:var(--ink); font-weight:500; }
+    footer { border-top:1px solid var(--rule); padding:20px 0 29px; font:12px/1.65 var(--sans); color:var(--muted); }
+    footer .content { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    footer a { text-decoration:none; }
+    @media (max-width:920px) {
+      .row { grid-template-columns:1fr; }
+      .intro { grid-template-columns:180px minmax(0,1fr); gap:24px; }
+      .margin-note { display:flex; gap:4px 12px; align-items:baseline; flex-wrap:wrap; padding:0; margin-bottom:16px; }
+      .margin-note strong,.margin-note .position,.margin-note .period { display:inline; margin:0; }
+      .margin-note .position { display:none; }
+      .margin-note .period { font-size:12px; }
+      .case { padding-top:26px; padding-bottom:34px; }
+      .case + .case { padding-top:26px; }
+      .bio { font-size:16px; }
+      .bibliography,.background { padding-top:26px; }
+      footer .margin-note { display:none; }
     }
-    :root{
-      --bg:#ffffff;--fg:#000000;--muted:#6b7280;--link:#2563eb;--accent:#2563eb;--card:#ffffff;--border:#e5e7eb;--kbd:#f1f5f9;--tag:#e2e8f0;--shadow:0 10px 30px rgba(0,0,0,.06);
-      /* graph theme */
-      --exp:#0EA5E9;   /* cyan-500 */
-      --pub:#F59E0B;   /* amber-500 */
+    @media (max-width:560px) {
+      .page { width:calc(100% - 36px); }
+      .topline { gap:12px; align-items:flex-start; font-size:12px; }
+      .topline nav { gap:12px; }
+      .intro { grid-template-columns:minmax(0,1fr) 128px; gap:16px; padding:28px 0 30px; }
+      .intro-copy { display:contents; }
+      .identity { grid-column:1; grid-row:1; }
+      .portrait-wrap { grid-column:2; grid-row:1; }
+      .headshot { width:128px; height:160px; }
+      h1 { font-size:25px; letter-spacing:-.3px; }
+      .role { font-size:12px; margin-top:8px; }
+      .bio,.contact-links { grid-column:1 / -1; margin-top:0; }
+      .bio { font-size:15px; }
+      .contact-links { font-size:12px; gap:18px; }
+      .case h2,.section-title { font-size:16px; }
+      .case .lede { margin-top:10px; }
+      .arena-gallery { grid-template-columns:minmax(0,1fr); max-width:320px; gap:18px; }
+      .figure figcaption { font-size:12px; }
+      .figure { margin-top:20px; }
+      .video-showcase { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 14px; }
+      .video-item--product { grid-column:1 / -1; display:flex; align-items:center; gap:14px; }
+      .video-item--product .video-preview { flex:0 0 72px; width:72px; }
+      .video-item--product figcaption { margin-top:0; }
+      .publication-list { max-height:380px; }
+      .paper h4 { font-size:15px; }
+      .authors { font-size:12px; }
+      .career li { grid-template-columns:1fr; gap:1px; padding-bottom:17px; }
+      .career-date { order:2; }
+      .career-role { font-size:12px; }
     }
-    @media (prefers-color-scheme: dark){
-      :root{
-        --bg:#ffffff;--fg:#000000;--muted:#94a3b8;--link:#60a5fa;--accent:#60a5fa;--card:#ffffff;--border:#e5e7eb;--kbd:#111827;--tag:#1f2937;--shadow:0 10px 30px rgba(0,0,0,.35);
-      }
+    @media (max-width:380px) {
+      .topline { display:block; }
+      .topline nav { margin-top:8px; gap:19px; }
+      h1 { font-size:24px; }
     }
-    html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif}
-    a, a:visited{color:var(--link) !important; text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:980px;margin:auto;padding:24px}
-    header{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;margin-block:20px}
-    .avatar{width:120px;height:120px;border-radius:16px;object-fit:cover;box-shadow:var(--shadow)}
-    .name{font-size:32px;line-height:1.2;margin:0}
-    .title{color:var(--muted);margin:.25rem 0 0}
-    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .chip{display:inline-flex;align-items:center;gap:8px;background:#ffffff;color:var(--link);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px;text-decoration:none}
-    .chip:visited{color:var(--link)}
-    .chip:hover{background:var(--card)}
-    nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:10}
-    .nav{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;padding:10px 24px;overflow:auto}
-    .nav a{
-      padding:6px 10px;
-      border-radius:8px;
-      background:#ffffff;
-      color:var(--link);
-      border:1px solid var(--border);
-      text-decoration:none;
-    }
-    .nav a:visited{color:var(--link)}
-    .nav a.active,.nav a:hover{background:var(--card);color:var(--link);text-decoration:none}
-    section{padding-block:28px;border-bottom:1px dashed var(--border)}
-    h2{margin:0 0 12px;font-size:26px}
-    .grid{display:grid;gap:16px}
-    .grid-2{grid-template-columns:repeat(2,1fr)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-    .pub{display:grid;gap:10px}
-    .pub .meta{color:var(--muted);font-size:14px}
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-    .tag{font-size:12px;background:var(--tag);border:1px solid var(--border);padding:2px 8px;border-radius:999px}
-    /* Hide publication tags (visual-only) */
-    .card.pub .tags{display:none}
-    .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--bg);padding:6px 10px;border-radius:8px}
-    .btn:hover{background:var(--card);text-decoration:none}
-    .right{margin-left:auto}
-    .tool{display:flex;gap:8px;flex-wrap:wrap}
-    .search{display:flex;gap:8px;align-items:center}
-    input[type="search"],select{background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:8px;color:var(--fg)}
-    footer{padding:24px 0;color:var(--muted);font-size:14px}
-    .two-col{display:grid;grid-template-columns:1fr 240px;gap:24px}
-    .thumb{width:100%;aspect-ratio:25/12;object-fit:cover;border-radius:12px;border:1px solid var(--border);background:#000}
-
-    /* Media thumbnails keep their native aspect ratio; titles on first line, authors on second. */
-    .card.pub{display:grid;gap:12px;align-items:start;grid-template-columns:1fr}
-    .card.pub:has(.thumb){grid-template-columns:240px 1fr}
-    .card.pub .thumb{grid-column:1;grid-row:1;width:240px;height:144px;border-radius:8px;object-fit:cover;display:block;max-width:100%}
-    /* Place all non-thumb children into the right column when a thumbnail exists */
-    .card.pub:has(.thumb) > *:not(.thumb){grid-column:2}
-    .card.pub .tool{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
-    .card.pub pre.bibtex{display:block;margin-top:6px;color:var(--muted);font-size:13px}
-    /* Title and authors on separate lines */
-    .card.pub > div > strong{display:block;margin-bottom:4px}
-    .card.pub > div > .meta{display:block;margin-top:0}
-
-    /* Collapse publications: show only first 3 when collapsed */
-    #pub-list.collapsed article.pub:nth-of-type(n+4){display:none;}
-
-    /* Toggle button style for publications (more visible) */
-    .pub-toggle{font-size:.95rem;padding:.4rem .75rem;background:var(--accent);color:#fff;border:none;border-radius:.5rem;cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.12)}
-    .pub-toggle:hover{opacity:.95}
-    .pub-toggle:focus{outline:3px solid rgba(0,0,0,.06);outline-offset:2px}
-
-    @media (max-width:720px){
-      .card.pub{grid-template-columns:1fr}
-      .card.pub .thumb{width:100%;height:auto}
-      .card.pub > *:not(.thumb){grid-column:1}
-    }
-    @media (max-width:900px){.two-col{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
-    @media print{nav,.tool,.chip{display:none}.card{box-shadow:none}a{text-decoration:none}}
-
-    /* ===== Interactive Experience/Publication Graph (scoped) ===== */
-    #xp-pubs-graph{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:16px;position:relative}
-    #xp-pubs-graph .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-    #xp-pubs-graph .title{display:flex;align-items:center;gap:10px}
-    #xp-pubs-graph .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:var(--accent);box-shadow:0 0 16px rgba(96,165,250,.6)}
-    #xp-pubs-graph .legend{display:flex;gap:14px;font-size:12px;color:var(--muted)}
-    #xp-pubs-graph .legend .dot{background:currentColor;box-shadow:none}
-    #xp-pubs-graph .surface{
-      position:relative;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden;
-      background:
-        radial-gradient(60% 40% at 10% 0%, rgba(96,165,250,0.14) 0%, rgba(96,165,250,0.00) 60%),
-        radial-gradient(50% 40% at 90% 100%, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0.00) 70%),
-        conic-gradient(from 220deg at 70% 30%, rgba(99,102,241,.10), rgba(59,130,246,.08), rgba(99,102,241,.10));
-      backdrop-filter: blur(8px)
-    }
-    #xp-pubs-graph .surface .hint{
-      position:absolute;right:10px;bottom:8px;font-size:11px;color:var(--muted);
-      user-select:none;background:var(--card);padding:6px 8px;border-radius:8px;border:1px solid var(--border)
-    }
-    #xp-pubs-graph .surface .test{
-      position:absolute;left:10px;bottom:8px;font-size:11px;opacity:.85;
-      user-select:none;background:rgba(0,0,0,.08);padding:6px 8px;border-radius:8px;border:1px solid var(--border);display:none; /* hide in prod */
-      color:var(--muted)
-    }
-    #xp-pubs-graph svg{width:100%;height:100%;display:block;cursor:grab;touch-action:pan-x pan-y pinch-zoom}
-    #xp-pubs-graph svg:active{cursor:grabbing}
-    #xp-pubs-graph .link{stroke:rgba(17,24,39,.28);stroke-width:1.2;transition:stroke .15s ease,stroke-width .15s ease}
-    #xp-pubs-graph .link.is-active{stroke:rgba(17,24,39,.66);stroke-width:2}
-    #xp-pubs-graph .node circle{stroke:rgba(255,255,255,.75);stroke-width:1.2;filter:drop-shadow(0 0 6px rgba(255,255,255,.6));transition:transform .15s ease, filter .15s ease, stroke-width .15s ease}
-    #xp-pubs-graph .node:hover circle{transform:scale(1.05)}
-    #xp-pubs-graph .node.is-active circle{stroke-width:2;filter:drop-shadow(0 0 12px rgba(255,255,255,.9))}
-    #xp-pubs-graph .node.is-dragging circle{transform:scale(1.12);filter:drop-shadow(0 0 16px rgba(255,255,255,.9))}
-    #xp-pubs-graph .label{font-size:12px;fill:var(--fg);paint-order:stroke;stroke:rgba(0,0,0,.25);stroke-width:3px;pointer-events:none}
-    #xp-pubs-graph .cluster{stroke:rgba(255,255,255,.35);stroke-dasharray:4 6;fill:rgba(96,165,250,0.06);pointer-events:none}
-    #xp-pubs-graph .cluster-label{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;font-weight:600;font-style:italic;font-size:15px;fill:var(--fg);opacity:.9;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.45);filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
-
-    /* ===== Video Panels (scoped) ===== */
-    #video-panels{}
-    /* Horizontal slider for Product Highlights (show up to 3 panels) */
-    #video-panels .vid-grid{
-      display:flex; gap:12px; margin:0;
-      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-      scroll-padding-inline:56px; -ms-overflow-style:none; scrollbar-width:none;
-    }
-    #video-panels .vid-grid::-webkit-scrollbar{ display:none; height:0 }
-    /* Each vid panel becomes a flex child (3 per view desktop, 2 per tablet, 1 per mobile) */
-    #video-panels .vid-panel{ flex:0 0 calc((100% - 24px)/3); max-width:calc((100% - 24px)/3); scroll-snap-align:start; margin:0 6px; }
-    @media (max-width:1100px){ #video-panels .vid-panel{ flex:0 0 calc((100% - 12px)/2); max-width:calc((100% - 12px)/2); } }
-    @media (max-width:520px){  #video-panels .vid-panel{ flex:0 0 100%; max-width:100%; } }
-
-    #video-panels .vid-panel{
-      position:relative;
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:10px;
-      box-shadow:var(--shadow);
-      isolation:isolate;
-    }
-    #video-panels .vid-panel::before{
-      content:"";
-      position:absolute; inset:0; padding:2px; border-radius:16px;
-      background:linear-gradient(135deg, hsl(214 95% 68%), hsl(284 92% 72%));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-      pointer-events:none; opacity:.9;
-    }
-    #video-panels .vid-badge{
-      display:inline-block;
-      padding:1px 16px;
-      border-radius:999px;
-      font-size:12px; font-weight:600;
-      background:rgba(96,165,250,.18);
-      border:1px solid var(--border);
-    }
-    #video-panels .vid-video{
-      position:relative; width:100%; overflow:hidden; border-radius:12px; margin-top:8px;
-    }
-    #video-panels .vid-video video{
-      width:100%; height:auto; display:block;
-      aspect-ratio:16/9;
-      object-fit:cover; background:#000;
-      border:1px solid var(--border); border-radius:12px;
-    }
-    #video-panels .vid-caption{
-      margin-top:8px; font-size:14px; color:var(--muted);
-    }
-
-    /* Taller video panels */
-    #video-panels { --vid-aspect: 9/14; }           /* try 2/3 for very tall, 1/1 for square */
-    #video-panels .vid-video { aspect-ratio: var(--vid-aspect); }
-
-    /* make the <video> fill the new box */
-    #video-panels .vid-video video{
-      aspect-ratio: auto;      /* override the old 16/9 rule */
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Slightly larger video panels (raised height to reduce 'skewed' look) */
-    #video-panels .vid-video{ max-height:260px; }
-    #video-panels .vid-video video{ height:100%; }
-
-    /* News vertical slider */
-    .news-slider{ position:relative; }
-    .news-list{ max-height:200px; overflow-y:auto; scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch; padding-right:8px; -ms-overflow-style:none; scrollbar-width:none; }
-    .news-list > ul{ margin:4px 0 0; padding-left:16px; }
-    .news-list::-webkit-scrollbar{ display:none; width:0 }
-    .news-list li{ scroll-snap-align:start; padding:6px 0; }
-
-    /* tighten spacing between card header and list */
-    .card > strong{ display:block; margin-bottom:6px }
-    .news-prev, .news-next{
-      position:absolute; right:10px; width:36px; height:36px; border-radius:50%; border:none; background:rgba(0,0,0,0.6); color:#fff; display:flex; align-items:center; justify-content:center; z-index:6; box-shadow:0 6px 18px rgba(0,0,0,.12); cursor:pointer; opacity:1; transition:opacity .12s ease;
-    }
-    .news-prev{ top:8px }
-    .news-next{ bottom:8px }
-    .news-prev.hidden, .news-next.hidden{ opacity:0; pointer-events:none }
-
-
-    /* ===== LinkedIn-style Experience list (matches site tokens) ===== */
-    #experience .xp {
-      display: grid;
-      gap: 14px;
-      margin-top: 14px;
-    }
-    #experience .xp-item {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 14px;
-      box-shadow: var(--shadow);
-    }
-    #experience .xp-logo {
-      width: 56px; height: 56px;
-      border-radius: 12px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg);
-      border: 1px solid var(--border);
-    }
-    #experience .xp-logo img { width: 48px; height: 48px; object-fit: contain; }
-    #experience .xp-header { display: flex; flex-direction: column; gap: 2px; }
-    #experience .xp-company { font-weight: 700; color: inherit; text-decoration: none; }
-    #experience .xp-company:hover { text-decoration: underline; }
-    #experience .xp-meta { color: var(--muted); font-size: 14px; }
-    #experience .xp-location { color: var(--muted); font-size: 13px; }
-    #experience .xp-roles { margin-top: 8px; display: grid; gap: 10px; }
-    #experience .xp-role { border-top: 1px dashed var(--border); padding-top: 10px; }
-    #experience .xp-role:first-child { border-top: none; padding-top: 0; }
-    #experience .xp-role-title { font-weight: 600; }
-    #experience .xp-role-meta { color: var(--muted); font-size: 13px; }
-    #experience .xp-desc { margin-top: 6px; }
-    #experience .xp-desc a { color: var(--link); }
-    #experience .xp-desc a:hover { text-decoration: underline; }
-    @media (max-width: 720px){ #experience .xp-item{ grid-template-columns: 1fr; } }
-
-    .p-clamp{
-      max-width: 60ch;
-      margin: 0 0 .5rem 0;
-      overflow: hidden;
-    }
-    .p-clamp:not(.is-open){
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
-              mask-image: linear-gradient(to bottom, black 70%, transparent);
-    }
-    .p-toggle{
-      font-size: .875rem;
-      padding: .2rem .5rem;
-      background: var(--card, #f8fafc);
-      border: 1px solid var(--border, #e5e7eb);
-      border-radius: .5rem;
-      cursor: pointer;
-    }
-
-    .lead{font-weight:500; font-size:1.05rem; line-height:1.5}
-    .accent{
-      /* element-level override via --accent is supported */
-      color: color-mix(in oklab, var(--accent, #2563eb) 88%, var(--fg, #111827));
-      font-weight:600; letter-spacing:.2px;
-    }
-    /* Responsive YouTube embed for publication cards */
-    .thumb-embed{
-      inline-size: var(--w, 100%);             /* width control: set --w inline if needed */
-      aspect-ratio: var(--ar, 25/12);          /* default matches your .thumbs; use 16/9 if you prefer */
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #000;
-      margin: 8px 0;
-    }
-    .thumb-embed > iframe{
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
+    @media print {
+      body { background:#fff; font-size:11pt; }
+      .page { width:100%; max-width:none; }
+      .topline,.skip,.image-viewer,.video-viewer,footer { display:none; }
+      .intro { padding-top:0; }
+      .headshot { width:96px; height:120px; }
+      .row { grid-template-columns:120px minmax(0,1fr); gap:24px; }
+      .video-hover,.video-hint,.video-preview::after,.video-preview .play-mark { display:none !important; }
+      .publication-toolbar { display:none !important; }
+      .publication-list { max-height:none !important; overflow:visible !important; padding:0; outline:0; }
+      .paper { break-inside:avoid; }
+      a { color:inherit; }
     }
   </style>
-
-  <script>
-  // Lightweight hover play/pause for project videos
-  (function initProjectThumbs(){
-    const tiles = document.querySelectorAll('#experience .xp-project');
-    tiles.forEach(t=>{
-      const v = t.querySelector('video');
-      if(!v) return;
-      v.muted = true; v.playsInline = true; v.preload = 'metadata';
-      t.addEventListener('mouseenter', ()=> v.play().catch(()=>{}));
-      t.addEventListener('mouseleave', ()=> v.pause());
-      t.addEventListener('focus',     ()=> v.play().catch(()=>{}), true);
-      t.addEventListener('blur',      ()=> v.pause(), true);
-    });
-  })();
-</script>
-
-  <style>
-  /* ===== Experience project thumbnails (LinkedIn-like) ===== */
-  /* Horizontal slider: show up to 3 projects per view, allow sliding for more */
-  #experience .xp-projects{
-    display:flex;
-    flex-wrap:nowrap;
-    gap:12px;
-    margin-top:10px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    padding-bottom:6px;
-    scroll-padding-inline:56px; /* keep first/last visible when arrows overlay */
-    -ms-overflow-style:none; /* hide IE scrollbar */
-    scrollbar-width:none; /* hide Firefox scrollbar */
-  }
-  #experience .xp-projects::-webkit-scrollbar{ display:none; height:0; }
-  /* Each project takes up one third of the container (max 3 visible) */
-  #experience .xp-project{ flex:0 0 calc((100% - 24px)/3); max-width:calc((100% - 24px)/3); scroll-snap-align:start; }
-  @media (max-width:1000px){ #experience .xp-project{ flex:0 0 calc((100% - 12px)/2); max-width:calc((100% - 12px)/2); } }
-  @media (max-width:640px){  #experience .xp-project{ flex:0 0 100%; max-width:100%; } }
-
-  /* Slider wrapper and nav buttons */
-  .xp-slider{ position:relative; margin:8px 0 0; }
-  .xp-prev, .xp-next{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    width:40px; height:40px; border-radius:50%; border:none;
-    background:rgba(0,0,0,0.65); color:#fff; display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 18px rgba(0,0,0,.12); cursor:pointer; z-index:6; transition:transform .12s ease, opacity .12s ease;
-  }
-  .xp-prev{ left:8px; }
-  .xp-next{ right:8px; }
-  .xp-prev.hidden, .xp-next.hidden{ opacity:0; pointer-events:none; transform:translateY(-50%) scale(.98); }
-
-  /* subtle gradient edges to hint at overflow */
-  .xp-slider::before, .xp-slider::after{ content:''; position:absolute; top:0; bottom:0; width:56px; pointer-events:none; z-index:4; }
-  .xp-slider::before{ left:0; background: linear-gradient(to right, var(--bg), transparent); }
-  .xp-slider::after{ right:0; background: linear-gradient(to left, var(--bg), transparent); }
-
-  @media (max-width:640px){ .xp-prev, .xp-next, .xp-slider::before, .xp-slider::after { display:none !important; } }
-
-  #experience .xp-project{
-    display:block;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    color:inherit; text-decoration:none;
-    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-  }
-  #experience .xp-project:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
-    text-decoration:none;
-    border-color:color-mix(in oklab, var(--accent) 35%, var(--border));
-  }
-  #experience .xp-project:focus-visible{
-    outline:2px solid var(--accent);
-    outline-offset:2px;
-  }
-
-  #experience .xp-project-thumb{
-    width:100%;
-    aspect-ratio:16/9;
-    object-fit:cover;
-    background:#000;
-    border-bottom:1px solid var(--border);
-    display:block;
-    max-height:105px;
-    overflow:hidden;
-  }
-  /* Allow video too (same class) */
-  #experience .xp-project-thumb video,
-  #experience .xp-project-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-  #experience .xp-project-body{ padding:10px 12px; }
-  #experience .xp-project-title{ font-weight:600; line-height:1.35; }
-  #experience .xp-project-meta{ color:var(--muted); font-size:13px; margin-top:2px; }
-  #experience .xp-project-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-  #experience .xp-project-tag{
-    font-size:12px; padding:2px 8px; border-radius:999px;
-    background:var(--tag); border:1px solid var(--border);
-    white-space:nowrap;
-  }
-</style>
-
-  
-  <script>
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.p-toggle');
-      if (!btn) return;
-      const target = document.getElementById(btn.getAttribute('aria-controls'));
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      btn.textContent = expanded ? '🚀 We’re Hiring (Intern and <s>FTE</s>)' : 'Show less';
-      target.classList.toggle('is-open', !expanded);
-    });
-  </script>
-
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Jacob Zhiyuan Fang","jobTitle":"Research Scientist","affiliation":{"@type":"Organization","name":"TikTok / ByteDance"},"email":"mailto:you@example.com","url":"https://your-domain.example","sameAs":["https://scholar.google.com/citations?user=fHWXpq4AAAAJ","https://openreview.net/profile?id=~Zhiyuan_Fang1","https://github.com/"]}
-  </script>
+  <script src="assets/publications.js" defer></script>
+  <script src="assets/image-viewer.js" defer></script>
+  <script src="assets/video-dialog.js" defer></script>
+  <script src="assets/video-hover.js" defer></script>
 </head>
-<body>
-  <nav>
-    <div class="nav">
-      <a href="#about" class="active">About</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Publications</a>
-      <a href="#experience">Experience</a>
-<!--      <a href="#teaching">Teaching</a>-->
-<!--      <a href="#talks">Talks</a>-->
-      <a href="#service">Service</a>
-      <a href="cv.pdf" class="right btn" download>Download CV (PDF)</a>
-    </div>
-  </nav>
-  <main class="wrap">
-    <header>
-      <img class="avatar" src="images/profile.jpg" alt="Headshot (replace avatar.jpg)"/>
-      <div>
-        <h1 class="name">Jacob Zhiyuan Fang</h1>
-        <p class="title">Member of Technical Staff,  Microsoft AI, Super Intelligence Team</p>
-        <div class="links">
-          <a class="chip" href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="chip" href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-          <a class="chip" href="https://x.com/Jacob292020" target="_blank" rel="noopener">X</a>
-        </div>
-      </div>
+<body id="top">
+  <a class="skip" href="#projects">Skip to selected work</a>
+  <div class="page">
+    <div class="topline"><a class="preview-link" href="#top">Jacob Fang</a><nav aria-label="Main navigation"><a href="#projects">Work</a><a href="#publications">Publications</a><a href="#background">Background</a></nav></div>
+    <header class="intro row">
+      <div class="portrait-wrap"><a class="portrait-link" href="images/profile.jpg" data-full-image data-image-title="Jacob Zhiyuan Fang" aria-label="Enlarge profile photo"><img class="headshot" src="images/profile.jpg" alt="Jacob Zhiyuan Fang" width="180" height="225"></a></div>
+      <div class="intro-copy content"><div class="identity"><h1>Jacob Zhiyuan Fang</h1><p class="role">Member of Technical Staff · Microsoft AI</p></div><p class="bio">I work broadly on visual generation—from images and videos to visual assets—using diffusion models, code, and agentic methods.</p><div class="contact-links"><a href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ">Google Scholar</a><a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/">LinkedIn</a><a href="https://x.com/Jacob292020">X</a></div></div>
     </header>
-
-    <section id="about" class="two-col">
-      <div>
-        <h2>About</h2>
-        <p>I am a member of technical staff in Microsoft AI's Super Intelligence Team, focusing on visual generation and multi-modal learning. My recent focus includes controllable video generation, large scale training for diffusion models, and representation learning.</p>
-
-        <div class="grid grid-1">
-
-          <div class="card">
-            <strong>News</strong>
-            <ul>
-              <li>[2026 June] - <a href="https://microsoft.ai/news/introducing-mai-image-2-5/">MAI-Image-2.5</a> released. Top-2 Image generation model on LMArena. </li>              
-              <li>[2026 March] - Joined Microsoft AI's Super Intelligence Team. </li> 
-              <li>[2025 Sep] - New video generation model (Seedance-1.0-mini - TikTok production model) trained by us is online. Check out its first effect - <a href="">AI Flower (2M+ posts on TikTok in one week)</a>. <a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441"> <br> AI Mermaid Effect</a> is online, more than <a><em>35M</em></a> post on TikTok - <b>best</b> TikTok Global AI effect since 2023! </li>
-              <li>[2025 Jan] - <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">AI Alive</a> is online, check out <a href="https://www.tiktok.com/@shou.time/video/7504111206039571758">Shou's demo video</a> on our product. </li>
-              <!-- <li>[2024 Oct] ACM MM'24: <a href="https://www.amazon.science/publications/zero-shot-controllable-image-to-video-animation-via-motion-decomposition">Zero-Shot Controllable Image-to-Video Animation </a>.</li> <br> -->
-              <!-- <li>[2024 July]: Joined Bytedance Global GenAI - Intelligent Creation team as a Research Scientist. </li> -->
-
-            </ul>
-          </div>
-        </div>
-      </div>
-<!--      <aside>-->
-        <div class="card">
-          <strong>Research Areas</strong>
-          <ul>
-            <li>Generative modeling (Image/Video diffusion model)</li>
-            <li>Vision-Language models (video-language, VLM)</li>
-            <li>Representation learning & efficient pretraining</li>
-          </ul>
-        </div>
-<!--      </aside>-->
-    </section>
-
-
-    <!-- ===== Experience — interactive canvas ===== -->
-    <!-- ===== Experience — interactive canvas + list ===== -->
-    <section id="experience">
-      <h2>Experience</h2>
-
-      <!-- new LinkedIn-style list -->
-      <div class="xp" id="xp-list">
-        <!-- MAI Superintelligence Lab (new job) -->
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="./images/mai.png" alt="MAI / Microsoft AI logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="https://microsoft.ai/" target="_blank" rel="noopener">Superintelligence Lab, Microsoft AI</a>
-              <div class="xp-meta">Member of Technical Staff · March, 2026 — Present</div>
-              <div class="xp-location">Mountain View, USA</div>
-            </div>
-            <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-title">Image Generation; Diffusion Model; Post-Training and RL</div>
-                <div class="xp-role-meta">Diffusion Model RL</div>
-                <div class="xp-desc">
-                  <ul>
-                    <li><a href="https://microsoft.ai/news/introducing-mai-image-2-5/">MAI-Image-2.5 </a>: Post-training and RL, Reward Model Development</a></li>
-                  </ul>
-                </div>
+    <main>
+      <div id="projects">
+        <section class="case row" aria-labelledby="mai-title">
+          <aside class="margin-note"><strong>Microsoft AI</strong><span class="position">Member of Technical Staff</span><span class="period">Mar 2026 — Present</span></aside>
+          <div class="content">
+            <h2 id="mai-title">MAI Image Series Models</h2>
+            <p class="lede">I am a core contributor to the <strong>MAI Image Series Models</strong>, focusing on post-training. My work spans reward model design, vision-language model RL for prompt enhancement, RL for captioning models, and diffusion RL.</p>
+            <p class="result">MAI-Image-2.6 <strong>reached #2 on Text-to-Image Arena</strong>, with a score of 1,336 at release.</p>
+            <figure class="generation-set" aria-labelledby="generation-caption">
+              <div class="generation-row">
+                <a href="assets/mai-2-6/everyday-realism.jpg" data-full-image data-image-title="MAI-Image-2.6 · Courtyard snapshot" aria-label="Enlarge generated courtyard snapshot"><img src="assets/mai-2-6/everyday-realism.webp" srcset="assets/mai-2-6/everyday-realism.webp 600w, assets/mai-2-6/everyday-realism.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated vintage-style snapshot of a family in an apartment courtyard" width="600" height="600" loading="lazy" decoding="async"></a>
+                <a href="assets/mai-2-6/stylized-scene.jpg" data-full-image data-image-title="MAI-Image-2.6 · Warm interior" aria-label="Enlarge generated warm interior"><img src="assets/mai-2-6/stylized-scene.webp" srcset="assets/mai-2-6/stylized-scene.webp 600w, assets/mai-2-6/stylized-scene.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated scene of a woman and cat in warm light, with drawings on the wall" width="600" height="600" loading="lazy" decoding="async"></a>
+                <a href="assets/mai-2-6/materials.jpg" data-full-image data-image-title="MAI-Image-2.6 · Weathered details" aria-label="Enlarge generated weathered gas meter"><img src="assets/mai-2-6/materials.webp" srcset="assets/mai-2-6/materials.webp 600w, assets/mai-2-6/materials.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated image of a weathered gas meter with Chinese signage" width="600" height="600" loading="lazy" decoding="async"></a>
               </div>
-            </div>
-          </div>
-        </article>
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="images/bytedance_logo.jpeg" alt="ByteDance / TikTok logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="https://www.tiktok.com/" target="_blank" rel="noopener">Global GenAI, ByteDance / TikTok</a>
-              <div class="xp-meta">Senior Research Scientist · June, 2024 — March, 2026 </div>
-              <div class="xp-location">San Jose, USA</div>
-            </div>
-              <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-title">Video Generation Model</div>
-                <div class="xp-desc">
-                  <ul>
-                    <li> ID/IP Perservation in Video Gen; Video Editing; Controllable Video Gen； </li>
-                    <li> Seedance 1.0 mini Production Model Pre-train; (billions+ videos over ~2K GPUs) ;</li>
-                    <li> Video Gen Post-Training/RLHF;</li>
-
-                </ul>
-                </div>
-
-                <!-- Highlighted Projects (LinkedIn-style thumbnails) -->
-                <h4 style="margin:12px 0 2px">Highlighted projects</h4>
-                <div class="xp-projects">
-
-
-                  <a class="xp-project" href="https://www.tiktok.com/effect/AI-Mermaid-2386487441" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb" aria-hidden="true">
-                      <video autoplay muted loop playsinline poster="images/ati.jpg">
-                        <source src="images/ai_mermaid.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">AI Mermaid - Video Generation & XFN</div>
-                      <div class="xp-project-meta">2025 · TikTok Effect  <br><b><span style="color: #170e7e;">(Best AI Effect on TikTok since 2023 )</b></span></div>
-                      <div class="xp-project-tags">
-                        <!-- <span class="xp-project-tag">Video Generation</span>
-                        <span class="xp-project-tag">Effect</span> -->
-<!--                        <span class="xp-project-tag"></span>-->
-                      </div>
-                    </div>
-                  </a>
-
-                  <!-- Project 1: MAGREF -->
-                  <a class="xp-project" href="https://magref-video.github.io/" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb" aria-hidden="true">
-                      <video autoplay muted loop playsinline poster="images/magref.jpg">
-                        <source src="images/magref.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">MAGREF — Any-Reference Video Generation</div>
-                      <div class="xp-project-meta">2025 · Research Work</div>
-                      <div class="xp-project-tags">
-<!--                        <span class="xp-project-tag">VideoGen</span>-->
-                        <!-- <span class="xp-project-tag">ID/IP Video Gen</span>
-                        <span class="xp-project-tag">Diffusion Model</span> -->
-                      </div>
-                    </div>
-                  </a>
-
-                  <!-- Project 2: ATI -->
-                  <a class="xp-project" href="https://anytraj.github.io/" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb" aria-hidden="true">
-                      <video autoplay muted loop playsinline poster="images/ati.jpg">
-                        <source src="images/ATI_teaser.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">ATI — Motion-Controlled Video Generation</div>
-                      <div class="xp-project-meta">2025 · Research Work</div>
-                      <div class="xp-project-tags">
-                        <!-- <span class="xp-project-tag">Controllable Video Gen</span> -->
-<!--                        <span class="xp-project-tag">Trajectory</span>-->
-                      </div>
-                    </div>
-                  </a>
-
-                   <a class="xp-project" href="" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb" aria-hidden="true">
-                      <video autoplay muted loop playsinline poster="images/ai_flower_2.gif">
-                        <source src="images/ai_flower_2.gif" type="image/gif">
-                      </video>
-                    </div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">AI Flower 2.0 — Effect Powered by our Seedance 1.0 TikTok Version</div>
-                      <div class="xp-project-meta">2025 · TikTok Effect</div>
-                      <div class="xp-project-tags">
-                        <!-- <span class="xp-project-tag">Video Generation</span>
-                        <span class="xp-project-tag">Effect</span> -->
-                      </div>
-                    </div>
-
-                  </a>
-
-                  <!-- Project 4: AI Live -->
-                <a class="xp-project" href="https://www.tiktok.com/@shou.time/video/7504111206039571758" target="_blank" rel="noopener">
-                  <div class="xp-project-thumb" aria-hidden="true">
-                    <video autoplay muted loop playsinline poster="images/shou.mp4">
-                      <source src="images/shou.mp4" type="video/mp4">
-                    </video>
-                  </div>
-                  <div class="xp-project-body">
-                    <div class="xp-project-title">AI Live Photo — Image to Video Generation</div>
-                    <div class="xp-project-meta">2025 · Production</div>
-                    <div class="xp-project-tags">
-                      <!-- <span class="xp-project-tag">Video Gen</span>
-                      <span class="xp-project-tag">Seedance-TikTok</span> -->
-                    </div>
-                  </div>
-                </a>
-                  
-                </div>
-                </div>
+              <div class="generation-row generation-row--mixed">
+                <a href="assets/mai-2-6/portrait.jpg" data-full-image data-image-title="MAI-Image-2.6 · Café portrait" aria-label="Enlarge generated café portrait"><img src="assets/mai-2-6/portrait.webp" srcset="assets/mai-2-6/portrait.webp 411w, assets/mai-2-6/portrait.jpg 1248w" sizes="(max-width: 560px) 28vw, 188px" alt="MAI-Image-2.6 generated café portrait of a person holding coffee" width="411" height="600" loading="lazy" decoding="async"></a>
+                <a href="assets/mai-2-6/sculptural-art.jpg" data-full-image data-image-title="MAI-Image-2.6 · Miniature cities" aria-label="Enlarge generated miniature city illustrations"><img src="assets/mai-2-6/sculptural-art.webp" srcset="assets/mai-2-6/sculptural-art.webp 600w, assets/mai-2-6/sculptural-art.jpg 1920w" sizes="(max-width: 560px) 72vw, (max-width: 736px) 71vw, 484px" alt="MAI-Image-2.6 generated pop-up illustrations of miniature Tokyo, Shanghai, Bangkok, and Singapore" width="600" height="338" loading="lazy" decoding="async"></a>
               </div>
-            </div>
+              <figcaption id="generation-caption">MAI-Image-2.6 · Generated examples · Click to enlarge · <a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" aria-label="Source: Microsoft AI experience on LinkedIn">LinkedIn ↗</a></figcaption>
+            </figure>
+            <div class="arena-gallery"><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-6-leaderboard.jpg" data-full-image data-image-title="MAI-Image-2.6 · Overall ranking" aria-label="Enlarge MAI-Image-2.6 overall ranking"><img src="assets/arena/mai-2-6-leaderboard.jpg" alt="Original Arena leaderboard for MAI-Image-2.6. All model rows are preserved." width="1305" height="1305" decoding="async"></a><figcaption>Overall ranking</figcaption></figure><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-6-categories.jpg" data-full-image data-image-title="MAI-Image-2.6 · By category" aria-label="Enlarge MAI-Image-2.6 by category"><img src="assets/arena/mai-2-6-categories.jpg" alt="Original Arena category comparison for MAI-Image-2.6." width="1305" height="1305" decoding="async"></a><figcaption>By category</figcaption></figure></div>
+            <p class="arena-source">Arena release snapshot · Click an image to enlarge · <a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7492710114735415296/">Source ↗</a></p>
+            <details class="supporting" id="mai25-support"><summary>Earlier Arena results</summary><p class="support-copy">The 2.5 Preview debuted at #3 on Text-to-Image Arena, with a score of 1,254. This earlier release snapshot precedes the 2.6 chart above.</p><div class="arena-gallery"><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-5-leaderboard.jpg" data-full-image data-image-title="MAI-Image-2.5 Preview · Overall ranking" aria-label="Enlarge MAI-Image-2.5 Preview overall ranking"><img src="assets/arena/mai-2-5-leaderboard.jpg" alt="Original Arena leaderboard for MAI-Image-2.5 Preview. All model rows are preserved." width="1538" height="1536" decoding="async" loading="lazy"></a><figcaption>Overall ranking</figcaption></figure><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-5-categories.jpg" data-full-image data-image-title="MAI-Image-2.5 Preview · By category" aria-label="Enlarge MAI-Image-2.5 Preview by category"><img src="assets/arena/mai-2-5-categories.jpg" alt="Original Arena category comparison for MAI-Image-2.5 Preview." width="1536" height="1536" decoding="async" loading="lazy"></a><figcaption>By category</figcaption></figure></div><p class="arena-source">Earlier release snapshot · Click an image to enlarge · <a href="https://www.linkedin.com/posts/arenaai_exciting-news-mai-image-25-preview-from-activity-7465112161686609920-Ka0T">Source ↗</a></p></details>
           </div>
-        </article>
-
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="images/amazon_logo.jpeg" alt="Amazon logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="https://amazon.jobs/content/en/teams/agi" target="_blank" rel="noopener">Amazon AGI</a>
-              <div class="xp-meta">Applied Scientist · 2022 — 2024</div>
-              <div class="xp-location">Sunnyvale, USA</div>
+        </section>
+        <section class="case row" aria-labelledby="tiktok-title">
+          <aside class="margin-note"><strong>ByteDance / TikTok</strong><span class="position">Senior Research Scientist</span><span class="period">Jul 2024 — Mar 2026</span></aside>
+          <div class="content"><h2 id="tiktok-title">TikTok Video Generation</h2>
+            <p class="lede">At TikTok, I contributed to video generation models and creative features, including AI Alive.</p>
+            <div class="video-showcase" role="group" aria-label="Selected video demos">
+              <figure class="video-item video-item--product">
+                <a class="video-preview" href="images/shou.mp4" data-video-demo data-preview-src="assets/previews/ai-alive.mp4" data-video-title="AI Alive · Product demo" data-video-width="576" data-video-height="1024" aria-label="Play AI Alive demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-alive.webp" alt="AI Alive public demo preview" width="576" height="1024" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI Alive</span><span class="video-detail">19 sec</span><a class="video-source" href="https://www.tiktok.com/@shou.time/video/7504111206039571758" aria-label="AI Alive public demo by Shou">Shou ↗</a></figcaption>
+              </figure>
+              <figure class="video-item">
+                <a class="video-preview" href="images/ATI_teaser.mp4" data-video-demo data-preview-src="assets/previews/ati.mp4" data-video-title="ATI · Trajectory control" data-video-width="1280" data-video-height="720" aria-label="Play ATI research demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ati.webp" alt="ATI research demo showing motion guided by trajectory instructions" width="1280" height="720" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">ATI</span><span class="video-detail">Trajectory control · 1:09</span><a class="video-source" href="https://anytraj.github.io/">Research project ↗</a></figcaption>
+              </figure>
+              <figure class="video-item">
+                <a class="video-preview" href="images/magref.mp4" data-video-demo data-preview-src="assets/previews/magref.mp4" data-video-title="MAGREF · Reference guidance" data-video-width="1872" data-video-height="1080" aria-label="Play MAGREF research demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/magref.webp" alt="MAGREF research demo showing reference-guided video generation" width="1280" height="738" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">MAGREF</span><span class="video-detail">Reference guidance · 1:29</span><a class="video-source" href="https://magref-video.github.io/">Research project ↗</a></figcaption>
+              </figure>
             </div>
-            <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-title">Image/Video Generation; Diffusion Model Pre-training & Post-training</div>
-                <div class="xp-role-meta">Image/Video Diffusion Model</div>
-                <div class="xp-desc">
-                  Amazon AGI Project Nova, Image/Video Generation team.
-                  <ul>
-                    <li> Text-to-Image generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/creative/">Amazon Nova Canvas</a>, <a href="https://www.aboutamazon.com/news/devices/what-is-create-with-alexa">Create with Alexa for Kids</a>, <a href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator"> AI Art for FireTV </a>, and <a href="https://www.aboutamazon.com/news/innovation-at-amazon/amazon-ads-generative-ai-video-generator-advertisers"> Amazon Ads</a>). Model training/post-training.</li>
-                    <li> Video generation (see <a href="https://aws.amazon.com/ai/generative-ai/nova/?trk=978e13b6-fa37-4872-9001-1825f3ca3367&sc_channel=ps&ef_id=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB:G:s&s_kwcid=AL!4422!3!692006004844!e!!g!!nova%20reel!21048268689!159639953895&gad_campaignid=21048268689&gbraid=0AAAAADjHtp_cG3ZoMojsEiEKFCdZNR-Vj&gclid=Cj0KCQjw5onGBhDeARIsAFK6QJYSxDIwKsfgLU9xs_v9pbM43_MaYqwg97s--agfKh0Wuit5m9HLuEgaAgBhEALw_wcB">Amazon Nova Reel</a>, and Amazon Ads). Model SFT/post-training. </li>
-                  </ul>
-                </div>
-                <h4 style="margin:12px 0 2px">Highlighted projects</h4>
-                <div class="xp-projects">
-                  <a class="xp-project" href="https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/nova.png" alt="Amazon Nova visuals"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">Amazon Nova — Image/Video Generation</div>
-                      <div class="xp-project-meta">2023–2024 · Model family</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">T2V</span><span class="xp-project-tag">Video</span></div> -->
-                    </div>
-                  </a>
-
-                    <a class="xp-project" href="https://www.aboutamazon.com/news/devices/amazon-fire-tv-ai-art-generator" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/firetv.jpeg" alt="Amazon FireTV"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">Amazon FireTV — Image/Video Generation</div>
-                      <div class="xp-project-meta">2023–2024 · XFN</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">T2I</span><span class="xp-project-tag">Image Generation</span></div> -->
-                    </div>
-                  </a>
-
-                  <a class="xp-project" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/zero_shot_motion.png" alt="I2V Motion Decomposition teaser"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">Zero-Shot I2V via Motion Decomposition</div>
-                      <div class="xp-project-meta">ACM MM 2024 · Website</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">I2V</span><span class="xp-project-tag">Control</span></div> -->
-                    </div>
-                  </a>
-                </div>
-
-              </div>
-            </div>
+            <p class="video-hint"><span class="hover-hint">Hover to preview · Click to expand</span><span class="tap-hint">Select a demo to watch</span></p>
           </div>
-        </article>
-
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="images/microsoft_logo.jpeg" alt="Microsoft logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="#" target="_blank" rel="noopener">Microsoft Cloud & AI</a>
-              <div class="xp-meta">Research Intern · 2020 — 2022</div>
-              <div class="xp-location">Redmond, USA</div>
-            </div>
-            <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-title">Vision and Language Model (VLM)</div>
-                <div class="xp-role-meta">Self-supervised Learning · Knowledge Distillation · Vision-Language Representation Learning</div>
-                <div class="xp-desc">Collaborators: <a href="https://sites.google.com/view/zichengliu/home">Zicheng Liu</a>, <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a>, <a href="https://jianfengwang.me/">Jianfeng Wang</a>, <a href="https://zhegan27.github.io/">Zhe Gan</a></div>
-                <div class="xp-desc">
-                  <!-- Vision-Language Model Pre-training/Distillation. -->
-                  <ul>
-                    <li> Vision Language Model Distillation: <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Compressing Visual-linguistic Model via Knowledge Distillation</a> </li>
-                    <li> VLM Pre-training & Image Captioning: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf">Injecting Semantic Concepts into End-to-End Image Captioning</a> </li>
-                    <li> Self-Supervised Learning/Visual Pre-training: <a href="https://arxiv.org/pdf/2101.04731"> SEED: Self-supervised Distillation For Visual Representation </a> </li>
-                  </ul>
-                </div>
-              <h4 style="margin:12px 0 2px">Highlighted projects</h4>
-
-                <div class="xp-projects">
-                  <a class="xp-project" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/seed.png" alt="SEED paper cover (placeholder)"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">SEED — Self-supervised Distillation</div>
-                      <div class="xp-project-meta">ICLR 2021 · Paper</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">SSL</span><span class="xp-project-tag">KD</span></div> -->
-                    </div>
-                  </a>
-
-                  <a class="xp-project" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/compress.png" alt="SEED paper cover (placeholder)"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title"> Vision-Language Model Pretraining & Distillation</div>
-                      <div class="xp-project-meta">ICCV 2021 · Paper</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">VLM</span><span class="xp-project-tag">KD</span></div> -->
-                    </div>
-                  </a>
-
-                  <a class="xp-project" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf" target="_blank" rel="noopener">
-                    <div class="xp-project-thumb"><img src="images/vitcap.png" alt="SEED paper cover (placeholder)"></div>
-                    <div class="xp-project-body">
-                      <div class="xp-project-title">ViTCAP — Image Captioning & Vision-Language Model Pretraining </div>
-                      <div class="xp-project-meta">CVPR 2022 · Paper</div>
-                      <!-- <div class="xp-project-tags"><span class="xp-project-tag">Pretraining</span><span class="xp-project-tag">VLM</span></div> -->
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="images/chinese_academy_of_sciences_logo.jpeg" alt="Chinse Academy of Sciences, MM Lab logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="#" target="_blank" rel="noopener">Chinse Academy of Sciences, MM Lab</a>
-              <div class="xp-meta">Visiting Student · June. 2016 — Dec. 2016</div>
-              <div class="xp-location">Shenzhen, China</div>
-            </div>
-            <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-meta">Deep Learning · Face Recognition</div>
-                <div class="xp-desc">Collaborators: Zhifeng Li, Xiao Zhang,  <a href="https://mmlab.siat.ac.cn/yuqiao"> Yu Qiao</a></div>
-                  <ul>
-                    <li> Face Recognition: <a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Zhang_Range_Loss_for_ICCV_2017_paper.pdf">Range Loss for Deep Face Recognition with Long-tailed Training Data</a> </li>
-                  </ul>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="xp-item">
-          <div class="xp-logo">
-            <img src="images/asu.png" alt="Chinse Academy of Sciences, MM Lab logo"/>
-          </div>
-          <div>
-            <div class="xp-header">
-              <a class="xp-company" href="#" target="_blank" rel="noopener">Arizona State University, APG Lab</a>
-              <div class="xp-meta">Ph.D. Student </div>
-              <div class="xp-location">Phoenix, USA</div>
-            </div>
-            <div class="xp-roles">
-              <div class="xp-role">
-                <div class="xp-role-meta"> Vision and Language</div>
-                <div class="xp-desc">Advisor:  <a href="https://faculty.engineering.asu.edu/yezhouyang/"> Yezhou Yang</a></div>
-              </div>
-            </div>
-          </div>
-        </article>
+        </section>
+        <section class="case row" aria-labelledby="amazon-title">
+          <aside class="margin-note"><strong>Amazon</strong><span class="position">Applied Scientist</span><span class="period">Jun 2022 — Jul 2024</span></aside>
+          <div class="content"><h2 id="amazon-title">Amazon Nova Models</h2><p class="lede">At Amazon, I contributed to the Nova family of image and video generation models.</p><figure class="figure nova-figure"><a class="figure-image" href="images/nova.png" data-full-image data-image-title="Amazon Nova · Product visual" aria-label="Enlarge Amazon Nova product visual"><img src="assets/posters/nova.webp" srcset="assets/posters/nova.webp 1280w, images/nova.png 2484w" sizes="(max-width: 560px) calc(100vw - 36px), 520px" alt="Amazon Nova product image showing a generated dinosaur in a teacup" width="1280" height="716" loading="lazy" decoding="async"></a><figcaption><span class="caption-title">Amazon Nova.</span> Image and video generation models.<span class="caption-source"><a href="https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws">Amazon’s December 2024 announcement ↗</a></span></figcaption></figure></div>
+        </section>
       </div>
-    </section>
-
-    <!-- ===== Video panels directly beneath Experience ===== -->
-    <section id="video-panels">
-      <h2>Product Highlights</h2>
-      <div class="vid-grid" style="gap: 0px 0px;">
-        <!-- Panel 1 -->
-        <figure class="vid-panel">
-          <span class="vid-badge">AI Mermaid</span>
-          <div class="vid-video">
-            <video autoplay loop muted playsinline preload="metadata" poster="images/ai_mermaid.jpg">
-              <source src="images/ai_mermaid.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <figcaption class="vid-caption"><a href="https://www.tiktok.com/effect/AI-Mermaid-2386487441"> AI Mermaid effect</a> demo. Over <b><em>30M+</em></b> posts since online. BEST AI effect on Tiktok since 2023.</figcaption>
-        </figure>
-
-      <figure class="vid-panel">
-          <span class="vid-badge">AI Alive - Tiktok</span>
-          <div class="vid-video">
-            <video autoplay loop muted playsinline preload="metadata" poster="images/magref.jpg">
-              <source src="images/shou.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="vid-caption">AI Alive online! Demo video by Shou.</figcaption>
-        </figure>
-
-        <!-- Panel 2 -->
-        <figure class="vid-panel" style="gap: 0px 0px;">
-          <span class="vid-badge">AI SwayDance</span>
-          <div class="vid-video">
-            <video autoplay loop muted playsinline preload="metadata" poster="images/seedance.jpg">
-              <source src="images/ai_swaydance.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="vid-caption">AI Sway Dance Effect demo. Over 3M+ posts in 3 weeks. Let's hop hop hop!</figcaption>
-        </figure>
-
-        <!-- Panel 3 -->
-        <figure class="vid-panel">
-          <span class="vid-badge">AI Hug</span>
-          <div class="vid-video">
-            <video autoplay loop muted playsinline preload="metadata" poster="images/i2v_motion.jpg">
-              <source src="images/ai_hug.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="vid-caption">AI Hug Effect demo. Hug with your loved one.</figcaption>
-        </figure>
-      </div>
-    </section>
-    <section id="publications">
-      <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
-        <h2 style="margin:0">Selected Preprints & Publications</h2>
-        <div class="tool">
-          <div class="search">
-            <label for="q">Search</label>
-            <input id="q" type="search" placeholder="Filter by title, authors, keywords…" oninput="filterPubs()">
-          </div>
-          <select id="year" onchange="filterPubs()">
-            <option value="">All years</option>
-            <option>2025</option>
-            <option>2024</option>
-            <option>2023</option>
-            <option>2022</option>
-            <option>2021</option>
-            <option>2020</option>
-            <option>2019</option>
-            <option>2018</option>
-          </select>
-          <select id="venue" onchange="filterPubs()">
-            <option value="">All venues</option>
-            <option>MM</option>
-            <option>TMLR</option>
-            <option>WACV</option>
-            <option>ECCV</option>
-            <option>CVPR</option>
-            <option>ICCV</option>
-            <option>ICLR</option>
-            <option>arXiv</option>
-            <option>TR</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="pub-list" class="grid collapsed" style="margin-top:16px">
-        <!-- Existing + added publications -->
-
-          <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="video generation any-reference masked guidance">
-          <video class="thumb"
-                 autoplay muted loop playsinline
-                 preload="metadata"
-                 aria-label="MAGREF teaser">
-            <source src="images/magref.mp4" type="video/mp4">
-            <!-- Optional: <source src="images/magref.webm" type="video/webm"> -->
-            Your browser does not support the video tag.
-          </video>
-          <div>
-            <strong>MAGREF: Masked Guidance for Any-Reference Video Generation</strong>
-            <span class="meta">Yufan Deng, Xun Guo, Yuanyang Yin, Jacob Zhiyuan Fang, Yiding Yang, Yizhi Wang, Shenghai Yuan, Angtian Wang, Bo Liu, Haibin Huang, Chongyang Ma · arXiv 2025</span>
-            <div class="tags"><span class="tag">Video Generation</span><span class="tag">ID/IP Reference Video Generation</span></div>
-            <div class="tool">
-              <a class="btn" href="#" target="_blank" rel="noopener">Preprint</a>
-              <a class="btn" href="https://github.com/MAGREF-Video/MAGREF" target="_blank" rel="noopener">Github</a>
-              <a class="btn" href="https://magref-video.github.io/" target="_blank" rel="noopener">Webpage</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@article{fang2025magref,
-  title={MAGREF: Masked Guidance for Any-Reference Video Generation},
-  author={Fang, Zhiyuan and others},
-  journal={arXiv},
-  year={2025}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2025" data-venue="arXiv" data-keywords="controllable video trajectory instruction">
-          <video class="thumb"
-                 autoplay muted loop playsinline
-                 preload="metadata"
-                 aria-label="ATI teaser">
-            <source src="images/ATI_teaser.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <div>
-            <strong>ATI: Any Trajectory Instruction for Controllable Video Generation</strong>
-            <span class="meta">Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma · arXiv 2025</span>
-            <div class="tags"><span class="tag">Video Generation</span><span class="tag">Motion Controlled Video Generation</span></div>
-            <div class="tool">
-              <a class="btn" href="https://arxiv.org/pdf/2505.22944" target="_blank" rel="noopener">Preprint</a>
-              <a class="btn" href="https://github.com/bytedance/ATI" target="_blank" rel="noopener">Github</a>
-              <a class="btn" href="https://anytraj.github.io/" target="_blank" rel="noopener">Webpage</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@article{wang2025ati,
-  title={Any Trajectory Instruction for Controllable Video Generation},
-  author={Angtian Wang, Haibin Huang, Jacob Zhiyuan Fang, Yiding Yang, Chongyang Ma},
-  journal={arXiv},
-  year={2025}
-}</pre>
-        </article>
-        
-        <article class="card pub" data-year="2024" data-venue="MM" data-keywords="image-to-video controllable animation motion decomposition diffusion">
-          <img class="thumb" src="images/zero_shot_motion.png" alt="Zero-shot controllable image-to-video animation teaser"/>
-          <div>
-            <strong>Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition</strong>
-            <span class="meta">Shoubin Yu, <strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Gunnar A. Sigurdsson, Vicente Ordonez, Robinson Piramuthu, Mohit Bansal · ACM MM 2024</span>
-            <div class="tags"><span class="tag">Video Generation</span><span class="tag">Control Generation</span><span class="tag">Diffusion</span></div>
-            <div class="tool">
-              <a class="btn" href="https://openreview.net/pdf?id=vngElHOj2N" target="_blank" rel="noopener">Paper</a>
-              <a class="btn" href="https://img2vidanim-0.github.io/" target="_blank" rel="noopener">Website</a>
-            </div>
-            <!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{yu2024zeroshot,
-  title={Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition},
-  author={Yu, Shoubin and Fang, Jacob Zhiyuan and Zheng, Skyler and Sigurdsson, Gunnar A and Ordonez, Vicente and Piramuthu, Robinson and Bansal, Mohit},
-  booktitle={ACM Multimedia},
-  year={2024}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2024" data-venue="TMLR" data-keywords="controllable text-to-image multimodal control efficiency lora">
-<!--          <img class="thumb" src="https://lh3.googleusercontent.com/E5QZXmuMSG9PhSLmode29xiLqBg9QEr5cz-eBM6kJMtdh8eNTMq7Yv4rQtpkDz5umHgy0OqE8sLtwVQ2ddn2qoFVwlsHIpwBkBx0n31s7TdswBDQq5KzBo4FO0KVhtZGizAzHh2jndlmAdaF5T8NuwIlEABERrpgEIwyCDe-8pQLFGPeWLIXHA=w1280" alt="FlexEControl teaser"/>-->
-          <div>
-            <strong>FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation</strong>
-            <span class="meta">Xuehai He, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Robinson Piramuthu, Mohit Bansal, Vicente Ordonez, Gunnar A. Sigurdsson, Nanyun Peng, Xin Eric Wang · TMLR 2024</span>
-            <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion Model</span><span class="tag">Efficiency</span></div>
-            <div class="tool">
-              <a class="btn" href="https://arxiv.org/abs/2405.04834" target="_blank" rel="noopener">arXiv</a>
-              <a class="btn" href="https://sites.google.com/view/flexecontrol" target="_blank" rel="noopener">Project</a>
-            </div>
-            <!--            <button class="btn" onclick="copyBibtex(this)">Copy BibTeX</button>-->
-          </div>
-          <pre class="bibtex" style="display:none">@article{he2024flexecontrol,
-  title={FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation},
-  author={He, Xuehai and Zheng, Jian and Fang, Jacob Zhiyuan and Piramuthu, Robinson and Bansal, Mohit and Ordonez, Vicente and Sigurdsson, Gunnar A and Peng, Nanyun and Wang, Xin Eric},
-  journal={TMLR},
-  year={2024}
-}</pre>
-        </article>
-
-
-        <article class="card pub" data-year="2024" data-venue="ECCV" data-keywords="text-to-image generalization dataset skew evaluation">
-          <div>
-            <strong>Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation</strong>
-            <span class="meta">Yingshan Chang, Yasi Zhang, <strong>Zhiyuan Fang</strong>, Yingnian Wu, Yonatan Bisk, Feng Gao · ECCV 2024</span>
-            <div class="tags"><span class="tag">Image Generation</span><span class="tag">Diffusion</span></div>
-            <div class="tool">
-              <a class="btn" href="https://arxiv.org/pdf/2403.16394" target="_blank" rel="noopener">Arxiv</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{chang2024skews,
-  title={Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation},
-  author={Chang, Yuqing and Zhang, Yuchen and Fang, Zhiyuan and Wu, Yuchen and Bisk, Yonatan and Gao, Feng},
-  booktitle={ECCV},
-  year={2024}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2021" data-venue="ICLR" data-keywords="self-supervised distillation visual representation">
-          <div>
-            <strong>SEED: Self-supervised Distillation For Visual Representation</strong>
-            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Lijuan Wang, Lei Zhang, Yezhou Yang, Zicheng Liu · ICLR 2021</span>
-            <div class="tags"><span class="tag">Self-supervised Learning</span><span class="tag">Knowledge Distillation</span></div>
-            <div class="tool">
-              <a class="btn" href="https://arxiv.org/pdf/2101.04731" target="_blank" rel="noopener">Arxiv</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{fang2021seed,
-  title={SEED: Self-supervised Distillation For Visual Representation},
-  author={Fang, Zhiyuan and Wang, Jianfeng and Wang, Lijuan and Zhang, Lei and Yang, Yezhou and Liu, Zicheng},
-  booktitle={ICLR},
-  year={2021}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2022" data-venue="CVPR" data-keywords="captioning semantics end-to-end">
-          <div>
-            <strong>Injecting Semantic Concepts into End-to-End Image Captioning</strong>
-            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lin Liang, Zhe Gan, Lijuan Wang, Yezhou Yang, Zicheng Liu · CVPR 2022</span>
-            <div class="tags"><span class="tag">Image Captioning</span><span class="tag">Vision & Language</span></div>
-            <div class="tool">
-              <a class="btn" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf" target="_blank" rel="noopener">Paper</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{fang2022injecting,
-  title={Injecting Semantic Concepts into End-to-End Image Captioning},
-  author={Fang, Zhiyuan and Wang, Jianfeng and Hu, Xiaowei and Liang, Lin and Gan, Zhe and Wang, Lijuan and Yang, Yezhou and Liu, Zicheng},
-  booktitle={CVPR},
-  year={2022}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2021" data-venue="ICCV" data-keywords="knowledge distillation vlm compression">
-          <div>
-            <strong>Compressing Visual-linguistic Model via Knowledge Distillation</strong>
-            <span class="meta"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, Zicheng Liu · ICCV 2021</span>
-            <div class="tags"><span class="tag">Knowledge Distillation</span><span class="tag">Vision and Language</span></div>
-            <div class="tool">
-              <a class="btn" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf" target="_blank" rel="noopener">Paper</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{fang2021compressing,
-  title={Compressing Visual-linguistic Model via Knowledge Distillation},
-  author={Fang, Zhiyuan and Wang, Jianfeng and Hu, Xiaowei and Lijuan Wang, Yezhou Yang, Zicheng Liu},
-  booktitle={ICCV},
-  year={2021}
-}</pre>
-        </article>
-
-        <article class="card pub" data-year="2020" data-venue="ECCV" data-keywords="person search language attributes alignment">
-          <div>
-            <strong>ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language</strong>
-            <span class="meta">Zhe Wang, <strong>Zhiyuan Fang</strong>, Jun Wang, Yezhou Yang · ECCV 2020</span>
-            <div class="tags"><span class="tag">Person Search</span></div>
-            <div class="tool">
-              <a class="btn" href="https://arxiv.org/pdf/2005.07327" target="_blank" rel="noopener">Paper</a>
-            </div>
-          </div>
-          <pre class="bibtex" style="display:none">@inproceedings{wang2020vitaa,
-  title={ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language},
-  author={Wang, Zheng and Fang, Zhiyuan and Wang, Jianfeng and Yang, Yezhou},
-  booktitle={ECCV},
-  year={2020}
-}</pre>
-        </article>
-
-        <a href="https://scholar.google.com/citations?hl=en&user=fHWXpq4AAAAJ">More in Google Scholar.</a>
-
-      </div>
-
-      <div style="text-align:center;margin-top:12px">
-        <button id="pub-toggle" class="pub-toggle" aria-expanded="false" aria-controls="pub-list">Show all</button>
-      </div>
-
-    </section>
-
-    <section id="service">
-      <h2>Service</h2>
-      <div class="card">
-        <ul>
-          <li>Reviewer: ICCV, CVPR, ECCV, Neurips, ICLR, ICML, ACL, EMNLP, SIGGRAPH, SIGGRAPH-ASIA, TMLR, etc.</li>
-        </ul>
-      </div>
-    </section>
-
-    <footer>
-      © <span id="y"></span> Jacob Zhiyuan Fang </span>
-    </footer>
-  </main>
-
-  <script>
-    // year & last modified (guarded)
-    const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
-    const lmEl=document.getElementById('lastmod'); try{ if(lmEl) lmEl.textContent=new Date(document.lastModified).toISOString().slice(0,10);}catch(e){}
-
-    // nav active (guarded)
-    const links=[...document.querySelectorAll('.nav a[href^="#"]')];
-    const secs=links.map(a=>{try{return document.querySelector(a.getAttribute('href'));}catch(_){return null}}).filter(Boolean);
-    if('IntersectionObserver' in window){
-      const obs=new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            links.forEach(l=>l.classList.remove('active'));
-            const id='#'+e.target.id; const cur=links.find(l=>l.getAttribute('href')===id);
-            cur&&cur.classList.add('active');
-          }
-        })
-      },{rootMargin:'-40% 0px -55% 0px'});
-      secs.forEach(s=>s&&obs.observe(s));
-    }
-
-    // --- publication search & filtering ---
-    function normText(s){
-      return (s||'').toString().toLowerCase()
-        .normalize('NFD').replace(/\p{Diacritic}+/gu,'')
-        .replace(/\s+/g,' ')
-        .trim();
-    }
-    function buildPubIndex(){
-      const items=[...document.querySelectorAll('#pub-list .pub')];
-      items.forEach(it=>{
-        const title=it.querySelector('strong')?.textContent||'';
-        const meta=it.querySelector('.meta')?.textContent||'';
-        const tags=[...it.querySelectorAll('.tags .tag')].map(t=>t.textContent).join(' ');
-        const kws=it.dataset.keywords||'';
-        it.dataset.search = normText([title,meta,tags,kws].join(' • '));
-      });
-    }
-    function filterPubs(){
-      const first=document.querySelector('#pub-list .pub');
-      if(first && !first.dataset.search) buildPubIndex();
-      const qEl=document.getElementById('q');
-      const yEl=document.getElementById('year');
-      const vEl=document.getElementById('venue');
-      const query=normText(qEl? qEl.value : '');
-      const terms=query? query.split(' ').filter(Boolean) : [];
-      const y=(yEl&&yEl.value)||'';
-      const v=(vEl&&vEl.value)||'';
-      const items=[...document.querySelectorAll('#pub-list .pub')];
-      let visible=0;
-      items.forEach(it=>{
-        const okY=!y || it.dataset.year===y;
-        const okV=!v || it.dataset.venue===v;
-        let okQ=true;
-        if(terms.length){
-          const text = it.dataset.search || normText(it.textContent);
-          okQ = terms.every(t=>text.includes(t));
-        }
-        const show = okQ && okY && okV;
-        it.style.display = show ? '' : 'none';
-        if(show) visible++;
-      });
-      let empty=document.getElementById('pub-empty');
-      if(!empty){
-        empty=document.createElement('div');
-        empty.id='pub-empty';
-        empty.style.cssText='color:var(--muted);font-size:14px;margin-top:8px;';
-        const list=document.getElementById('pub-list');
-        list && list.parentElement && list.parentElement.appendChild(empty);
-      }
-      empty.textContent = visible ? '' : 'No publications match your filters.';
-    }
-
-    // copy bibtex
-    function copyBibtex(btn){
-      const pre=btn.closest('.pub').querySelector('.bibtex').textContent;
-      navigator.clipboard.writeText(pre).then(()=>{btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Copy BibTeX',1500)});
-    }
-
-    // ===== Interactive Experience/Publication Graph =====
-    function initGraph(){
-      "use strict";
-      const CONFIG = {
-        gridPadding: 16,
-        ringBase: 120,
-        ringGap: 72,
-        pubsPerRing: 10,
-        clusterGap: 24,
-        jitterFrac: 0.22,
-        zoomMin: 0.5,
-        zoomMax: 3,
-        // floating + breathing
-        expFloatAmp: 2.5,
-        expFloatSpeed: 0.20,
-        pubFloatAmp: 5.0,
-        pubFloatSpeed: 0.42,
-        floatLerp: 0.085,
-        breatheAmpExp: 0.06,
-        breatheAmpPub: 0.08
-      };
-
-      const experiences = [
-        { id: "xp_bytedance", label: "ByteDance / TikTok — Senior Research Scientist", year: "2024–Present", keywords:["Video Generation"] },
-        { id: "xp_amazon", label: "Amazon AGI — Applied Scientist", year: "2022–2024", keywords:["Diffusion","Image Generation"] },
-        { id: "xp_microsoft", label: "Microsoft Cloud & AI — Research Intern", year: "2020–2022", keywords:["VLM","Self-sup.","KD"] },
-        { id: "xp_cas", label: "CAS MM Lab — Visiting Student", year: "2016", keywords:["Deep Learning","Face Rec"] },
-        { id: "xp_asu", label: "ASU — Ph.D.", year: "2013", keywords:["Vision & Language", "VLM"] },
-      ];
-      const publications = [
-        { id: "pub_arxiv25_magref", label: "MAGREF: Any-Reference Video Gen", year: "arXiv 2025" },
-        { id: "pub_arxiv25_ati", label: "ATI: Any Trajectory Instruction", year: "arXiv 2025" },
-        { id: "pub_mm24_i2v", label: "Zero-Shot Controllable I2V Animation", year: "MM 2024" },
-        { id: "pub_tmlr24_flexe", label: "FlexEControl", year: "TMLR 2024" },
-        { id: "pub_wacv24_ttiir", label: "T2I Editing by Info Removal", year: "WACV 2024" },
-        { id: "pub_wacv24_evilm", label: "E-ViLM", year: "WACV 2024" },
-        { id: "pub_eccv24_skews", label: "Skews Hinder T2I Generalization", year: "ECCV 2024" },
-        { id: "pub_tr24_nova", label: "Amazon Nova Models", year: "2024" },
-        { id: "pub_iclr21_seed", label: "SEED: Self-sup. Distillation", year: "ICLR 2021" },
-        { id: "pub_cvpr22_caption", label: "Injecting Concepts into Captioning", year: "CVPR 2022" },
-        { id: "pub_iccv21_kd", label: "Compressing V-L via KD", year: "ICCV 2021" },
-        { id: "pub_eccv20_vitaa", label: "ViTAA", year: "ECCV 2020" },
-        { id: "pub_arxiv20_v2cs", label: "Video2commonsense", year: "arXiv 2020" },
-        { id: "pub_cvpr19_modground", label: "Modularized Textual Grounding", year: "CVPR 2019" },
-        { id: "pub_arxiv18_wsag", label: "Weakly-Sup. Attention Grounding", year: "arXiv 2018" },
-      ];
-      const data = {
-        nodes: [
-          ...experiences.map(d => ({ ...d, type: "experience" })),
-          ...publications.map(d => ({ ...d, type: "publication" })),
-        ],
-        links: [
-          { source: "xp_bytedance", target: "pub_arxiv25_magref" },
-          { source: "xp_bytedance", target: "pub_arxiv25_ati" },
-          { source: "xp_amazon", target: "pub_mm24_i2v" },
-          { source: "xp_amazon", target: "pub_tmlr24_flexe" },
-          { source: "xp_amazon", target: "pub_wacv24_ttiir" },
-          { source: "xp_amazon", target: "pub_wacv24_evilm" },
-          { source: "xp_amazon", target: "pub_tr24_nova" },
-          { source: "xp_amazon", target: "pub_eccv24_skews" },
-          { source: "xp_microsoft", target: "pub_iclr21_seed" },
-          { source: "xp_microsoft", target: "pub_iccv21_kd" },
-          { source: "xp_microsoft", target: "pub_cvpr22_caption" },
-          { source: "xp_asu", target: "pub_cvpr19_modground" },
-          { source: "xp_asu", target: "pub_arxiv18_wsag" },
-          { source: "xp_asu", target: "pub_eccv20_vitaa" },
-          { source: "xp_asu", target: "pub_arxiv20_v2cs" },
-          { source: "xp_bytedance", target: "xp_amazon" },
-          { source: "xp_amazon", target: "xp_microsoft" },
-          { source: "xp_microsoft", target: "xp_asu" },
-        ]
-      };
-
-      const svg = document.getElementById('graph');
-      const gNodes = document.getElementById('nodes');
-      const gLinks = document.getElementById('links');
-      const gClusters = document.getElementById('clusters');
-      const surface = document.getElementById('graph-surface');
-      const testStatus = document.getElementById('test-status');
-      if(!svg || !gNodes || !gLinks || !gClusters || !surface) return;
-
-      const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
-
-      // helpers
-      function hslToRgb(h, s, l){
-        const a = s*Math.min(l,1-l);
-        const f = (n,k=(n+h*12)%12)=> l - a*Math.max(Math.min(k-3, 9-k, 1), -1);
-        return [Math.round(255*f(0)), Math.round(255*f(8)), Math.round(255*f(4))];
-      }
-      const rgba = (r,g,b,a)=>`rgba(${r},${g},${b},${a})`;
-      function pointerToViewBox(e){
-        const rect = svg.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width;
-        const py = (e.clientY - rect.top) / rect.height;
-        return {
-          x: view.x + px * (W / view.z),
-          y: view.y + py * (H / view.z),
-          px, py
-        };
-      }
-
-      // Build lookup
-      const nodeById = new Map(data.nodes.map(n=>[n.id, n]));
-      const pubsByExp = new Map();
-      const expByPub = new Map();
-      data.links.forEach(l=>{
-        const sIsExp = l.source.startsWith('xp_');
-        const tIsPub = l.target.startsWith('pub_');
-        if(sIsExp && tIsPub){
-          const arr = pubsByExp.get(l.source) || []; arr.push(l.target); pubsByExp.set(l.source, arr);
-          expByPub.set(l.target, l.source);
-        }
-      });
-
-      // Cluster styles
-      (function assignClusterStyles(){
-        const exps = data.nodes.filter(n=>n.type==='experience');
-        exps.forEach((e, i)=>{
-          const hue = (i / Math.max(1, exps.length)) % 1;
-          const [r,g,b] = hslToRgb(hue, 0.65, 0.60);
-          e.tint = { r, g, b };
-          e.pulseSpeed = 0.6 + Math.random()*0.5;
-          e.pulsePhase = Math.random()*Math.PI*2;
-        });
-      })();
-
-      // Layout helpers
-      function assignAnchor(n, x, y){
-        n.ax = x; n.ay = y; n.x = x; n.y = y;
-        n.phi = Math.random()*Math.PI*2;
-        n.psi = Math.random()*Math.PI*2;
-        n.omega = 0.6 + Math.random()*0.8;
-        n.breathePhase = Math.random()*Math.PI*2;
-        n.breatheSpeed = 0.45 + Math.random()*0.4;
-        if(n.type==='experience' || (n.id && n.id.startsWith('xp_'))){ n.kbase = Math.random()*Math.PI*2; }
-      }
-      function clusterRadiusExpected(exp){
-        const pubIds = pubsByExp.get(exp.id) || [];
-        const count = pubIds.length;
-        const rings = Math.max(1, Math.ceil(count / CONFIG.pubsPerRing));
-        const outer = CONFIG.ringBase + (rings-1)*CONFIG.ringGap;
-        return Math.max(60, outer + 18);
-      }
-      function clusterRadiusNow(exp){
-        const pubIds = pubsByExp.get(exp.id) || [];
-        let r = 0;
-        for(const pid of pubIds){
-          const p = nodeById.get(pid); if(!p) continue;
-          r = Math.max(r, Math.hypot(p.x-exp.x, p.y-exp.y));
-        }
-        return Math.max(60, r + 18);
-      }
-      function placeClustersHexFit(exps){
-        const radii = exps.map(e => clusterRadiusExpected(e));
-        const Rmax = radii.length ? Math.max(...radii) : 60;
-        let stepX = (Rmax*2) + CONFIG.clusterGap;
-        let stepY = stepX * Math.sqrt(3)/2;
-        const padEdge = Math.max(CONFIG.gridPadding, Rmax + 8);
-        let cols = Math.max(1, Math.floor((W - 2*padEdge) / stepX));
-        let rows = Math.max(1, Math.floor((H - 2*padEdge) / stepY));
-        let passes = 0;
-        while (cols * rows < exps.length && passes < 20){
-          stepX *= 0.92;
-          stepY = stepX * Math.sqrt(3)/2;
-          cols = Math.max(1, Math.floor((W - 2*padEdge) / stepX));
-          rows = Math.max(1, Math.floor((H - 2*padEdge) / stepY));
-          passes++;
-        }
-        const pts = [];
-        for(let r=0;r<rows;r++){
-          const offsetX = (r % 2) ? stepX/2 : 0;
-          for(let c=0;c<cols;c++){
-            const x = padEdge + offsetX + c*stepX;
-            const y = padEdge + r*stepY;
-            if(x>=padEdge && x<=W-padEdge && y>=padEdge && y<=H-padEdge) pts.push({x,y});
-          }
-        }
-        for(let i=pts.length-1;i>0;i--){
-          const j = (Math.random()*(i+1))|0;
-          [pts[i], pts[j]] = [pts[j], pts[i]];
-        }
-        const chosen = pts.slice(0, exps.length);
-        if(chosen.length){
-          let minX = Math.min(...chosen.map(p=>p.x));
-          let maxX = Math.max(...chosen.map(p=>p.x));
-          let minY = Math.min(...chosen.map(p=>p.y));
-          let maxY = Math.max(...chosen.map(p=>p.y));
-          const availW = W - 2*padEdge;
-          const availH = H - 2*padEdge;
-          const scale = Math.min(
-            availW / Math.max(1, maxX - minX),
-            availH / Math.max(1, maxY - minY)
-          );
-          const cx = (minX + maxX) * 0.5;
-          const cy = (minY + maxY) * 0.5;
-          const canvasCX = W * 0.5;
-          const canvasCY = H * 0.5;
-          chosen.forEach(p=>{
-            p.x = canvasCX + (p.x - cx) * scale;
-            p.y = canvasCY + (p.y - cy) * scale;
-          });
-        }
-        const jitter = stepX * CONFIG.jitterFrac;
-        exps.forEach((e,i)=>{
-          const r = radii[i];
-          const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
-          const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
-          let x = chosen[i] ? chosen[i].x : (W/2 + (Math.random()-0.5)*W*0.6);
-          let y = chosen[i] ? chosen[i].y : (H/2 + (Math.random()-0.5)*H*0.6);
-          x += (Math.random()*2-1)*jitter;
-          y += (Math.random()*2-1)*jitter;
-          x = Math.max(minX, Math.min(maxX, x));
-          y = Math.max(minY, Math.min(maxY, y));
-          assignAnchor(e, x, y);
-        });
-      }
-      function layout() {
-        const exps = data.nodes.filter(n=>n.type==='experience');
-        placeClustersHexFit(exps);
-        for(const exp of exps){
-          const pubIds = pubsByExp.get(exp.id) || [];
-          const pubs = pubIds.map(id=>nodeById.get(id)).filter(Boolean);
-          const perRing = CONFIG.pubsPerRing;
-          const baseAngle = Math.random()*Math.PI*2;
-          pubs.forEach((p, idx)=>{
-            const ringIndex = Math.floor(idx / perRing);
-            const posInRing = idx % perRing;
-            const ringCount = Math.min(perRing, pubs.length - ringIndex*perRing);
-            const angle = baseAngle + 2*Math.PI * (posInRing / Math.max(1, ringCount)) + (Math.random()-0.5)*0.28;
-            const radius = CONFIG.ringBase + ringIndex * CONFIG.ringGap + (Math.random()-0.5)*18;
-            const x = exp.ax + Math.cos(angle) * radius;
-            const y = exp.ay + Math.sin(angle) * radius;
-            assignAnchor(p, x, y);
-          });
-        }
-      }
-
-      // drawing
-      function linkId(s,t){ return `link_${s}__${t}`; }
-      function drawClusters(tNow){
-        gClusters.innerHTML='';
-        const exps = data.nodes.filter(n=>n.type==='experience');
-        for(const exp of exps){
-          const pubIds = pubsByExp.get(exp.id)||[];
-          let r = 0;
-          for(const pid of pubIds){ const p=nodeById.get(pid); if(!p) continue; const d=Math.hypot(p.x-exp.x, p.y-exp.y); if(d>r) r=d; }
-          r = Math.max(60, r + 18);
-
-          const phase = exp.pulsePhase || 0;
-          const speed = exp.pulseSpeed || 0.8;
-          const pulse = 1 + 0.025 * Math.sin((tNow*speed) + phase);
-          const alpha = 0.10 + 0.10 * (0.5 + 0.5*Math.sin((tNow*speed) + phase));
-          const {r:cr,g:cg,b:cb} = exp.tint || {r:108,g:124,b:255};
-
-          const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-          c.setAttribute('class','cluster');
-          c.setAttribute('cx', exp.x); c.setAttribute('cy', exp.y); c.setAttribute('r', r*pulse);
-          c.setAttribute('stroke', rgba(cr,cg,cb, 0.55));
-          c.setAttribute('fill', rgba(cr,cg,cb, alpha));
-          gClusters.appendChild(c);
-
-          const kws = exp.keywords || [];
-          const base = exp.kbase || 0;
-          kws.forEach((kw,i)=>{
-            const ang = base + i*(2*Math.PI/Math.max(1,kws.length));
-            const tx = exp.x + Math.cos(ang)*(r + 14);
-            const ty = exp.y + Math.sin(ang)*(r + 14);
-            const t = document.createElementNS('http://www.w3.org/2000/svg','text');
-            t.setAttribute('class','cluster-label');
-            t.setAttribute('x', tx); t.setAttribute('y', ty);
-            t.setAttribute('text-anchor', Math.cos(ang)>0 ? 'start' : 'end');
-            t.setAttribute('fill', rgba(cr,cg,cb, 0.95));
-            t.setAttribute('opacity', 0.70 + 0.25*(0.5 + 0.5*Math.sin((tNow*speed) + phase)));
-            t.textContent = kw; gClusters.appendChild(t);
-          });
-        }
-      }
-      function drawLinks(){
-        gLinks.innerHTML='';
-        for(const {source,target} of data.links){
-          const s = nodeById.get(source); const t = nodeById.get(target);
-          if(!s||!t) continue;
-          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-          line.setAttribute('x1', s.x); line.setAttribute('y1', s.y);
-          line.setAttribute('x2', t.x); line.setAttribute('y2', t.y);
-          line.setAttribute('class','link');
-          line.dataset.source = source; line.dataset.target = target; line.id = linkId(source,target);
-          if(source.startsWith('xp_') && target.startsWith('pub_') && s.tint){
-            const {r,g,b} = s.tint; line.setAttribute('stroke', rgba(r,g,b, 0.35));
-          } else if (target.startsWith('xp_') && source.startsWith('pub_') && t.tint){
-            const {r,g,b} = t.tint; line.setAttribute('stroke', rgba(r,g,b, 0.35));
-          }
-          gLinks.appendChild(line);
-        }
-      }
-      function drawNodes(tNow){
-        gNodes.innerHTML='';
-        for(const n of data.nodes){
-          const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-          g.setAttribute('class','node'); g.setAttribute('data-id', n.id); g.setAttribute('data-type', n.type);
-          g.style.pointerEvents = 'all';
-
-          const isExp = n.type==='experience';
-          const R0 = isExp ? 16 : 11;
-          const RR0 = isExp ? 24 : 18;
-
-          const amp = isExp ? CONFIG.breatheAmpExp : CONFIG.breatheAmpPub;
-          const s = 1 + amp * Math.sin(tNow*2*Math.PI*n.breatheSpeed + n.breathePhase);
-
-          // expanded hit
-          const hit = document.createElementNS('http://www.w3.org/2000/svg','circle');
-          hit.setAttribute('r', isExp ? 28 : 22);
-          hit.setAttribute('cx', n.x);
-          hit.setAttribute('cy', n.y);
-          hit.setAttribute('fill', '#000');
-          hit.setAttribute('fill-opacity', '0.001');
-
-          const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
-          ring.setAttribute('r', RR0*s); ring.setAttribute('cx', n.x); ring.setAttribute('cy', n.y);
-          ring.setAttribute('fill','none');
-          ring.setAttribute('stroke', isExp ? (getComputedStyle(document.documentElement).getPropertyValue('--exp').trim()||'#0EA5E9') : (getComputedStyle(document.documentElement).getPropertyValue('--pub').trim()||'#F59E0B'));
-          ring.setAttribute('stroke-opacity','.45');
-          ring.style.pointerEvents = 'none';
-
-          const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-          circle.setAttribute('r', R0*s); circle.setAttribute('cx', n.x); circle.setAttribute('cy', n.y);
-          circle.setAttribute('fill', isExp ? (getComputedStyle(document.documentElement).getPropertyValue('--exp').trim()||'#0EA5E9') : (getComputedStyle(document.documentElement).getPropertyValue('--pub').trim()||'#F59E0B'));
-
-          const label = document.createElementNS('http://www.w3.org/2000/svg','text');
-          label.setAttribute('class','label');
-          label.setAttribute('x', n.x + (isExp? 30: 20));
-          label.setAttribute('y', n.y + 6);
-          label.textContent = `${n.label}${n.year? ' · '+n.year:''}`;
-          label.style.pointerEvents = 'none';
-
-          // Hover highlighting
-          g.addEventListener('pointerenter', ()=> highlightNode(n.id, true));
-          g.addEventListener('pointerleave', ()=> highlightNode(n.id, false));
-
-          // Dragging
-          g.addEventListener('pointerdown', (e)=>{
-            const vb = pointerToViewBox(e);
-            dragging = n; draggingEl = g;
-            g.classList.add('is-dragging');
-            g.setPointerCapture(e.pointerId);
-            dragOffset.x = n.x - vb.x;
-            dragOffset.y = n.y - vb.y;
-          });
-          g.addEventListener('pointermove', (e)=>{
-            if(dragging !== n) return;
-            const vb = pointerToViewBox(e);
-            const nx = vb.x + dragOffset.x;
-            const ny = vb.y + dragOffset.y;
-            if(n.type==='experience'){
-              translateCluster(n.id, nx - n.x, ny - n.y);
-            } else {
-              n.x = Math.max(20, Math.min(W-20, nx));
-              n.y = Math.max(20, Math.min(H-20, ny));
-              n.ax = n.x; n.ay = n.y;
-            }
-            redraw(performance.now()*0.001);
-          });
-          g.addEventListener('pointerup', (e)=>{
-            if(dragging === n){ g.releasePointerCapture(e.pointerId); }
-            g.classList.remove('is-dragging');
-            dragging = null; draggingEl = null;
-          });
-
-          g.appendChild(hit); g.appendChild(ring); g.appendChild(circle); g.appendChild(label);
-          gNodes.appendChild(g);
-        }
-      }
-      function redraw(t){ drawClusters(t||0); drawLinks(); drawNodes(t||0); }
-
-      // Interaction: cluster drag + pan/zoom
-      let dragging=null, draggingEl=null, dragOffset={x:0,y:0};
-      const pubsOf = (expId)=> (pubsByExp.get(expId)||[]).map(id=>nodeById.get(id)).filter(Boolean);
-
-      function translateCluster(expId, dx, dy){
-        const exp = nodeById.get(expId); if(!exp) return;
-        let nx = exp.x + dx, ny = exp.y + dy;
-        const r = clusterRadiusNow(exp);
-        const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
-        const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
-        nx = Math.max(minX, Math.min(maxX, nx));
-        ny = Math.max(minY, Math.min(maxY, ny));
-        const ddx = nx - exp.x, ddy = ny - exp.y;
-
-        exp.x = nx; exp.y = ny; exp.ax += ddx; exp.ay += ddy;
-        for(const p of pubsOf(expId)){ p.x += ddx; p.y += ddy; p.ax += ddx; p.ay += ddy; }
-
-        resolveClusterOverlaps();
-      }
-
-      // Pan/Zoom state
-      let view={x:0,y:0,z:1}, panning=false, panStart={x:0,y:0}, viewStart={x:0,y:0};
-
-      svg.addEventListener('pointerdown', (e)=>{
-        const onNode = e.target.closest && e.target.closest('.node');
-        if(!onNode){
-          panning = true;
-          panStart = {x: e.clientX, y: e.clientY};
-          viewStart = {...view};
-        }
-      });
-      svg.addEventListener('pointermove', (e)=>{
-        if(panning){
-          const rect = svg.getBoundingClientRect();
-          const scaleX = (W/view.z)/rect.width;
-          const scaleY = (H/view.z)/rect.height;
-          view.x = viewStart.x - (e.clientX - panStart.x) * scaleX;
-          view.y = viewStart.y - (e.clientY - panStart.y) * scaleY;
-          applyView();
-        }
-      });
-      svg.addEventListener('pointerup', ()=>{ panning=false; });
-      svg.addEventListener('pointerleave', ()=>{ panning=false; });
-
-      // Hover highlight
-      function highlightNode(id, on){
-        if(on){
-          for(const el of gNodes.querySelectorAll('.node')) el.classList.remove('is-active');
-          for(const el of gLinks.querySelectorAll('.link')) el.classList.remove('is-active');
-        }
-        const n = nodeById.get(id); if(!n) return;
-        const nodeEl = gNodes.querySelector(`[data-id="${id}"]`);
-        if(nodeEl && on) nodeEl.classList.add('is-active');
-
-        if(n.type==='experience'){
-          const pubs = pubsByExp.get(id)||[];
-          for(const pid of pubs){
-            const l = document.getElementById(linkId(id,pid)); if(l && on) l.classList.add('is-active');
-            const pEl = gNodes.querySelector(`[data-id="${pid}"]`); if(pEl && on) pEl.classList.add('is-active');
-          }
-        } else if(n.type==='publication'){
-          const expId = expByPub.get(id);
-          const l = document.getElementById(linkId(expId,id)); if(l && on) l.classList.add('is-active');
-          const eEl = gNodes.querySelector(`[data-id="${expId}"]`); if(eEl && on) eEl.classList.add('is-active');
-        }
-
-        if(!on){
-          for(const el of gNodes.querySelectorAll('.node')) el.classList.remove('is-active');
-          for(const el of gLinks.querySelectorAll('.link')) el.classList.remove('is-active');
-        }
-      }
-
-      // Node spacing
-      function collideNodes(pass=1){
-        const nodes = data.nodes; const n = nodes.length;
-        const strength = 0.16*pass;
-        const minExp = 52, minPub = 18, minCross = 26;
-        for(let i=0;i<n;i++){
-          for(let j=i+1;j<n;j++){
-            const a=nodes[i], b=nodes[j];
-            const dx=b.x-a.x, dy=b.y-a.y; let d2=dx*dx+dy*dy; if(d2<0.01) d2=0.01;
-            const d=Math.sqrt(d2); const ux=dx/d, uy=dy/d;
-            const want = (a.type==='experience' && b.type==='experience') ? minExp
-                      : (a.type==='publication' && b.type==='publication') ? minPub
-                      : minCross;
-            const overlap = want - d;
-            if(overlap>0){
-              const push = overlap*strength;
-              if(dragging!==a){ a.x -= ux*push; a.y -= uy*push; }
-              if(dragging!==b){ b.x += ux*push; b.y += uy*push; }
-              a.x=Math.max(20,Math.min(W-20,a.x)); a.y=Math.max(20,Math.min(H-20,a.y));
-              b.x=Math.max(20,Math.min(W-20,b.x)); b.y=Math.max(20,Math.min(H-20,b.y));
-            }
-          }
-        }
-      }
-
-      // Cluster collision
-      function resolveClusterOverlaps(pass=1){
-        const exps = data.nodes.filter(n=>n.type==='experience');
-        const n = exps.length;
-        const strength = 0.65*pass;
-        for(let i=0;i<n;i++){
-          for(let j=i+1;j<n;j++){
-            const a = exps[i], b = exps[j];
-            const ra = clusterRadiusNow(a), rb = clusterRadiusNow(b);
-            const need = ra + rb + CONFIG.clusterGap;
-
-            let dx = b.x - a.x, dy = b.y - a.y;
-            let d2 = dx*dx + dy*dy;
-            if(d2 < 1e-5){ dx = (Math.random()-0.5)*1e-3; dy = (Math.random()-0.5)*1e-3; d2 = dx*dx+dy*dy; }
-            const d = Math.sqrt(d2);
-            const overlap = need - d;
-            if(overlap > 0){
-              const ux = dx / d, uy = dy / d;
-              const push = overlap * strength;
-
-              applyClusterDelta(a, dragging===a ? 0 : -ux*push, dragging===a ? 0 : -uy*push);
-              applyClusterDelta(b, dragging===b ? 0 :  ux*push, dragging===b ? 0 :  uy*push);
-            }
-          }
-        }
-      }
-      function applyClusterDelta(exp, dx, dy){
-        if(dx===0 && dy===0) return;
-        const r = clusterRadiusNow(exp);
-        const minX = r + CONFIG.gridPadding, maxX = W - r - CONFIG.gridPadding;
-        const minY = r + CONFIG.gridPadding, maxY = H - r - CONFIG.gridPadding;
-        let nx = Math.max(minX, Math.min(maxX, exp.x + dx));
-        let ny = Math.max(minY, Math.min(maxY, exp.y + dy));
-        const ddx = nx - exp.x, ddy = ny - exp.y;
-        exp.x = nx; exp.y = ny; exp.ax += ddx; exp.ay += ddy;
-
-        const pubs = (pubsByExp.get(exp.id)||[]).map(id=>nodeById.get(id)).filter(Boolean);
-        for(const p of pubs){ p.x += ddx; p.y += ddy; p.ax += ddx; p.ay += ddy; }
-      }
-
-      // Floating & Pulse
-      let lastT = performance.now();
-      function floatStep(){
-        const now = performance.now();
-        const t = now * 0.001;
-        const dt = Math.min(0.05, (now - lastT) * 0.001);
-        lastT = now;
-        for(const n of data.nodes){
-          if(dragging===n) continue;
-          const isExp = n.type==='experience';
-          const amp = isExp ? CONFIG.expFloatAmp : CONFIG.pubFloatAmp;
-          const spd = isExp ? CONFIG.expFloatSpeed : CONFIG.pubFloatSpeed;
-          const targetX = n.ax + Math.cos(n.phi + t*spd*2*Math.PI) * amp;
-          const targetY = n.ay + Math.sin(n.psi + t*spd*2*Math.PI*0.88) * amp;
-          n.x += (targetX - n.x) * (CONFIG.floatLerp * (1+dt*14));
-          n.y += (targetY - n.y) * (CONFIG.floatLerp * (1+dt*14));
-          n.x = Math.max(20, Math.min(W-20, n.x));
-          n.y = Math.max(20, Math.min(H-20, n.y));
-        }
-        return t;
-      }
-
-      function tick(){
-        const t = floatStep();
-        resolveClusterOverlaps(1.0);
-        collideNodes(0.20);
-        redraw(t);
-        requestAnimationFrame(tick);
-      }
-
-      // Tests
-      function runTests(){
-        const results = [];
-        function assert(cond, msg){ results.push({ok:!!cond, msg}); }
-        const expCount = experiences.length, pubCount = publications.length;
-        assert(data.nodes.filter(n=>n.type==='experience').length === expCount, 'experience count matches');
-        assert(data.nodes.filter(n=>n.type==='publication').length === pubCount, 'publication count matches');
-        const passed = results.filter(r=>r.ok).length;
-        if(testStatus) testStatus.textContent = `tests: ${passed}/${results.length} passed`;
-      }
-
-      // Init
-      function applyView(){ const vbW=W/view.z, vbH=H/view.z; svg.setAttribute('viewBox', `${view.x} ${view.y} ${vbW} ${vbH}`); }
-      surface.addEventListener('wheel', (e)=>{
-        e.preventDefault();
-        const rect = svg.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width;
-        const py = (e.clientY - rect.top) / rect.height;
-        const mx = view.x + px*(W/view.z);
-        const my = view.y + py*(H/view.z);
-        const scale = Math.exp(-e.deltaY*0.001);
-        view.z = Math.max(CONFIG.zoomMin, Math.min(CONFIG.zoomMax, view.z*scale));
-        view.x = mx - px*(W/view.z);
-        view.y = my - py*(H/view.z);
-        applyView();
-      }, {passive:false});
-      surface.addEventListener('dblclick', ()=>{ view={x:0,y:0,z:1}; applyView(); });
-
-      (function init(){ layout(); redraw(0); applyView(); runTests(); requestAnimationFrame(tick); })();
-    }
-
-    // boot
-    if(document.readyState==='loading'){
-      document.addEventListener('DOMContentLoaded',()=>{ buildPubIndex(); filterPubs(); initGraph(); });
-    }else{
-      buildPubIndex(); filterPubs(); initGraph();
-    }
-    ['q','year','venue'].forEach(id=>{
-      const el=document.getElementById(id); if(!el) return;
-      const ev=(id==='q')?'input':'change';
-      el.addEventListener(ev, filterPubs);
-    });
-
-    // ===== Auto-pause/play videos when (not) visible =====
-    (function manageVideoAutoplay(){
-      const vids = document.querySelectorAll('#video-panels video');
-      vids.forEach(v => { v.muted = true; v.playsInline = true; });
-      if ('IntersectionObserver' in window){
-        const io = new IntersectionObserver(entries=>{
-          entries.forEach(e=>{
-            const v = e.target;
-            if (e.isIntersecting) { v.play().catch(()=>{}); }
-            else { v.pause(); }
-          });
-        }, { threshold: 0.25 });
-        vids.forEach(v=>io.observe(v));
-      }
-    })();
-
-    // ===== Collapse/Expand publications list (show top 3 by default) =====
-    (function initPubToggle(){
-      const list = document.getElementById('pub-list');
-      const btn = document.getElementById('pub-toggle');
-      if(!list || !btn) return;
-      const pubs = list.querySelectorAll('article.pub');
-      const total = pubs.length;
-      const isCollapsed = list.classList.contains('collapsed');
-      btn.setAttribute('aria-expanded', String(!isCollapsed));
-      btn.textContent = isCollapsed ? `Show all (${total})` : 'Show less';
-      btn.addEventListener('click', ()=>{
-        const collapsed = list.classList.toggle('collapsed');
-        btn.setAttribute('aria-expanded', String(!collapsed));
-        btn.textContent = collapsed ? `Show all (${total})` : 'Show less';
-      });
-    })();
-
-    // ===== Experience project sliders (show up to 3, add nav buttons with loop) =====
-    (function initXpSliders(){
-      const containers = document.querySelectorAll('#experience .xp-projects');
-      containers.forEach((track)=>{
-        // wrap track in a slider wrapper
-        const wrapper = document.createElement('div');
-        wrapper.className = 'xp-slider';
-        track.parentNode.insertBefore(wrapper, track);
-        wrapper.appendChild(track);
-
-        // create nav buttons with SVG icons
-        const prev = document.createElement('button');
-        prev.className = 'xp-prev'; prev.setAttribute('aria-label','Previous projects');
-        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.71 6.71a1 1 0 0 0-1.42-1.42L8 11.59 14.29 17.88a1 1 0 1 0 1.42-1.42L10.83 12l4.88-5.29z"/></svg>';
-
-        const next = document.createElement('button');
-        next.className = 'xp-next'; next.setAttribute('aria-label','Next projects');
-        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8.29 17.29a1 1 0 0 0 1.42 1.42L16 12.41 9.71 6.12A1 1 0 0 0 8.29 7.54L13.17 12l-4.88 5.29z"/></svg>';
-
-        wrapper.appendChild(next); wrapper.insertBefore(prev, track);
-
-        // paging helpers
-        let page = 0;
-        const pageWidth = ()=> Math.max(1, track.clientWidth);
-        const maxPage = ()=> Math.max(0, Math.ceil(track.scrollWidth / pageWidth()) - 1);
-
-        function goToPage(p){
-          const mp = maxPage();
-          const target = Math.max(0, Math.min(mp, p));
-          track.scrollTo({ left: Math.round(target * pageWidth()), behavior: 'smooth' });
-          page = target;
-        }
-
-        // next/prev with looping behavior
-        prev.addEventListener('click', ()=>{
-          const mp = maxPage();
-          if (mp === 0) return;
-          if (page <= 0) goToPage(mp); else goToPage(page - 1);
-        });
-        next.addEventListener('click', ()=>{
-          const mp = maxPage();
-          if (mp === 0) return;
-          if (page >= mp) goToPage(0); else goToPage(page + 1);
-        });
-
-        // show/hide arrows only when content overflows; keep arrows visible otherwise
-        function update(){
-          const canScroll = track.scrollWidth - track.clientWidth > 6;
-          prev.classList.toggle('hidden', !canScroll);
-          next.classList.toggle('hidden', !canScroll);
-          // update current page based on scroll position
-          const pw = pageWidth();
-          if (pw > 0) page = Math.max(0, Math.min(maxPage(), Math.round(track.scrollLeft / pw)));
-        }
-        track.addEventListener('scroll', update, {passive:true});
-        window.addEventListener('resize', update);
-        update();
-
-        // sensible scroll padding so first/last items aren't hidden under arrows
-        try{ track.style.scrollPaddingInline = '56px'; }catch(e){}
-      });
-    })();
-
-    // ===== Product Highlights slider (horizontal, reuse xp styles) =====
-    (function initVidSliders(){
-      const containers = document.querySelectorAll('#video-panels .vid-grid');
-      containers.forEach((track)=>{
-        const wrapper = document.createElement('div'); wrapper.className = 'xp-slider';
-        track.parentNode.insertBefore(wrapper, track); wrapper.appendChild(track);
-
-        const prev = document.createElement('button'); prev.className='xp-prev'; prev.setAttribute('aria-label','Previous highlights');
-        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.71 6.71a1 1 0 0 0-1.42-1.42L8 11.59 14.29 17.88a1 1 0 1 0 1.42-1.42L10.83 12l4.88-5.29z"/></svg>';
-        const next = document.createElement('button'); next.className='xp-next'; next.setAttribute('aria-label','Next highlights');
-        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8.29 17.29a1 1 0 0 0 1.42 1.42L16 12.41 9.71 6.12A1 1 0 0 0 8.29 7.54L13.17 12l-4.88 5.29z"/></svg>';
-        wrapper.appendChild(next); wrapper.insertBefore(prev, track);
-
-        let page = 0;
-        const pageWidth = ()=> Math.max(1, track.clientWidth);
-        const maxPage = ()=> Math.max(0, Math.ceil(track.scrollWidth / pageWidth()) - 1);
-        function goToPage(p){ const mp = maxPage(); const target = Math.max(0, Math.min(mp, p)); track.scrollTo({ left: Math.round(target * pageWidth()), behavior: 'smooth' }); page = target; }
-
-        prev.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page <= 0) goToPage(mp); else goToPage(page - 1); });
-        next.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page >= mp) goToPage(0); else goToPage(page + 1); });
-
-        function update(){ const canScroll = track.scrollWidth - track.clientWidth > 6; prev.classList.toggle('hidden', !canScroll); next.classList.toggle('hidden', !canScroll); const pw = pageWidth(); if (pw>0) page = Math.max(0, Math.min(maxPage(), Math.round(track.scrollLeft / pw))); }
-        track.addEventListener('scroll', update, {passive:true}); window.addEventListener('resize', update); update();
-        try{ track.style.scrollPaddingInline = '56px'; }catch(e){}
-
-        // Auto-slide (left→right) with looping, pause on hover/interaction and when tab hidden
-        (function autoSlide(){
-          const AUTO_MS = 4000; let autoTimer = null; let interactionPaused = false;
-          function startAuto(){ if (autoTimer || interactionPaused) return; if (maxPage() === 0) return; autoTimer = setInterval(()=>{ const mp = maxPage(); if (page >= mp) goToPage(0); else goToPage(page + 1); }, AUTO_MS); }
-          function stopAuto(){ if (!autoTimer) return; clearInterval(autoTimer); autoTimer = null; }
-          wrapper.addEventListener('mouseenter', ()=>{ interactionPaused = true; stopAuto(); });
-          wrapper.addEventListener('mouseleave', ()=>{ interactionPaused = false; startAuto(); });
-          track.addEventListener('pointerdown', ()=>{ interactionPaused = true; stopAuto(); }, {passive:true});
-          track.addEventListener('pointerup', ()=>{ interactionPaused = false; setTimeout(startAuto, 1200); }, {passive:true});
-          document.addEventListener('visibilitychange', ()=>{ if (document.hidden) stopAuto(); else startAuto(); });
-          // start if scrollable
-          startAuto();
-        })();
-      });
-    })();
-
-    // ===== News vertical slider (up/down) =====
-    (function initNewsSlider(){
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card=>{
-        const header = card.querySelector('strong'); if(!header) return;
-        if(header.textContent.trim() !== 'News') return;
-        const ul = card.querySelector('ul'); if(!ul) return;
-
-        const wrapper = document.createElement('div'); wrapper.className = 'news-slider';
-        const list = document.createElement('div'); list.className = 'news-list';
-        ul.parentNode.replaceChild(wrapper, ul);
-        list.appendChild(ul); wrapper.appendChild(list);
-
-        const prev = document.createElement('button'); prev.className='news-prev'; prev.setAttribute('aria-label','Previous news');
-        prev.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>';
-        const next = document.createElement('button'); next.className='news-next'; next.setAttribute('aria-label','Next news');
-        next.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>';
-        wrapper.appendChild(next); wrapper.insertBefore(prev, list);
-
-        let page = 0;
-        const pageHeight = ()=> Math.max(1, list.clientHeight);
-        const maxPage = ()=> Math.max(0, Math.ceil(list.scrollHeight / pageHeight()) - 1);
-        function goToPage(p){ const mp = maxPage(); const target = Math.max(0, Math.min(mp, p)); list.scrollTo({ top: Math.round(target * pageHeight()), behavior: 'smooth' }); page = target; }
-
-        prev.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page <= 0) goToPage(mp); else goToPage(page - 1); });
-        next.addEventListener('click', ()=>{ const mp = maxPage(); if (mp === 0) return; if (page >= mp) goToPage(0); else goToPage(page + 1); });
-
-        function update(){ const canScroll = list.scrollHeight - list.clientHeight > 6; prev.classList.toggle('hidden', !canScroll); next.classList.toggle('hidden', !canScroll); const ph = pageHeight(); if (ph>0) page = Math.max(0, Math.min(maxPage(), Math.round(list.scrollTop / ph))); }
-        list.addEventListener('scroll', update, {passive:true}); window.addEventListener('resize', update); update();
-        try{ list.style.scrollPaddingBlock = '40px'; }catch(e){}
-      });
-    })();
-  </script>
-
+      <section class="bibliography row" id="publications" aria-labelledby="publications-title"><aside class="margin-note"><strong>Research</strong></aside><div class="content"><h2 class="section-title" id="publications-title">Selected publications</h2><div class="publication-toolbar"><span>9 papers · Scroll to browse</span><button type="button" id="publication-toggle" aria-expanded="false" aria-controls="publication-list" hidden>View all</button></div>
+<div class="publication-list" id="publication-list" tabindex="0" role="region" aria-label="Publications, scroll vertically to browse">
+<section class="paper-group" aria-labelledby="video-papers-title"><h3 id="video-papers-title">Controllable video generation</h3><article class="paper"><div class="paper-heading"><h4><a href="https://magref-video.github.io/">MAGREF: Masked Guidance for Any-Reference Video Generation</a></h4><p class="paper-venue">arXiv · 2025</p></div><p class="authors">Yufan Deng, Xun Guo, Yuanyang Yin, <strong>Jacob Zhiyuan Fang</strong>, Yiding Yang, Yizhi Wang, Shenghai Yuan, Angtian Wang, Bo Liu, Haibin Huang, Chongyang Ma</p><div class="paper-links" aria-label="Links for MAGREF: Masked Guidance for Any-Reference Video Generation"><a href="https://github.com/MAGREF-Video/MAGREF">Code</a><a href="https://magref-video.github.io/">Project</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2505.22944">ATI: Any Trajectory Instruction for Controllable Video Generation</a></h4><p class="paper-venue">arXiv · 2025</p></div><p class="authors">Angtian Wang, Haibin Huang, <strong>Jacob Zhiyuan Fang</strong>, Yiding Yang, Chongyang Ma</p><div class="paper-links" aria-label="Links for ATI: Any Trajectory Instruction for Controllable Video Generation"><a href="https://arxiv.org/pdf/2505.22944">Preprint</a><a href="https://github.com/bytedance/ATI">Code</a><a href="https://anytraj.github.io/">Project</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://openreview.net/pdf?id=vngElHOj2N">Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition</a></h4><p class="paper-venue">ACM MM · 2024</p></div><p class="authors">Shoubin Yu, <strong>Jacob Zhiyuan Fang</strong>, Skyler Zheng, Gunnar A. Sigurdsson, Vicente Ordonez, Robinson Piramuthu, Mohit Bansal</p><div class="paper-links" aria-label="Links for Zero-Shot Controllable Image-to-Video Animation via Motion Decomposition"><a href="https://openreview.net/pdf?id=vngElHOj2N">Paper</a><a href="https://img2vidanim-0.github.io/">Project</a></div></article></section>
+<section class="paper-group" aria-labelledby="image-papers-title"><h3 id="image-papers-title">Image generation and generalization</h3><article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/abs/2405.04834">FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation</a></h4><p class="paper-venue">TMLR · 2024</p></div><p class="authors">Xuehai He, Jian Zheng, <strong>Jacob Zhiyuan Fang</strong>, Robinson Piramuthu, Mohit Bansal, Vicente Ordonez, Gunnar A. Sigurdsson, Nanyun Peng, Xin Eric Wang</p><div class="paper-links" aria-label="Links for FlexEControl: Flexible and Efficient Multimodal Control for Text-to-Image Generation"><a href="https://arxiv.org/abs/2405.04834">Paper</a><a href="https://sites.google.com/view/flexecontrol">Project</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2403.16394">Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation</a></h4><p class="paper-venue">ECCV · 2024</p></div><p class="authors">Yingshan Chang, Yasi Zhang, <strong>Zhiyuan Fang</strong>, Yingnian Wu, Yonatan Bisk, Feng Gao</p><div class="paper-links" aria-label="Links for Skews in the Phenomenon Space Hinder Generalization in Text-to-Image Generation"><a href="https://arxiv.org/pdf/2403.16394">Paper</a></div></article></section>
+<section class="paper-group" aria-labelledby="representation-papers-title"><h3 id="representation-papers-title">Representation and vision-language learning</h3><article class="paper"><div class="paper-heading"><h4><a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf">Injecting Semantic Concepts into End-to-End Image Captioning</a></h4><p class="paper-venue">CVPR · 2022</p></div><p class="authors"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lin Liang, Zhe Gan, Lijuan Wang, Yezhou Yang, Zicheng Liu</p><div class="paper-links" aria-label="Links for Injecting Semantic Concepts into End-to-End Image Captioning"><a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Fang_Injecting_Semantic_Concepts_Into_End-to-End_Image_Captioning_CVPR_2022_paper.pdf">Paper</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2101.04731">SEED: Self-supervised Distillation For Visual Representation</a></h4><p class="paper-venue">ICLR · 2021</p></div><p class="authors"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Lijuan Wang, Lei Zhang, Yezhou Yang, Zicheng Liu</p><div class="paper-links" aria-label="Links for SEED: Self-supervised Distillation For Visual Representation"><a href="https://arxiv.org/pdf/2101.04731">Paper</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Compressing Visual-linguistic Model via Knowledge Distillation</a></h4><p class="paper-venue">ICCV · 2021</p></div><p class="authors"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, Zicheng Liu</p><div class="paper-links" aria-label="Links for Compressing Visual-linguistic Model via Knowledge Distillation"><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Paper</a></div></article>
+<article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2005.07327">ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language</a></h4><p class="paper-venue">ECCV · 2020</p></div><p class="authors">Zhe Wang, <strong>Zhiyuan Fang</strong>, Jun Wang, Yezhou Yang</p><div class="paper-links" aria-label="Links for ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language"><a href="https://arxiv.org/pdf/2005.07327">Paper</a></div></article></section>
+</div></div></section>
+      <section class="background row" id="background" aria-labelledby="background-title"><aside class="margin-note"><strong>Background</strong></aside><div class="content"><h2 class="section-title" id="background-title">Experience &amp; education</h2><ol class="career"><li><span class="career-date">Mar 2026 — Present</span><div><span class="career-company">Microsoft AI</span><span class="career-role">Member of Technical Staff</span></div></li>
+<li><span class="career-date">Jul 2024 — Mar 2026</span><div><span class="career-company">ByteDance</span><span class="career-role">Senior Research Scientist</span></div></li>
+<li><span class="career-date">Jun 2022 — Jul 2024</span><div><span class="career-company">Amazon</span><span class="career-role">Applied Scientist</span></div></li>
+<li><span class="career-date">May 2021 — Jan 2022</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">Aug 2020 — May 2021</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">May 2020 — Aug 2020</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">Sep 2016 — Jan 2017</span><div><span class="career-company">Chinese Academy of Sciences</span><span class="career-role">Research Assistant</span></div></li></ol><div class="education"><p>Ph.D., Computer Science · Arizona State University<span>Computer vision and multimodal representation learning</span></p><p>B.Eng., Computer Science · Southern University of Science and Technology（南方科技大学）</p></div><p class="service"><strong>Reviewer:</strong> ICCV, CVPR, ECCV, NeurIPS, ICLR, ICML, ACL, EMNLP, SIGGRAPH, SIGGRAPH Asia, and TMLR.</p></div></section>
+    </main>
+    <footer class="row"><div class="margin-note"></div><div class="content"><span>Jacob Zhiyuan Fang</span><a href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ">Full publication list on Google Scholar ↗</a></div></footer>
+  </div>
+  <dialog class="image-viewer" id="image-viewer" aria-labelledby="viewer-title">
+    <div class="viewer-bar"><span id="viewer-title">Image preview</span><div class="viewer-actions"><button type="button" id="viewer-zoom" aria-pressed="false" aria-controls="image-canvas" disabled>Actual size</button><button type="button" id="viewer-close">Close</button></div></div>
+    <div class="image-canvas" id="image-canvas" tabindex="0" role="region" aria-label="Image preview"><img id="viewer-image" alt=""></div>
+  </dialog>
+  <dialog class="video-viewer" id="video-viewer" aria-labelledby="video-title">
+    <div class="viewer-bar"><span id="video-title">Video demo</span><button type="button" id="video-close" aria-label="Close video">Close</button></div>
+    <video id="demo-video" controls preload="none" playsinline muted width="576" height="1024" aria-label="Video demonstration">Your browser does not support this video. <a href="images/shou.mp4" data-video-fallback>Open the original video</a>.</video>
+    <p class="video-error" id="video-error" role="status" hidden>Playback could not start. Use the video controls or <a href="images/shou.mp4" data-video-fallback>open the original video</a>.</p>
+  </dialog>
 </body>
 </html>
