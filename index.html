@@ -45,8 +45,19 @@
     .case h2,.section-title { font:600 16px/1.5 var(--sans); letter-spacing:0; }
     .case .lede { max-width:680px; margin-top:12px; }
     .case .lede + p { max-width:680px; margin-top:12px; }
-    .case .result { margin-top:12px; font-size:15px; }
-    .result strong { font-weight:600; color:var(--ink); }
+    .model-updates { max-width:680px; margin:22px 0 24px; }
+    .model-updates h3 { margin-bottom:12px; font:600 13px/1.6 var(--sans); }
+    .update-scroll { max-height:136px; overflow-y:auto; overscroll-behavior-y:contain; padding:0 12px 0 0; scrollbar-gutter:stable; scrollbar-color:#a6b0bb #f2f4f6; }
+    .update-scroll:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+    .update-list { list-style:none; margin:0; padding:0; }
+    .update-list li { display:grid; grid-template-columns:98px minmax(0,1fr); gap:14px; padding:10px 0; border-top:1px solid var(--rule); font:13px/1.6 var(--sans); }
+    .update-list li:first-child { padding-top:0; border-top:0; }
+    .update-list li:last-child { padding-bottom:0; }
+    .update-list time { color:var(--muted); font:12px/1.75 var(--sans); white-space:nowrap; }
+    .update-list a { text-decoration:none; }
+    .update-list a:hover { text-decoration:underline; }
+    .update-list .update-model { font-weight:600; }
+    .update-source { font-size:12px; white-space:nowrap; }
     .figure { margin-top:20px; }
     .figure-image { display:block; }
     .figure-image img { width:100%; height:auto; border:1px solid #e2e6ea; }
@@ -144,7 +155,8 @@
     .authors strong { font-weight:600; color:var(--ink); }
     .paper-links { display:flex; flex-wrap:wrap; gap:16px; margin-top:6px; font:12px/1.6 var(--sans); }
     .paper-links a { text-decoration:none; }
-    .background { border-top:1px solid var(--rule); padding:30px 0 32px; }
+    .background,.thoughts { border-top:1px solid var(--rule); padding:30px 0 32px; }
+    .thoughts .content { grid-column:-2 / -1; }
     .career { list-style:none; margin:20px 0 22px; padding:0; }
     .career li { display:grid; grid-template-columns:158px minmax(0,1fr); gap:22px; font:12px/1.65 var(--sans); padding:0 0 15px; }
     .career-date { color:var(--muted); font-size:12px; padding-top:2px; }
@@ -168,7 +180,7 @@
       .case { padding-top:26px; padding-bottom:34px; }
       .case + .case { padding-top:26px; }
       .bio { font-size:16px; }
-      .bibliography,.background { padding-top:26px; }
+      .bibliography,.background,.thoughts { padding-top:26px; }
       footer .margin-note { display:none; }
     }
     @media (max-width:560px) {
@@ -194,6 +206,8 @@
       .video-item--product { grid-column:1 / -1; display:flex; align-items:center; gap:14px; }
       .video-item--product .video-preview { flex:0 0 72px; width:72px; }
       .video-item--product figcaption { margin-top:0; }
+      .update-scroll { max-height:236px; }
+      .update-list li { grid-template-columns:1fr; gap:3px; }
       .publication-list { max-height:380px; }
       .paper h4 { font-size:15px; }
       .authors { font-size:12px; }
@@ -216,7 +230,8 @@
       .video-hover,.video-hint,.video-preview::after,.video-preview .play-mark { display:none !important; }
       .publication-toolbar { display:none !important; }
       .publication-list { max-height:none !important; overflow:visible !important; padding:0; outline:0; }
-      .paper { break-inside:avoid; }
+      .update-scroll { max-height:none; overflow:visible; padding:0; }
+      .update-list li,.paper { break-inside:avoid; }
       a { color:inherit; }
     }
   </style>
@@ -228,7 +243,7 @@
 <body id="top">
   <a class="skip" href="#projects">Skip to selected work</a>
   <div class="page">
-    <div class="topline"><a class="preview-link" href="#top">Jacob Fang</a><nav aria-label="Main navigation"><a href="#projects">Work</a><a href="#publications">Publications</a><a href="#background">Background</a></nav></div>
+    <div class="topline"><a class="preview-link" href="#top">Jacob Fang</a><nav aria-label="Main navigation"><a href="#projects">Work</a><a href="#background">Background</a><a href="#publications">Publications</a><a href="#thoughts">Thoughts</a></nav></div>
     <header class="intro row">
       <div class="portrait-wrap"><a class="portrait-link" href="images/profile.jpg" data-full-image data-image-title="Jacob Zhiyuan Fang" aria-label="Enlarge profile photo"><img class="headshot" src="images/profile.jpg" alt="Jacob Zhiyuan Fang" width="180" height="225"></a></div>
       <div class="intro-copy content"><div class="identity"><h1>Jacob Zhiyuan Fang</h1><p class="role">Member of Technical Staff · Microsoft AI</p></div><p class="bio">I work broadly on visual generation—from images and videos to visual assets—using diffusion models, code, and agentic methods.</p><div class="contact-links"><a href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ">Google Scholar</a><a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/">LinkedIn</a><a href="https://x.com/Jacob292020">X</a></div></div>
@@ -240,7 +255,6 @@
           <div class="content">
             <h2 id="mai-title">MAI Image Series Models</h2>
             <p class="lede">I am a core contributor to the <strong>MAI Image Series Models</strong>, focusing on post-training. My work spans reward model design, vision-language model RL for prompt enhancement, RL for captioning models, and diffusion RL.</p>
-            <p class="result">MAI-Image-2.6 <strong>reached #2 on Text-to-Image Arena</strong>, with a score of 1,336 at release.</p>
             <figure class="generation-set" aria-labelledby="generation-caption">
               <div class="generation-row">
                 <a href="assets/mai-2-6/everyday-realism.jpg" data-full-image data-image-title="MAI-Image-2.6 · Courtyard snapshot" aria-label="Enlarge generated courtyard snapshot"><img src="assets/mai-2-6/everyday-realism.webp" srcset="assets/mai-2-6/everyday-realism.webp 600w, assets/mai-2-6/everyday-realism.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated vintage-style snapshot of a family in an apartment courtyard" width="600" height="600" loading="lazy" decoding="async"></a>
@@ -253,6 +267,18 @@
               </div>
               <figcaption id="generation-caption">MAI-Image-2.6 · Generated examples · Click to enlarge · <a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" aria-label="Source: Microsoft AI experience on LinkedIn">LinkedIn ↗</a></figcaption>
             </figure>
+            <div class="model-updates">
+              <h3 id="model-updates-title">Model updates</h3>
+              <div class="update-scroll" tabindex="0" role="region" aria-labelledby="model-updates-title">
+                <ol class="update-list" role="list">
+                  <li><time datetime="2026-10-27">Oct 27, 2026</time><p><a class="update-model" href="https://microsoft.ai/models/mai-image-2-6/">MAI-Image-2.6</a> · Foundry availability update: Microsoft confirmed general availability. <a class="update-source" href="https://microsoft.ai/news/mai-image-2-6-launches-at-no-2-on-arena-ahead-of-google-meta-and-xai/" aria-label="Source for the October 27 Foundry availability update">Source ↗</a></p></li>
+                  <li><time datetime="2026-09-04">Sep 4, 2026</time><p><a class="update-model" href="https://microsoft.ai/models/mai-image-2-6/">MAI-Image-2.6 · I2I</a> ranked #1 for image editing on Artificial Analysis. <a class="update-source" href="https://microsoft.ai/news/pushing-the-quality-cost-frontier-with-mai-image-2-6/" aria-label="Source for the September 4 image-editing ranking">Source ↗</a></p></li>
+                  <li><time datetime="2026-09-04">Sep 4, 2026</time><p><a class="update-model" href="https://microsoft.ai/models/mai-image-2-6/">MAI-Image-2.6 · T2I</a> ranked #2 on Text-to-Image Arena. <a class="update-source" href="https://microsoft.ai/news/pushing-the-quality-cost-frontier-with-mai-image-2-6/" aria-label="Source for the September 4 text-to-image ranking">Source ↗</a></p></li>
+                  <li><time datetime="2026-06-02">Jun 2, 2026</time><p><a class="update-model" href="https://microsoft.ai/news/introducing-mai-image-2-5/">MAI-Image-2.5</a> launched at #3 for text-to-image and #2 for image editing on Arena.</p></li>
+                  <li><time datetime="2026-03-19">Mar 19, 2026</time><p><a class="update-model" href="https://microsoft.ai/news/introducing-MAI-Image-2/">MAI-Image-2</a> launched, bringing MAI to #3 among text-to-image model families on Arena.</p></li>
+                </ol>
+              </div>
+            </div>
             <div class="arena-gallery"><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-6-leaderboard.jpg" data-full-image data-image-title="MAI-Image-2.6 · Overall ranking" aria-label="Enlarge MAI-Image-2.6 overall ranking"><img src="assets/arena/mai-2-6-leaderboard.jpg" alt="Original Arena leaderboard for MAI-Image-2.6. All model rows are preserved." width="1305" height="1305" decoding="async"></a><figcaption>Overall ranking</figcaption></figure><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-6-categories.jpg" data-full-image data-image-title="MAI-Image-2.6 · By category" aria-label="Enlarge MAI-Image-2.6 by category"><img src="assets/arena/mai-2-6-categories.jpg" alt="Original Arena category comparison for MAI-Image-2.6." width="1305" height="1305" decoding="async"></a><figcaption>By category</figcaption></figure></div>
             <p class="arena-source">Arena release snapshot · Click an image to enlarge · <a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7492710114735415296/">Source ↗</a></p>
             <details class="supporting" id="mai25-support"><summary>Earlier Arena results</summary><p class="support-copy">The 2.5 Preview debuted at #3 on Text-to-Image Arena, with a score of 1,254. This earlier release snapshot precedes the 2.6 chart above.</p><div class="arena-gallery"><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-5-leaderboard.jpg" data-full-image data-image-title="MAI-Image-2.5 Preview · Overall ranking" aria-label="Enlarge MAI-Image-2.5 Preview overall ranking"><img src="assets/arena/mai-2-5-leaderboard.jpg" alt="Original Arena leaderboard for MAI-Image-2.5 Preview. All model rows are preserved." width="1538" height="1536" decoding="async" loading="lazy"></a><figcaption>Overall ranking</figcaption></figure><figure class="figure"><a class="figure-image" href="assets/arena/mai-2-5-categories.jpg" data-full-image data-image-title="MAI-Image-2.5 Preview · By category" aria-label="Enlarge MAI-Image-2.5 Preview by category"><img src="assets/arena/mai-2-5-categories.jpg" alt="Original Arena category comparison for MAI-Image-2.5 Preview." width="1536" height="1536" decoding="async" loading="lazy"></a><figcaption>By category</figcaption></figure></div><p class="arena-source">Earlier release snapshot · Click an image to enlarge · <a href="https://www.linkedin.com/posts/arenaai_exciting-news-mai-image-25-preview-from-activity-7465112161686609920-Ka0T">Source ↗</a></p></details>
@@ -284,7 +310,14 @@
           <div class="content"><h2 id="amazon-title">Amazon Nova Models</h2><p class="lede">At Amazon, I contributed to the Nova family of image and video generation models.</p><figure class="figure nova-figure"><a class="figure-image" href="images/nova.png" data-full-image data-image-title="Amazon Nova · Product visual" aria-label="Enlarge Amazon Nova product visual"><img src="assets/posters/nova.webp" srcset="assets/posters/nova.webp 1280w, images/nova.png 2484w" sizes="(max-width: 560px) calc(100vw - 36px), 520px" alt="Amazon Nova product image showing a generated dinosaur in a teacup" width="1280" height="716" loading="lazy" decoding="async"></a><figcaption><span class="caption-title">Amazon Nova.</span> Image and video generation models.<span class="caption-source"><a href="https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws">Amazon’s December 2024 announcement ↗</a></span></figcaption></figure></div>
         </section>
       </div>
-      <section class="bibliography row" id="publications" aria-labelledby="publications-title"><aside class="margin-note"><strong>Research</strong></aside><div class="content"><h2 class="section-title" id="publications-title">Selected publications</h2><div class="publication-toolbar"><span>9 papers · Scroll to browse</span><button type="button" id="publication-toggle" aria-expanded="false" aria-controls="publication-list" hidden>View all</button></div>
+      <section class="background row" id="background" aria-labelledby="background-title"><aside class="margin-note"><strong>Background</strong></aside><div class="content"><h2 class="section-title" id="background-title">Experience &amp; education</h2><ol class="career"><li><span class="career-date">Mar 2026 — Present</span><div><span class="career-company">Microsoft AI</span><span class="career-role">Member of Technical Staff</span></div></li>
+<li><span class="career-date">Jul 2024 — Mar 2026</span><div><span class="career-company">ByteDance</span><span class="career-role">Senior Research Scientist</span></div></li>
+<li><span class="career-date">Jun 2022 — Jul 2024</span><div><span class="career-company">Amazon</span><span class="career-role">Applied Scientist</span></div></li>
+<li><span class="career-date">May 2021 — Jan 2022</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">Aug 2020 — May 2021</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">May 2020 — Aug 2020</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
+<li><span class="career-date">Sep 2016 — Jan 2017</span><div><span class="career-company">Chinese Academy of Sciences</span><span class="career-role">Research Assistant</span></div></li></ol><div class="education"><p>Ph.D., Computer Science · Arizona State University<span>Computer vision and multimodal representation learning</span></p><p>B.Eng., Computer Science · Southern University of Science and Technology（南方科技大学）</p></div><p class="service"><strong>Reviewer:</strong> ICCV, CVPR, ECCV, NeurIPS, ICLR, ICML, ACL, EMNLP, SIGGRAPH, SIGGRAPH Asia, and TMLR.</p></div></section>
+      <section class="bibliography row" id="publications" aria-labelledby="publications-title"><aside class="margin-note"><strong>Research</strong></aside><div class="content"><h2 class="section-title" id="publications-title">Selected publications</h2><div class="publication-toolbar"><span>Scroll to browse</span><button type="button" id="publication-toggle" aria-expanded="false" aria-controls="publication-list" hidden>View all</button></div>
 <div class="publication-list" id="publication-list" tabindex="0" role="region" aria-label="Publications, scroll vertically to browse">
 <section class="paper-group" aria-labelledby="video-papers-title"><h3 id="video-papers-title">Controllable video generation</h3><article class="paper"><div class="paper-heading"><h4><a href="https://magref-video.github.io/">MAGREF: Masked Guidance for Any-Reference Video Generation</a></h4><p class="paper-venue">arXiv · 2025</p></div><p class="authors">Yufan Deng, Xun Guo, Yuanyang Yin, <strong>Jacob Zhiyuan Fang</strong>, Yiding Yang, Yizhi Wang, Shenghai Yuan, Angtian Wang, Bo Liu, Haibin Huang, Chongyang Ma</p><div class="paper-links" aria-label="Links for MAGREF: Masked Guidance for Any-Reference Video Generation"><a href="https://github.com/MAGREF-Video/MAGREF">Code</a><a href="https://magref-video.github.io/">Project</a></div></article>
 <article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2505.22944">ATI: Any Trajectory Instruction for Controllable Video Generation</a></h4><p class="paper-venue">arXiv · 2025</p></div><p class="authors">Angtian Wang, Haibin Huang, <strong>Jacob Zhiyuan Fang</strong>, Yiding Yang, Chongyang Ma</p><div class="paper-links" aria-label="Links for ATI: Any Trajectory Instruction for Controllable Video Generation"><a href="https://arxiv.org/pdf/2505.22944">Preprint</a><a href="https://github.com/bytedance/ATI">Code</a><a href="https://anytraj.github.io/">Project</a></div></article>
@@ -296,13 +329,7 @@
 <article class="paper"><div class="paper-heading"><h4><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Compressing Visual-linguistic Model via Knowledge Distillation</a></h4><p class="paper-venue">ICCV · 2021</p></div><p class="authors"><strong>Zhiyuan Fang</strong>, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, Zicheng Liu</p><div class="paper-links" aria-label="Links for Compressing Visual-linguistic Model via Knowledge Distillation"><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Fang_Compressing_Visual-Linguistic_Model_via_Knowledge_Distillation_ICCV_2021_paper.pdf">Paper</a></div></article>
 <article class="paper"><div class="paper-heading"><h4><a href="https://arxiv.org/pdf/2005.07327">ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language</a></h4><p class="paper-venue">ECCV · 2020</p></div><p class="authors">Zhe Wang, <strong>Zhiyuan Fang</strong>, Jun Wang, Yezhou Yang</p><div class="paper-links" aria-label="Links for ViTAA: Visual-Textual Attributes Alignment in Person Search by Natural Language"><a href="https://arxiv.org/pdf/2005.07327">Paper</a></div></article></section>
 </div></div></section>
-      <section class="background row" id="background" aria-labelledby="background-title"><aside class="margin-note"><strong>Background</strong></aside><div class="content"><h2 class="section-title" id="background-title">Experience &amp; education</h2><ol class="career"><li><span class="career-date">Mar 2026 — Present</span><div><span class="career-company">Microsoft AI</span><span class="career-role">Member of Technical Staff</span></div></li>
-<li><span class="career-date">Jul 2024 — Mar 2026</span><div><span class="career-company">ByteDance</span><span class="career-role">Senior Research Scientist</span></div></li>
-<li><span class="career-date">Jun 2022 — Jul 2024</span><div><span class="career-company">Amazon</span><span class="career-role">Applied Scientist</span></div></li>
-<li><span class="career-date">May 2021 — Jan 2022</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
-<li><span class="career-date">Aug 2020 — May 2021</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
-<li><span class="career-date">May 2020 — Aug 2020</span><div><span class="career-company">Microsoft</span><span class="career-role">Research Internship</span></div></li>
-<li><span class="career-date">Sep 2016 — Jan 2017</span><div><span class="career-company">Chinese Academy of Sciences</span><span class="career-role">Research Assistant</span></div></li></ol><div class="education"><p>Ph.D., Computer Science · Arizona State University<span>Computer vision and multimodal representation learning</span></p><p>B.Eng., Computer Science · Southern University of Science and Technology（南方科技大学）</p></div><p class="service"><strong>Reviewer:</strong> ICCV, CVPR, ECCV, NeurIPS, ICLR, ICML, ACL, EMNLP, SIGGRAPH, SIGGRAPH Asia, and TMLR.</p></div></section>
+      <section class="thoughts row" id="thoughts" aria-labelledby="thoughts-title"><div class="content"><h2 class="section-title" id="thoughts-title">Thoughts</h2><div id="thoughts-entries"></div></div></section>
     </main>
     <footer class="row"><div class="margin-note"></div><div class="content"><span>Jacob Zhiyuan Fang</span><a href="https://scholar.google.com/citations?user=fHWXpq4AAAAJ">Full publication list on Google Scholar ↗</a></div></footer>
   </div>
