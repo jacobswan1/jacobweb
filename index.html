@@ -65,16 +65,25 @@
     .figure figcaption a { text-decoration:none; }
     .caption-title { color:var(--ink); font-weight:500; }
     .caption-source { display:block; margin-top:3px; font-size:12px; }
-    .generation-set { max-width:680px; margin:20px 0 24px; }
-    .generation-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-    .generation-row--mixed { grid-template-columns:minmax(0,.684962fr) minmax(0,1.777778fr); margin-top:12px; }
-    .generation-row a { display:block; min-width:0; aspect-ratio:1; cursor:zoom-in; }
-    .generation-row--mixed a:first-child { aspect-ratio:1248 / 1822; }
-    .generation-row--mixed a:last-child { aspect-ratio:1920 / 1080; }
-    .generation-row img { width:100%; height:100%; object-fit:contain; }
+    .generation-set { --generation-height:180px; width:100%; max-width:680px; min-width:0; margin:20px 0 24px; }
+    .generation-row { display:flex; gap:8px; width:100%; min-width:0; overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; scroll-snap-type:x proximity; padding:1px 1px 10px; scrollbar-color:#a6b0bb #f2f4f6; }
+    .generation-row[data-gallery-motion="true"] { scroll-snap-type:none; overflow-anchor:none; }
+    .generation-row:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+    .generation-row::-webkit-scrollbar { display:block; height:7px; }
+    .generation-row::-webkit-scrollbar-track { background:#f2f4f6; }
+    .generation-row::-webkit-scrollbar-thumb { background:#a6b0bb; border:1px solid #f2f4f6; border-radius:4px; }
+    .generation-row a { display:block; flex:0 0 auto; height:var(--generation-height); aspect-ratio:1; cursor:zoom-in; scroll-snap-align:start; }
+    .generation-row a:focus-visible { outline-offset:-3px; }
+    .generation-row .generation-portrait { aspect-ratio:1248 / 1822; }
+    .generation-row .generation-landscape { aspect-ratio:1920 / 1080; }
+    .generation-row img { width:100%; height:100%; object-fit:contain; border:1px solid #e2e6ea; }
     .generation-set figcaption { margin-top:9px; color:var(--muted); font:12px/1.6 var(--sans); }
     .generation-set figcaption a { text-decoration:none; }
-    .arena-gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; max-width:640px; margin-top:20px; align-items:start; }
+    .generation-set figcaption { display:flex; flex-wrap:wrap; align-items:baseline; gap:5px 12px; }
+    .motion-toggle { padding:0; border:0; border-bottom:1px solid currentColor; background:none; color:var(--muted); font:inherit; line-height:1.6; cursor:pointer; white-space:nowrap; }
+    .motion-toggle:hover { color:var(--ink); }
+    .motion-toggle[hidden] { display:none; }
+    .arena-gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:100%; max-width:680px; margin-top:20px; align-items:start; }
     .arena-gallery .figure,.supporting .arena-gallery .figure { margin:0; min-width:0; }
     .arena-gallery figcaption { margin-top:7px; font:12px/1.5 var(--sans); }
     .arena-gallery .figure-image { cursor:zoom-in; }
@@ -99,27 +108,34 @@
     .supporting .support-copy { margin-top:14px; max-width:680px; font-size:15px; }
     .supporting .support-copy + p { margin-top:10px; font-size:15px; }
     .supporting .figure { margin-top:18px; }
-    .video-showcase { display:grid; grid-template-columns:.5625fr 1.777778fr 1.733333fr; gap:16px; max-width:600px; margin-top:18px; align-items:start; }
-    .video-item { min-width:0; margin:0; }
-    .video-preview { position:relative; display:block; overflow:hidden; }
+    .video-showcase { --video-height:200px; display:flex; gap:12px; width:100%; max-width:680px; min-width:0; margin-top:20px; align-items:start; overflow-x:auto; overflow-y:hidden; padding:2px 2px 8px; overscroll-behavior-x:contain; scrollbar-color:#a6b0bb #f2f4f6; }
+    .video-showcase[data-strip-motion="true"] { scroll-snap-type:none; scroll-behavior:auto; overflow-anchor:none; }
+    .video-showcase:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    .video-showcase::-webkit-scrollbar { display:block; height:7px; }
+    .video-showcase::-webkit-scrollbar-track { background:#f2f4f6; }
+    .video-showcase::-webkit-scrollbar-thumb { background:#a6b0bb; border:1px solid #f2f4f6; border-radius:4px; }
+    .video-item { flex:0 0 calc(var(--video-height) * var(--video-ratio)); min-width:0; margin:0; }
+    .video-preview { position:relative; display:block; height:var(--video-height); overflow:hidden; background:#f4f5f6; }
+    .video-preview:focus-visible { outline-offset:-3px; }
     .video-hover { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:contain; opacity:0; pointer-events:none; transition:opacity .16s ease; }
     .video-preview[data-preview-state="playing"] .video-hover { opacity:1; }
     .video-preview::after { content:"↗"; position:absolute; top:7px; right:7px; display:grid; place-items:center; width:22px; height:22px; color:#fff; background:rgba(20,28,38,.58); opacity:0; pointer-events:none; font:13px/1 var(--sans); transition:opacity .16s ease; }
     .video-preview:hover::after,.video-preview:focus-visible::after { opacity:1; }
-    .video-showcase[data-hover-previews="true"] .video-preview { cursor:zoom-in; }
-    .video-preview img { width:100%; height:auto; }
+    .video-showcase[data-auto-previews="true"] .video-preview { cursor:zoom-in; }
+    .video-preview img { width:100%; height:100%; object-fit:contain; }
     .video-preview .play-mark { position:absolute; bottom:8px; left:8px; display:grid; place-items:center; width:26px; height:26px; background:rgba(255,255,255,.94); color:var(--ink); font:11px/1 var(--sans); }
-    .video-showcase[data-hover-previews="true"] .play-mark { display:none; }
-    .video-showcase[data-hover-previews="true"] .video-preview[data-preview-state="error"] .play-mark { display:grid; }
-    .video-hint { margin-top:12px; color:var(--muted); font:12px/1.6 var(--sans); }
-    .video-hint .hover-hint { display:none; }
-    .video-showcase[data-hover-previews="true"] + .video-hint .hover-hint { display:inline; }
-    .video-showcase[data-hover-previews="true"] + .video-hint .tap-hint { display:none; }
+    .video-showcase[data-auto-previews="true"] .play-mark { display:none; }
+    .video-showcase[data-auto-previews="true"] .video-preview[data-preview-state="error"] .play-mark { display:grid; }
+    .video-hint { display:flex; flex-wrap:wrap; align-items:baseline; gap:5px 12px; margin-top:12px; color:var(--muted); font:12px/1.6 var(--sans); }
+    .video-hint .auto-hint { display:none; }
+    .video-showcase[data-auto-previews="true"] + .video-hint .auto-hint { display:inline; }
+    .video-showcase[data-auto-previews="true"] + .video-hint .tap-hint { display:none; }
     @media (prefers-reduced-motion:reduce) { .video-hover,.video-preview::after { transition:none; } }
     .video-item figcaption { margin-top:8px; color:var(--muted); font:12px/1.6 var(--sans); }
     .video-name { display:block; color:var(--ink); font-size:13px; font-weight:600; }
     .video-detail { display:block; margin-top:2px; }
     .video-source { display:inline-block; margin-top:3px; text-decoration:none; }
+    .video-detail .video-source { margin-top:0; }
     .video-source:hover { text-decoration:underline; }
     .video-viewer { width:fit-content; max-width:94vw; max-height:94vh; padding:16px; border:1px solid var(--rule); background:var(--page); color:var(--ink); }
     .video-viewer::backdrop { background:rgba(20,28,38,.66); }
@@ -183,6 +199,9 @@
       .bibliography,.background,.thoughts { padding-top:26px; }
       footer .margin-note { display:none; }
     }
+    @media (max-width:700px) {
+      .video-showcase { --video-height:min(180px, calc((100vw - 40px) * .5625)); }
+    }
     @media (max-width:560px) {
       .page { width:calc(100% - 36px); }
       .topline { gap:12px; align-items:flex-start; font-size:12px; }
@@ -199,13 +218,9 @@
       .contact-links { font-size:12px; gap:18px; }
       .case h2,.section-title { font-size:16px; }
       .case .lede { margin-top:10px; }
-      .arena-gallery { grid-template-columns:minmax(0,1fr); max-width:320px; gap:18px; }
+      .generation-set { --generation-height:156px; }
       .figure figcaption { font-size:12px; }
       .figure { margin-top:20px; }
-      .video-showcase { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 14px; }
-      .video-item--product { grid-column:1 / -1; display:flex; align-items:center; gap:14px; }
-      .video-item--product .video-preview { flex:0 0 72px; width:72px; }
-      .video-item--product figcaption { margin-top:0; }
       .update-scroll { max-height:236px; }
       .update-list li { grid-template-columns:1fr; gap:3px; }
       .publication-list { max-height:380px; }
@@ -227,10 +242,14 @@
       .intro { padding-top:0; }
       .headshot { width:96px; height:120px; }
       .row { grid-template-columns:120px minmax(0,1fr); gap:24px; }
-      .video-hover,.video-hint,.video-preview::after,.video-preview .play-mark { display:none !important; }
+      .video-hover,.video-hint,.video-preview::after,.video-preview .play-mark,.motion-toggle { display:none !important; }
+      .video-showcase { --video-height:160px; flex-wrap:wrap; overflow:visible; padding:0; }
+      .video-item { break-inside:avoid; }
       .publication-toolbar { display:none !important; }
       .publication-list { max-height:none !important; overflow:visible !important; padding:0; outline:0; }
       .update-scroll { max-height:none; overflow:visible; padding:0; }
+      .generation-row { flex-wrap:wrap; overflow:visible; padding:0; scroll-snap-type:none; }
+      .generation-row a { break-inside:avoid; }
       .update-list li,.paper { break-inside:avoid; }
       a { color:inherit; }
     }
@@ -238,7 +257,8 @@
   <script src="assets/publications.js" defer></script>
   <script src="assets/image-viewer.js" defer></script>
   <script src="assets/video-dialog.js" defer></script>
-  <script src="assets/video-hover.js" defer></script>
+  <script src="assets/video-hover.js?v=cfae509d1bdd" defer></script>
+  <script src="assets/gallery-motion.js?v=83a7ca3a316d" defer></script>
 </head>
 <body id="top">
   <a class="skip" href="#projects">Skip to selected work</a>
@@ -256,16 +276,14 @@
             <h2 id="mai-title">MAI Image Series Models</h2>
             <p class="lede">I am a core contributor to the <strong>MAI Image Series Models</strong>, focusing on post-training. My work spans reward model design, vision-language model RL for prompt enhancement, RL for captioning models, and diffusion RL.</p>
             <figure class="generation-set" aria-labelledby="generation-caption">
-              <div class="generation-row">
-                <a href="assets/mai-2-6/everyday-realism.jpg" data-full-image data-image-title="MAI-Image-2.6 · Courtyard snapshot" aria-label="Enlarge generated courtyard snapshot"><img src="assets/mai-2-6/everyday-realism.webp" srcset="assets/mai-2-6/everyday-realism.webp 600w, assets/mai-2-6/everyday-realism.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated vintage-style snapshot of a family in an apartment courtyard" width="600" height="600" loading="lazy" decoding="async"></a>
-                <a href="assets/mai-2-6/stylized-scene.jpg" data-full-image data-image-title="MAI-Image-2.6 · Warm interior" aria-label="Enlarge generated warm interior"><img src="assets/mai-2-6/stylized-scene.webp" srcset="assets/mai-2-6/stylized-scene.webp 600w, assets/mai-2-6/stylized-scene.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated scene of a woman and cat in warm light, with drawings on the wall" width="600" height="600" loading="lazy" decoding="async"></a>
-                <a href="assets/mai-2-6/materials.jpg" data-full-image data-image-title="MAI-Image-2.6 · Weathered details" aria-label="Enlarge generated weathered gas meter"><img src="assets/mai-2-6/materials.webp" srcset="assets/mai-2-6/materials.webp 600w, assets/mai-2-6/materials.jpg 1536w" sizes="(max-width: 560px) calc(33.333vw - 20px), (max-width: 736px) calc(33.333vw - 26.667px), 219px" alt="MAI-Image-2.6 generated image of a weathered gas meter with Chinese signage" width="600" height="600" loading="lazy" decoding="async"></a>
+              <div class="generation-row" tabindex="0" role="region" aria-label="MAI-Image-2.6 generated examples" aria-describedby="generation-caption">
+                <a href="assets/mai-2-6/everyday-realism.jpg" data-full-image data-image-title="MAI-Image-2.6 · Courtyard snapshot" aria-label="Enlarge generated courtyard snapshot"><img src="assets/mai-2-6/everyday-realism.webp" srcset="assets/mai-2-6/everyday-realism.webp 600w, assets/mai-2-6/everyday-realism.jpg 1536w" sizes="(max-width: 560px) 156px, 180px" alt="MAI-Image-2.6 generated vintage-style snapshot of a family in an apartment courtyard" width="600" height="600" loading="lazy" decoding="async"></a>
+                <a href="assets/mai-2-6/stylized-scene.jpg" data-full-image data-image-title="MAI-Image-2.6 · Warm interior" aria-label="Enlarge generated warm interior"><img src="assets/mai-2-6/stylized-scene.webp" srcset="assets/mai-2-6/stylized-scene.webp 600w, assets/mai-2-6/stylized-scene.jpg 1536w" sizes="(max-width: 560px) 156px, 180px" alt="MAI-Image-2.6 generated scene of a woman and cat in warm light, with drawings on the wall" width="600" height="600" loading="lazy" decoding="async"></a>
+                <a href="assets/mai-2-6/materials.jpg" data-full-image data-image-title="MAI-Image-2.6 · Weathered details" aria-label="Enlarge generated weathered gas meter"><img src="assets/mai-2-6/materials.webp" srcset="assets/mai-2-6/materials.webp 600w, assets/mai-2-6/materials.jpg 1536w" sizes="(max-width: 560px) 156px, 180px" alt="MAI-Image-2.6 generated image of a weathered gas meter with Chinese signage" width="600" height="600" loading="lazy" decoding="async"></a>
+                <a class="generation-portrait" href="assets/mai-2-6/portrait.jpg" data-full-image data-image-title="MAI-Image-2.6 · Café portrait" aria-label="Enlarge generated café portrait"><img src="assets/mai-2-6/portrait.webp" srcset="assets/mai-2-6/portrait.webp 411w, assets/mai-2-6/portrait.jpg 1248w" sizes="(max-width: 560px) 107px, 124px" alt="MAI-Image-2.6 generated café portrait of a person holding coffee" width="411" height="600" loading="lazy" decoding="async"></a>
+                <a class="generation-landscape" href="assets/mai-2-6/sculptural-art.jpg" data-full-image data-image-title="MAI-Image-2.6 · Miniature cities" aria-label="Enlarge generated miniature city illustrations"><img src="assets/mai-2-6/sculptural-art.webp" srcset="assets/mai-2-6/sculptural-art.webp 600w, assets/mai-2-6/sculptural-art.jpg 1920w" sizes="(max-width: 560px) 278px, 320px" alt="MAI-Image-2.6 generated pop-up illustrations of miniature Tokyo, Shanghai, Bangkok, and Singapore" width="600" height="338" loading="lazy" decoding="async"></a>
               </div>
-              <div class="generation-row generation-row--mixed">
-                <a href="assets/mai-2-6/portrait.jpg" data-full-image data-image-title="MAI-Image-2.6 · Café portrait" aria-label="Enlarge generated café portrait"><img src="assets/mai-2-6/portrait.webp" srcset="assets/mai-2-6/portrait.webp 411w, assets/mai-2-6/portrait.jpg 1248w" sizes="(max-width: 560px) 28vw, 188px" alt="MAI-Image-2.6 generated café portrait of a person holding coffee" width="411" height="600" loading="lazy" decoding="async"></a>
-                <a href="assets/mai-2-6/sculptural-art.jpg" data-full-image data-image-title="MAI-Image-2.6 · Miniature cities" aria-label="Enlarge generated miniature city illustrations"><img src="assets/mai-2-6/sculptural-art.webp" srcset="assets/mai-2-6/sculptural-art.webp 600w, assets/mai-2-6/sculptural-art.jpg 1920w" sizes="(max-width: 560px) 72vw, (max-width: 736px) 71vw, 484px" alt="MAI-Image-2.6 generated pop-up illustrations of miniature Tokyo, Shanghai, Bangkok, and Singapore" width="600" height="338" loading="lazy" decoding="async"></a>
-              </div>
-              <figcaption id="generation-caption">MAI-Image-2.6 · Generated examples · Click to enlarge · <a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" aria-label="Source: Microsoft AI experience on LinkedIn">LinkedIn ↗</a></figcaption>
+              <figcaption id="generation-caption"><span>MAI-Image-2.6 · Generated examples · Scroll to explore · Click to enlarge · <a href="https://www.linkedin.com/in/zhiyuan-jacob-fang/" aria-label="Source: Microsoft AI experience on LinkedIn">LinkedIn ↗</a></span><button class="motion-toggle" id="gallery-motion-toggle" type="button" hidden>Pause slideshow</button></figcaption>
             </figure>
             <div class="model-updates">
               <h3 id="model-updates-title">Model updates</h3>
@@ -288,21 +306,37 @@
           <aside class="margin-note"><strong>ByteDance / TikTok</strong><span class="position">Senior Research Scientist</span><span class="period">Jul 2024 — Mar 2026</span></aside>
           <div class="content"><h2 id="tiktok-title">TikTok Video Generation</h2>
             <p class="lede">At TikTok, I contributed to video generation models and creative features, including AI Alive.</p>
-            <div class="video-showcase" role="group" aria-label="Selected video demos">
-              <figure class="video-item video-item--product">
-                <a class="video-preview" href="images/shou.mp4" data-video-demo data-preview-src="assets/previews/ai-alive.mp4" data-video-title="AI Alive · Product demo" data-video-width="576" data-video-height="1024" aria-label="Play AI Alive demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-alive.webp" alt="AI Alive public demo preview" width="576" height="1024" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
-                <figcaption><span class="video-name">AI Alive</span><span class="video-detail">19 sec</span><a class="video-source" href="https://www.tiktok.com/@shou.time/video/7504111206039571758" aria-label="AI Alive public demo by Shou">Shou ↗</a></figcaption>
-              </figure>
-              <figure class="video-item">
+            <div class="video-showcase" role="region" tabindex="0" aria-labelledby="tiktok-title" aria-describedby="video-showcase-hint">
+              <figure class="video-item" style="--video-ratio:1.777778">
                 <a class="video-preview" href="images/ATI_teaser.mp4" data-video-demo data-preview-src="assets/previews/ati.mp4" data-video-title="ATI · Trajectory control" data-video-width="1280" data-video-height="720" aria-label="Play ATI research demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ati.webp" alt="ATI research demo showing motion guided by trajectory instructions" width="1280" height="720" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
                 <figcaption><span class="video-name">ATI</span><span class="video-detail">Trajectory control · 1:09</span><a class="video-source" href="https://anytraj.github.io/">Research project ↗</a></figcaption>
               </figure>
-              <figure class="video-item">
+              <figure class="video-item" style="--video-ratio:1.733333">
                 <a class="video-preview" href="images/magref.mp4" data-video-demo data-preview-src="assets/previews/magref.mp4" data-video-title="MAGREF · Reference guidance" data-video-width="1872" data-video-height="1080" aria-label="Play MAGREF research demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/magref.webp" alt="MAGREF research demo showing reference-guided video generation" width="1280" height="738" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
                 <figcaption><span class="video-name">MAGREF</span><span class="video-detail">Reference guidance · 1:29</span><a class="video-source" href="https://magref-video.github.io/">Research project ↗</a></figcaption>
               </figure>
+              <figure class="video-item video-item--product" style="--video-ratio:.5625">
+                <a class="video-preview" href="images/shou.mp4" data-video-demo data-preview-src="assets/previews/ai-alive.mp4" data-preview-rate="2" data-video-title="AI Alive · Product demo" data-video-width="576" data-video-height="1024" aria-label="Play AI Alive demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-alive.webp" alt="AI Alive effect preview" width="576" height="1024" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI Alive</span><span class="video-detail">19 sec · <a class="video-source" href="https://www.tiktok.com/@shou.time/video/7504111206039571758" aria-label="AI Alive public demo by Shou">Shou ↗</a></span></figcaption>
+              </figure>
+              <figure class="video-item" style="--video-ratio:.789041">
+                <a class="video-preview" href="images/ai_mermaid.mp4" data-video-demo data-preview-src="assets/previews/ai-mermaid.mp4" data-video-title="AI Mermaid · Creative effect" data-video-width="576" data-video-height="730" aria-label="Play AI Mermaid demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-mermaid.webp" alt="AI Mermaid effect preview" width="576" height="730" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI Mermaid</span><span class="video-detail">5 sec · <a class="video-source" href="https://www.tiktok.com/effect/AI-Mermaid-2386487441" aria-label="AI Mermaid effect on TikTok">TikTok ↗</a></span></figcaption>
+              </figure>
+              <figure class="video-item" style="--video-ratio:.543396">
+                <a class="video-preview" href="images/ai_swaydance.mp4" data-video-demo data-preview-src="assets/previews/ai-swaydance.mp4" data-video-title="AI SwayDance · Creative effect" data-video-width="576" data-video-height="1060" aria-label="Play AI SwayDance demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-swaydance.webp" alt="AI SwayDance effect preview" width="576" height="1060" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI SwayDance</span><span class="video-detail">5 sec</span></figcaption>
+              </figure>
+              <figure class="video-item" style="--video-ratio:.5625">
+                <a class="video-preview" href="images/ai_hug.mp4" data-video-demo data-preview-src="assets/previews/ai-hug.mp4" data-video-title="AI Hug · Creative effect" data-video-width="720" data-video-height="1280" aria-label="Play AI Hug demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-hug.webp" alt="AI Hug effect preview" width="720" height="1280" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI Hug</span><span class="video-detail">11 sec</span></figcaption>
+              </figure>
+              <figure class="video-item" style="--video-ratio:.735294">
+                <a class="video-preview" href="assets/demos/ai-flower-2.mp4" data-video-demo data-preview-src="assets/previews/ai-flower-2.mp4" data-video-title="AI Flower 2.0 · Creative effect" data-video-width="300" data-video-height="408" aria-label="Play AI Flower 2.0 demo" aria-haspopup="dialog" aria-controls="video-viewer"><img src="assets/posters/ai-flower-2.webp" alt="AI Flower 2.0 effect preview" width="300" height="408" loading="lazy" decoding="async"><span class="play-mark" aria-hidden="true">▶</span></a>
+                <figcaption><span class="video-name">AI Flower 2.0</span><span class="video-detail">13 sec</span></figcaption>
+              </figure>
             </div>
-            <p class="video-hint"><span class="hover-hint">Hover to preview · Click to expand</span><span class="tap-hint">Select a demo to watch</span></p>
+            <p class="video-hint" id="video-showcase-hint"><span class="auto-hint">Auto-scroll · Muted previews · Click to expand</span><span class="tap-hint">Scroll to explore · Select a demo to watch</span><button class="motion-toggle" id="video-preview-toggle" type="button" hidden>Pause previews</button></p>
           </div>
         </section>
         <section class="case row" aria-labelledby="amazon-title">
@@ -342,5 +376,34 @@
     <video id="demo-video" controls preload="none" playsinline muted width="576" height="1024" aria-label="Video demonstration">Your browser does not support this video. <a href="images/shou.mp4" data-video-fallback>Open the original video</a>.</video>
     <p class="video-error" id="video-error" role="status" hidden>Playback could not start. Use the video controls or <a href="images/shou.mp4" data-video-fallback>open the original video</a>.</p>
   </dialog>
+  <script id="statcounter-installation">
+    (() => {
+      "use strict";
+
+      const productionHosts = ["www.jacobzhiyuanfang.me", "jacobzhiyuanfang.me"];
+      if (
+        window.location.protocol !== "https:" ||
+        window.location.port !== "" ||
+        !productionHosts.includes(window.location.hostname)
+      ) return;
+
+      const counterUrl = "https://www.statcounter.com/counter/counter.js";
+      if (
+        window.__jacobStatcounterInstallationStarted ||
+        Array.from(document.scripts).some(script => script.src === counterUrl)
+      ) return;
+
+      window.__jacobStatcounterInstallationStarted = true;
+      window.sc_project = 13364784;
+      window.sc_invisible = 1;
+      window.sc_security = "0ca471be";
+
+      const counter = document.createElement("script");
+      counter.type = "text/javascript";
+      counter.src = counterUrl;
+      counter.async = true;
+      document.body.appendChild(counter);
+    })();
+  </script>
 </body>
 </html>
